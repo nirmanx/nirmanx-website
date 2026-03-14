@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Order Tracking - nirmanX</title>
+
+<link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<h1>Track Your Order</h1>
+
+<a href="../index.html">⬅ Back to Home</a>
+
+<div class="tracking">
+
+<div class="step active">
+<h3>Order Received</h3>
+<p>Your order has been placed</p>
+</div>
+
+<div class="step">
+<h3>Packing</h3>
+<p>Seller preparing your order</p>
+</div>
+
+<div class="step">
+<h3>Out for Delivery</h3>
+<p>Material is on the way</p>
+</div>
+
+<div class="step">
+<h3>Delivered</h3>
+<p>Order delivered successfully</p>
+</div>
+
+</div>
+
+<button onclick="nextStep()">Update Status</button>
+
+<script>
+
+let currentStep = 0
+
+function nextStep(){
+
+let steps = document.querySelectorAll(".step")
+
+if(currentStep < steps.length){
+
+steps[currentStep].classList.add("active")
+
+currentStep++
+
+}
+
+}
+
+</script>
+
+</body>
+
+</html>
