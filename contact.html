@@ -1,36 +1,124 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="hi">
 <head>
-
-<title>Contact - NirmanX</title>
-
-<link rel="stylesheet" href="../style.css">
-
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact – NirmanX</title>
+  <link rel="stylesheet" href="../style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .page-hero { background: linear-gradient(135deg, #1A1208, #2D2010); padding: 40px 24px; text-align: center; }
+    .page-hero h1 { font-family: 'Baloo 2'; font-size: 36px; font-weight: 800; color: white; }
+    .page-hero h1 span { color: var(--orange); }
+    .page-hero p { color: #C4B5A5; margin-top: 8px; }
+    .contact-page { max-width: 1100px; margin: 50px auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .contact-info h2 { font-family: 'Baloo 2'; font-size: 26px; font-weight: 800; margin-bottom: 24px; }
+    .contact-info h2 span { color: var(--orange); }
+    .contact-card { background: white; border: 1.5px solid var(--border); border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 16px; margin-bottom: 14px; transition: all .2s; }
+    .contact-card:hover { border-color: var(--orange); transform: translateX(4px); }
+    .contact-card .c-icon { width: 50px; height: 50px; border-radius: 13px; background: var(--orange-light); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+    .contact-card h4 { font-family: 'Baloo 2'; font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+    .contact-card p { font-size: 14px; color: var(--gray); }
+    .contact-card a { color: var(--orange); text-decoration: none; font-weight: 600; }
+    .contact-form { background: white; border: 1.5px solid var(--border); border-radius: 20px; padding: 30px; }
+    .contact-form h2 { font-family: 'Baloo 2'; font-size: 24px; font-weight: 800; margin-bottom: 22px; }
+    .contact-form h2 span { color: var(--orange); }
+    .form-field { margin-bottom: 16px; }
+    .form-field label { display: block; font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 7px; }
+    .form-field input, .form-field select, .form-field textarea { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 14px; font-family: 'Hind'; font-size: 14px; color: var(--black); outline: none; transition: border .2s; background: var(--light); }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--orange); background: white; }
+    .form-field textarea { height: 110px; resize: vertical; }
+    .btn-submit { width: 100%; background: var(--orange); color: white; border: none; border-radius: 12px; padding: 14px; font-family: 'Baloo 2'; font-size: 17px; font-weight: 700; cursor: pointer; transition: all .2s; margin-top: 4px; }
+    .btn-submit:hover { background: var(--orange-dark); transform: translateY(-1px); }
+    .wa-contact { background: linear-gradient(135deg, #25D366, #128C7E); border-radius: 16px; padding: 20px; text-align: center; margin-top: 14px; }
+    .wa-contact p { color: white; font-weight: 600; margin-bottom: 12px; }
+    .wa-contact a { background: white; color: #25D366; font-family: 'Baloo 2'; font-size: 15px; font-weight: 800; padding: 11px 26px; border-radius: 25px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all .2s; }
+    .wa-contact a:hover { transform: scale(1.03); }
+    @media(max-width:700px) { .contact-page { grid-template-columns: 1fr; } }
+  </style>
 </head>
-
 <body>
 
-<header>
+  <div class="ticker-wrap"><div class="ticker"><span>📞 Call: +91 96541 71005</span><span>💬 WhatsApp 24/7 Available</span><span>📧 support@nirmanx.in</span><span>📞 Call: +91 96541 71005</span><span>💬 WhatsApp 24/7 Available</span><span>📧 support@nirmanx.in</span></div></div>
 
-<h1>NirmanX</h1>
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="logo">Nirman<span>X</span></a>
+      <div class="nav-links" id="navLinks">
+        <a href="../index.html">🏠 Home</a>
+        <a href="products.html">📦 Products</a>
+        <a href="track.html">🔄 Track Order</a>
+        <a href="contact.html">📞 Contact</a>
+        <a href="login.html">👤 Login</a>
+        <a href="cart.html" class="nav-cta">🛒 Cart</a>
+      </div>
+      <button class="hamburger" onclick="toggleNav()">☰</button>
+    </div>
+  </nav>
 
-</header>
+  <div class="page-hero">
+    <h1>Hamaare Saath <span>Sampark Karo</span></h1>
+    <p>Koi bhi sawaal ho — hum hamesha available hain!</p>
+  </div>
 
+  <div class="contact-page">
+    <div class="contact-info">
+      <h2>Humse <span>Baat Karo</span></h2>
+      <div class="contact-card">
+        <div class="c-icon">📞</div>
+        <div><h4>Phone / Call</h4><p><a href="tel:+919654171005">+91 96541 71005</a></p></div>
+      </div>
+      <div class="contact-card">
+        <div class="c-icon">💬</div>
+        <div><h4>WhatsApp</h4><p><a href="https://wa.me/919654171005" target="_blank">+91 96541 71005</a> (24/7)</p></div>
+      </div>
+      <div class="contact-card">
+        <div class="c-icon">📧</div>
+        <div><h4>Email</h4><p><a href="mailto:support@nirmanx.in">support@nirmanx.in</a></p></div>
+      </div>
+      <div class="contact-card">
+        <div class="c-icon">🕐</div>
+        <div><h4>Working Hours</h4><p>Mon–Sat: 8:00 AM – 8:00 PM<br>Sunday: 9:00 AM – 5:00 PM</p></div>
+      </div>
+      <div class="contact-card">
+        <div class="c-icon">📍</div>
+        <div><h4>Service Areas</h4><p>Delhi • Noida • Greater Noida<br>Gurugram • Ghaziabad</p></div>
+      </div>
+      <div class="wa-contact">
+        <p>⚡ Sabse Fast Response WhatsApp par milega!</p>
+        <a href="https://wa.me/919654171005?text=Namaste! Mujhe NirmanX se help chahiye." target="_blank">💬 WhatsApp Karo Abhi</a>
+      </div>
+    </div>
 
-<section class="contact">
+    <div class="contact-form">
+      <h2>Message <span>Bhejo</span></h2>
+      <div class="form-field"><label>👤 Aapka Naam</label><input type="text" placeholder="Jaise: Rajesh Kumar"/></div>
+      <div class="form-field"><label>📱 Phone Number</label><input type="tel" placeholder="+91 XXXXX XXXXX"/></div>
+      <div class="form-field"><label>📍 Aapka Shehar</label>
+        <select>
+          <option>Delhi</option><option>Noida</option><option>Greater Noida</option><option>Gurugram</option><option>Ghaziabad</option>
+        </select>
+      </div>
+      <div class="form-field"><label>🏗️ Kis Material ki Zaroorat Hai?</label>
+        <select>
+          <option>Cement</option><option>Steel / TMT Sariya</option><option>Bricks / Eent</option><option>Tiles / Farshi</option><option>Sand / Baalu</option><option>Paint</option><option>Kuch Aur</option>
+        </select>
+      </div>
+      <div class="form-field"><label>💬 Aapka Message</label><textarea placeholder="Aapki zaroorat ya sawaal yahan likhein..."></textarea></div>
+      <button class="btn-submit" onclick="submitForm()">📨 Message Bhejo</button>
+    </div>
+  </div>
 
-<h2>Contact Us</h2>
+  <div class="wa-float">
+    <div class="wa-bubble" id="waBubble">💬 <strong>Help chahiye?</strong></div>
+    <a href="https://wa.me/919654171005" target="_blank" class="wa-btn" id="waBtn">💬</a>
+  </div>
 
-<p>Email: support@nirmanx.com</p>
-
-<p>Phone: +91 9654171005</p>
-
-<p>Service Area: Delhi NCR</p>
-
-</section>
-
-
+  <script src="../script.js"></script>
+  <script>
+    function submitForm() {
+      showToast('✅ Message bhej diya! Hum jald hi contact karenge.');
+    }
+  </script>
 </body>
-
 </html>

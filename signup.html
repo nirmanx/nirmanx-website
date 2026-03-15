@@ -1,33 +1,116 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="hi">
 <head>
-
-<title>Signup - nirmanX</title>
-
-<link rel="stylesheet" href="../style.css">
-
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up – NirmanX</title>
+  <link rel="stylesheet" href="../style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .signup-page { min-height: 100vh; background: linear-gradient(135deg, #1A1208, #2D2010, #4A3018); display: flex; align-items: center; justify-content: center; padding: 30px 20px; }
+    .signup-box { background: white; border-radius: 24px; padding: 40px 36px; width: 100%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+    .signup-logo { font-family: 'Baloo 2'; font-size: 32px; font-weight: 800; color: var(--orange); text-align: center; margin-bottom: 4px; }
+    .signup-logo span { color: var(--black); }
+    .signup-sub { text-align: center; color: var(--gray); font-size: 14px; margin-bottom: 26px; }
+    .acc-tabs { display: flex; background: var(--light); border-radius: 12px; padding: 4px; margin-bottom: 22px; }
+    .acc-tab { flex: 1; padding: 10px; border: none; background: transparent; font-family: 'Hind'; font-size: 14px; font-weight: 600; color: var(--gray); border-radius: 10px; cursor: pointer; transition: all .2s; }
+    .acc-tab.active { background: var(--orange); color: white; box-shadow: 0 3px 10px var(--orange-glow); }
+    .form-field { margin-bottom: 14px; }
+    .form-field label { display: block; font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 6px; }
+    .form-field input, .form-field select { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 14px; font-family: 'Hind'; font-size: 14px; outline: none; transition: border .2s; background: var(--light); color: var(--black); }
+    .form-field input:focus, .form-field select:focus { border-color: var(--orange); background: white; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .btn-signup { width: 100%; background: var(--orange); color: white; border: none; border-radius: 12px; padding: 14px; font-family: 'Baloo 2'; font-size: 17px; font-weight: 700; cursor: pointer; transition: all .2s; margin-top: 6px; }
+    .btn-signup:hover { background: var(--orange-dark); transform: translateY(-1px); }
+    .terms { font-size: 12px; color: var(--gray); text-align: center; margin-top: 12px; line-height: 1.6; }
+    .terms a { color: var(--orange); text-decoration: none; font-weight: 600; }
+    .divider { text-align: center; color: var(--gray); font-size: 13px; margin: 16px 0; position: relative; }
+    .divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: 42%; height: 1px; background: var(--border); }
+    .divider::before { left: 0; } .divider::after { right: 0; }
+    .btn-wa-reg { width: 100%; background: var(--whatsapp); color: white; border: none; border-radius: 12px; padding: 13px; font-family: 'Baloo 2'; font-size: 15px; font-weight: 700; cursor: pointer; transition: all .2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-wa-reg:hover { background: #1EB858; }
+    .already-login { text-align: center; margin-top: 18px; font-size: 13px; color: var(--gray); }
+    .already-login a { color: var(--orange); text-decoration: none; font-weight: 600; }
+    .seller-extra { display: none; }
+    .seller-extra.show { display: block; }
+    @media(max-width:480px) { .signup-box { padding: 28px 20px; } .form-row { grid-template-columns: 1fr; } }
+  </style>
 </head>
-
 <body>
+  <div class="signup-page">
+    <div class="signup-box">
+      <div class="signup-logo">Nirman<span>X</span></div>
+      <div class="signup-sub">Naya account banao — bilkul free!</div>
 
-<a href="../index.html">← Back to Home</a>
+      <!-- ACCOUNT TYPE TABS -->
+      <div class="acc-tabs">
+        <button class="acc-tab active" onclick="switchType('customer')">🏠 Customer</button>
+        <button class="acc-tab" onclick="switchType('contractor')">👷 Contractor</button>
+        <button class="acc-tab" onclick="switchType('seller')">🏭 Seller</button>
+      </div>
 
-<h1>Create Account</h1>
+      <!-- FORM -->
+      <div class="form-row">
+        <div class="form-field"><label>👤 Pehla Naam</label><input type="text" id="firstName" placeholder="Pehla naam"/></div>
+        <div class="form-field"><label>👤 Aakhri Naam</label><input type="text" id="lastName" placeholder="Aakhri naam"/></div>
+      </div>
+      <div class="form-field"><label>📱 WhatsApp Number</label><input type="tel" id="phone" placeholder="+91 XXXXX XXXXX"/></div>
+      <div class="form-field"><label>📧 Email Address</label><input type="email" id="email" placeholder="email@example.com"/></div>
+      <div class="form-field"><label>📍 Aapka Shehar</label>
+        <select id="city">
+          <option value="">Shehar select karo</option>
+          <option>Delhi</option><option>Noida</option><option>Greater Noida</option><option>Gurugram</option><option>Ghaziabad</option>
+        </select>
+      </div>
 
-<div class="login-box">
+      <!-- SELLER EXTRA FIELDS -->
+      <div class="seller-extra" id="sellerExtra">
+        <div class="form-field"><label>🏭 Company / Dukaan ka Naam</label><input type="text" placeholder="Company naam"/></div>
+        <div class="form-field"><label>🏗️ Aap Kya Bechte Hain?</label>
+          <select>
+            <option>Cement</option><option>Steel / TMT Sariya</option><option>Bricks</option><option>Tiles</option><option>Multiple Materials</option>
+          </select>
+        </div>
+        <div class="form-field"><label>📋 GST Number (Optional)</label><input type="text" placeholder="GST number"/></div>
+      </div>
 
-<input type="text" placeholder="Full Name">
+      <div class="form-field"><label>🔒 Password</label><input type="password" id="password" placeholder="Strong password banayein"/></div>
+      <div class="form-field"><label>🔒 Password Confirm Karo</label><input type="password" id="confirmPass" placeholder="Password dobara daalein"/></div>
 
-<input type="email" placeholder="Email">
+      <button class="btn-signup" onclick="doSignup()">✅ Account Banao — Free!</button>
 
-<input type="password" placeholder="Password">
+      <div class="divider">ya</div>
+      <button class="btn-wa-reg" onclick="waSignup()">💬 WhatsApp se Quick Register</button>
 
-<button>Create Account</button>
+      <p class="terms">Register karke aap hamare <a href="#">Terms of Service</a> aur <a href="#">Privacy Policy</a> se agree karte hain.</p>
+      <div class="already-login">Pehle se account hai? <a href="login.html">Login Karo →</a></div>
+    </div>
+  </div>
 
-</div>
-
+  <script src="../script.js"></script>
+  <script>
+    let accountType = 'customer';
+    function switchType(type) {
+      accountType = type;
+      document.querySelectorAll('.acc-tab').forEach((t, i) => {
+        t.classList.toggle('active', ['customer','contractor','seller'][i] === type);
+      });
+      document.getElementById('sellerExtra').classList.toggle('show', type === 'seller');
+    }
+    function doSignup() {
+      const phone = document.getElementById('phone').value.trim();
+      const pass = document.getElementById('password').value;
+      const confirm = document.getElementById('confirmPass').value;
+      const city = document.getElementById('city').value;
+      if (!phone || !pass || !city) { showToast('⚠️ Saari fields fill karein!'); return; }
+      if (pass !== confirm) { showToast('❌ Passwords match nahi kar rahe!'); return; }
+      if (pass.length < 6) { showToast('⚠️ Password kam se kam 6 characters ka hona chahiye!'); return; }
+      showToast('🎉 Account ban gaya! Welcome to NirmanX 🏗️');
+      setTimeout(() => window.location.href = '../index.html', 2000);
+    }
+    function waSignup() {
+      window.open('https://wa.me/919654171005?text=Namaste! Main NirmanX par naya account banana chahta hoon.', '_blank');
+    }
+  </script>
 </body>
-
 </html>
