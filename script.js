@@ -1,74 +1,29 @@
-// PRODUCT SEARCH
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-function searchProduct(){
+function addToCart(product,price){
 
-let input = document.querySelector("input").value.toLowerCase()
+cart.push({product,price});
 
-let cards = document.querySelectorAll(".product-card")
+localStorage.setItem("cart",JSON.stringify(cart));
 
-cards.forEach(function(card){
-
-let name = card.innerText.toLowerCase()
-
-if(name.includes(input)){
-
-card.style.display="block"
-
-}else{
-
-card.style.display="none"
+alert(product + " added to cart");
 
 }
-
-})
-
-}
-
-
-// CART SYSTEM
-
-let cart = []
-
-function addToCart(name,price){
-
-cart.push({name:name,price:price})
-
-alert(name + " added to cart")
-
-localStorage.setItem("nirmanx_cart",JSON.stringify(cart))
-
-}
-
-
-// SHOW CART
 
 function loadCart(){
 
-let data = localStorage.getItem("nirmanx_cart")
+let container=document.getElementById("cart-items");
 
-if(data){
+if(!container) return;
 
-cart = JSON.parse(data)
+container.innerHTML="";
 
-}
+cart.forEach(item=>{
 
-let cartBox = document.getElementById("cart-items")
+container.innerHTML+=`<p>${item.product} - ₹${item.price}</p>`;
 
-if(cartBox){
-
-cartBox.innerHTML=""
-
-cart.forEach(function(item){
-
-cartBox.innerHTML += `
-<div>
-<h3>${item.name}</h3>
-<p>₹${item.price}</p>
-</div>
-`
-
-})
+});
 
 }
 
-}
+window.onload=loadCart;

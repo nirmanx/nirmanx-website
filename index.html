@@ -1,26 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
 
-<title>NirmanX - Construction Materials Marketplace</title>
+<head>
+
+<title>NirmanX - Construction Material Marketplace</title>
 
 <link rel="stylesheet" href="style.css">
+
+<script src="script.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 
 <body>
 
 <header>
 
-<h1>NirmanX</h1>
+<h1 class="logo">Nirman<span>X</span></h1>
 
 <nav>
+
 <a href="index.html">Home</a>
-<a href="products.html">Products</a>
+
+<a href="pages/products.html">Products</a>
+
+<a href="pages/cart.html">Cart</a>
+
+<a href="pages/login.html">Customer Login</a>
+
 <a href="pages/seller.html">Become Seller</a>
+
 <a href="pages/track.html">Track Order</a>
-<a href="pages/contact.html">Contact</a>
+
 </nav>
 
 </header>
@@ -28,127 +40,100 @@
 
 <section class="hero">
 
-<h2>India's Construction Marketplace</h2>
+<h2>India's Construction Material Marketplace</h2>
 
-<p>Buy building materials directly from companies, dealers and manufacturers.</p>
+<p>Order Cement, Steel, Bricks & Tiles Online</p>
+
+
+<!-- LOCATION SELECTOR -->
+
+<select>
+
+<option>Select Location</option>
+
+<option>Delhi</option>
+
+<option>Noida</option>
+
+<option>Greater Noida</option>
+
+<option>Gurugram</option>
+
+<option>Ghaziabad</option>
+
+</select>
+
+
+<br><br>
+
+
+<!-- SEARCH SYSTEM -->
+
+<input type="text" placeholder="Search cement, steel, bricks, tiles">
+
+<button>Search</button>
+
+
+<br><br>
+
+<a href="pages/products.html">
 
 <button>Explore Products</button>
-
-</section>
-
-
-<section class="categories">
-
-<h2>Product Categories</h2>
-
-<div class="category-grid">
-
-<div class="card">
-<h3>Cement</h3>
-</div>
-
-<div class="card">
-<h3>Steel</h3>
-</div>
-
-<div class="card">
-<h3>Bricks</h3>
-</div>
-
-<div class="card">
-<h3>Sand</h3>
-</div>
-
-<div class="card">
-<h3>Tiles</h3>
-</div>
-
-</div>
-
-</section>
-
-
-<section class="products">
-
-<h2>Featured Products</h2>
-
-<div class="product-grid">
-
-<div class="product-card">
-
-<img src="images/cement.jpg" width="150">
-
-<h3>UltraTech Cement</h3>
-
-<p>₹380 / bag</p>
-
-<button>Order Now</button>
-
-</div>
-
-
-<div class="product-card">
-
-<img src="images/steel.jpg" width="150">
-
-<h3>TMT Steel Bar</h3>
-
-<p>₹60 / kg</p>
-
-<button>Order Now</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section class="seller">
-
-<h2>Become a Seller</h2>
-
-<p>Companies, dealers and manufacturers can sell products on NirmanX.</p>
-
-<a href="pages/seller.html">
-
-<button>Register as Seller</button>
 
 </a>
 
 </section>
 
 
-<section class="tracking">
 
-<h2>Track Your Order</h2>
+<section class="categories">
 
-<input type="text" placeholder="Enter Order ID">
+<h2>Shop by Category</h2>
 
-<button>Track</button>
+<div class="category-grid">
+
+<a href="pages/cement.html" class="card">Cement</a>
+
+<a href="pages/steel.html" class="card">Steel</a>
+
+<a href="pages/bricks.html" class="card">Bricks</a>
+
+<a href="pages/tiles.html" class="card">Tiles</a>
+
+</div>
+
+</section>
+
+
+
+<section class="seller">
+
+<h2>Sell Your Construction Materials</h2>
+
+<p>Manufacturers, Dealers & Suppliers can sell directly</p>
+
+<a href="pages/seller.html">
+
+<button>Become a Seller</button>
+
+</a>
 
 </section>
 
-
-<section class="locations">
-
-<h2>Service Locations</h2>
-
-<p>
-
-Delhi | Noida | Greater Noida | Gurugram | Ghaziabad
-
-</p>
-
-</section>
 
 
 <footer>
 
-<p>© 2026 NirmanX. All rights reserved.</p>
+<h3>NirmanX</h3>
+
+<p>India's Smart Construction Marketplace</p>
+
+<p>Service Areas: Delhi | Noida | Greater Noida | Gurugram | Ghaziabad</p>
+
+<p>© 2026 NirmanX All Rights Reserved</p>
 
 </footer>
 
-
 </body>
+
 </html>
