@@ -1,31 +1,673 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
-<title>Seller Dashboard</title>
-<link rel="stylesheet" href="../style.css">
-</head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seller Dashboard – NirmanX</title>
+  <link rel="stylesheet" href="../style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { background: #F0EDE8; }
 
+    /* ── LAYOUT ── */
+    .dash-layout { display: flex; min-height: 100vh; }
+
+    /* ── SIDEBAR ── */
+    .sidebar { width: 240px; background: var(--black); color: white; padding: 24px 0; position: fixed; height: 100vh; overflow-y: auto; z-index: 50; }
+    .sb-logo { font-family:'Baloo 2'; font-size:22px; font-weight:800; color:var(--orange); padding:0 20px 18px; border-bottom:1px solid rgba(255,255,255,.08); margin-bottom:14px; }
+    .sb-logo span { color:white; }
+    .sb-logo p { font-size:11px; color:#C4B5A5; font-family:'Hind'; margin-top:3px; }
+    .sb-seller { display:flex; align-items:center; gap:10px; padding:12px 20px; margin-bottom:8px; background:rgba(244,111,26,.1); border-left:3px solid var(--orange); }
+    .sb-avatar { width:38px; height:38px; border-radius:50%; background:var(--orange); display:flex; align-items:center; justify-content:center; font-family:'Baloo 2'; font-size:16px; font-weight:800; color:white; flex-shrink:0; }
+    .sb-seller-name { font-size:13px; font-weight:700; color:white; }
+    .sb-seller-type { font-size:11px; color:#C4B5A5; }
+    .nav-section { font-size:11px; color:rgba(255,255,255,.3); padding:14px 20px 5px; text-transform:uppercase; letter-spacing:1px; }
+    .nav-item { display:flex; align-items:center; gap:11px; padding:11px 20px; color:#C4B5A5; font-size:14px; font-weight:600; cursor:pointer; transition:all .2s; border-left:3px solid transparent; text-decoration:none; }
+    .nav-item:hover,.nav-item.active { background:rgba(244,111,26,.12); color:var(--orange); border-left-color:var(--orange); }
+    .nav-item .ni { font-size:17px; width:20px; text-align:center; }
+    .nav-badge { background:var(--orange); color:white; font-size:10px; font-weight:800; padding:2px 7px; border-radius:20px; margin-left:auto; }
+
+    /* ── MAIN ── */
+    .dash-main { margin-left:240px; flex:1; padding:26px; }
+
+    /* ── TOP BAR ── */
+    .dash-topbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
+    .dash-topbar h1 { font-family:'Baloo 2'; font-size:24px; font-weight:800; color:var(--black); }
+    .dash-topbar h1 span { color:var(--orange); }
+    .topbar-btns { display:flex; gap:10px; flex-wrap:wrap; }
+    .tb-btn { background:var(--orange); color:white; border:none; border-radius:25px; padding:9px 20px; font-family:'Baloo 2'; font-size:14px; font-weight:700; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:7px; text-decoration:none; }
+    .tb-btn:hover { background:var(--orange-dark); transform:translateY(-1px); }
+    .tb-btn.outline { background:white; color:var(--orange); border:2px solid var(--orange); }
+    .tb-btn.outline:hover { background:var(--orange-light); }
+
+    /* ── STATS ── */
+    .stats-row { display:grid; grid-template-columns:repeat(auto-fill, minmax(170px,1fr)); gap:16px; margin-bottom:24px; }
+    .s-card { background:white; border-radius:16px; padding:20px; border-left:4px solid var(--orange); box-shadow:0 2px 10px rgba(0,0,0,.05); transition:all .2s; }
+    .s-card:hover { transform:translateY(-3px); box-shadow:0 8px 22px rgba(0,0,0,.1); }
+    .s-card.blue { border-left-color:#2D7DD2; }
+    .s-card.green { border-left-color:#27AE60; }
+    .s-card.purple { border-left-color:#8E44AD; }
+    .s-icon { font-size:26px; margin-bottom:8px; }
+    .s-num { font-family:'Baloo 2'; font-size:28px; font-weight:800; color:var(--black); line-height:1; }
+    .s-lbl { font-size:12px; color:var(--gray); margin-top:4px; }
+    .s-chg { font-size:12px; font-weight:700; margin-top:6px; }
+    .s-chg.up { color:#27AE60; }
+
+    /* ── SECTION HEADER ── */
+    .sec-hdr { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+    .sec-hdr h2 { font-family:'Baloo 2'; font-size:20px; font-weight:800; color:var(--black); }
+    .sec-hdr h2 span { color:var(--orange); }
+
+    /* ── ADD PRODUCT FORM ── */
+    .add-prod-card { background:white; border-radius:20px; padding:28px; box-shadow:0 2px 12px rgba(0,0,0,.06); margin-bottom:24px; }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .form-field { margin-bottom:0; }
+    .form-field.full { grid-column:1/-1; }
+    .form-field label { display:block; font-size:13px; font-weight:600; color:var(--dark); margin-bottom:6px; }
+    .form-field input,.form-field select,.form-field textarea {
+      width:100%; border:1.5px solid var(--border); border-radius:10px;
+      padding:11px 13px; font-family:'Hind'; font-size:14px;
+      outline:none; transition:border .2s; background:var(--light); color:var(--black);
+    }
+    .form-field input:focus,.form-field select:focus,.form-field textarea:focus { border-color:var(--orange); background:white; }
+    .form-field textarea { height:80px; resize:vertical; }
+
+    /* ── PHOTO UPLOAD ── */
+    .photo-upload-area {
+      border:2.5px dashed var(--border); border-radius:14px;
+      padding:28px 20px; text-align:center; cursor:pointer;
+      transition:all .3s; background:var(--light); position:relative;
+    }
+    .photo-upload-area:hover,.photo-upload-area.dragover { border-color:var(--orange); background:var(--orange-light); }
+    .photo-upload-area input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+    .upload-icon { font-size:40px; margin-bottom:10px; }
+    .upload-text { font-family:'Baloo 2'; font-size:16px; font-weight:700; color:var(--dark); margin-bottom:4px; }
+    .upload-sub { font-size:13px; color:var(--gray); }
+    .upload-tip { display:inline-block; margin-top:10px; background:var(--orange-light); color:var(--orange); font-size:12px; font-weight:600; padding:4px 12px; border-radius:20px; }
+
+    /* ── PHOTO PREVIEW ── */
+    .photo-previews { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+    .preview-item { position:relative; width:90px; height:90px; border-radius:12px; overflow:hidden; border:2px solid var(--border); }
+    .preview-item img { width:100%; height:100%; object-fit:cover; }
+    .preview-remove { position:absolute; top:4px; right:4px; width:22px; height:22px; border-radius:50%; background:#E74C3C; color:white; border:none; cursor:pointer; font-size:13px; display:flex; align-items:center; justify-content:center; }
+
+    /* ── PRIVACY NOTICE ── */
+    .privacy-notice { background:linear-gradient(135deg, #1A1208, #2D2010); border-radius:14px; padding:18px 20px; margin-bottom:20px; display:flex; gap:14px; align-items:flex-start; }
+    .pn-icon { font-size:28px; flex-shrink:0; }
+    .pn-title { font-family:'Baloo 2'; font-size:16px; font-weight:800; color:var(--orange); margin-bottom:6px; }
+    .pn-text { font-size:13px; color:#C4B5A5; line-height:1.7; }
+    .pn-text strong { color:white; }
+
+    /* ── MY PRODUCTS TABLE ── */
+    .my-prods-card { background:white; border-radius:20px; padding:24px; box-shadow:0 2px 12px rgba(0,0,0,.06); margin-bottom:24px; }
+    .prod-table { width:100%; border-collapse:collapse; font-size:13px; }
+    .prod-table th { background:var(--light); color:var(--gray); padding:10px 12px; text-align:left; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; }
+    .prod-table td { padding:12px; border-bottom:1px solid var(--border); color:var(--dark); vertical-align:middle; }
+    .prod-table tr:last-child td { border-bottom:none; }
+    .prod-table tr:hover td { background:var(--light); }
+    .prod-thumb { width:52px; height:52px; border-radius:10px; object-fit:cover; background:var(--orange-light); display:flex; align-items:center; justify-content:center; font-size:24px; border:1.5px solid var(--border); }
+    .prod-thumb img { width:100%; height:100%; object-fit:cover; border-radius:10px; }
+    .prod-name-cell strong { display:block; font-size:14px; font-weight:700; }
+    .prod-name-cell span { font-size:12px; color:var(--gray); }
+    .pill { display:inline-flex; align-items:center; font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; }
+    .pill.active { background:#D1FAE5; color:#065F46; }
+    .pill.pending { background:#FEF3C7; color:#92400E; }
+    .pill.inactive { background:#FEE2E2; color:#991B1B; }
+    .hidden-badge { background:var(--dark); color:white; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:6px; }
+    .action-btns { display:flex; gap:6px; }
+    .act-btn { border:none; border-radius:8px; padding:6px 12px; font-size:12px; font-weight:700; cursor:pointer; transition:all .2s; font-family:'Hind'; }
+    .act-edit { background:var(--orange-light); color:var(--orange); }
+    .act-edit:hover { background:var(--orange); color:white; }
+    .act-del { background:#FEE2E2; color:#DC2626; }
+    .act-del:hover { background:#DC2626; color:white; }
+
+    /* ── ORDERS ── */
+    .orders-card { background:white; border-radius:20px; padding:24px; box-shadow:0 2px 12px rgba(0,0,0,.06); margin-bottom:24px; }
+    .order-row { display:flex; gap:14px; align-items:center; padding:14px 0; border-bottom:1px solid var(--border); flex-wrap:wrap; }
+    .order-row:last-child { border-bottom:none; }
+    .order-icon { width:48px; height:48px; background:var(--orange-light); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+    .order-info { flex:1; min-width:160px; }
+    .order-id { font-family:'Baloo 2'; font-weight:700; color:var(--orange); font-size:14px; }
+    .order-prod { font-size:13px; font-weight:600; color:var(--dark); margin-top:2px; }
+    .order-date { font-size:12px; color:var(--gray); margin-top:2px; }
+    .order-amount { font-family:'Baloo 2'; font-size:18px; font-weight:800; color:var(--black); }
+    .order-note { font-size:11px; color:var(--gray); margin-top:2px; }
+    .status-pill { display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:700; padding:4px 12px; border-radius:20px; }
+    .status-pill.delivered { background:#D1FAE5; color:#065F46; }
+    .status-pill.pending { background:#FEF3C7; color:#92400E; }
+    .status-pill.transit { background:#DBEAFE; color:#1E40AF; }
+
+    /* ── EARNINGS ── */
+    .earnings-card { background:linear-gradient(135deg, var(--orange), var(--orange-dark)); border-radius:20px; padding:26px; color:white; margin-bottom:24px; }
+    .earnings-card h3 { font-family:'Baloo 2'; font-size:20px; font-weight:800; margin-bottom:18px; }
+    .earn-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(140px,1fr)); gap:14px; }
+    .earn-item { background:rgba(255,255,255,.15); border-radius:12px; padding:16px; }
+    .earn-item .e-num { font-family:'Baloo 2'; font-size:24px; font-weight:800; }
+    .earn-item .e-lbl { font-size:12px; opacity:.85; margin-top:4px; }
+    .earn-note { font-size:13px; opacity:.85; margin-top:14px; }
+
+    /* ── MOBILE ── */
+    @media(max-width:900px) {
+      .sidebar { display:none; }
+      .dash-main { margin-left:0; padding:18px; }
+      .form-grid { grid-template-columns:1fr; }
+    }
+    @media(max-width:560px) {
+      .stats-row { grid-template-columns:1fr 1fr; }
+      .prod-table thead { display:none; }
+      .prod-table td { display:block; padding:6px 12px; }
+    }
+  </style>
+</head>
 <body>
 
-<h1>Seller Dashboard</h1>
+<div class="dash-layout">
 
-<h2>Add Product</h2>
+  <!-- ══ SIDEBAR ══ -->
+  <div class="sidebar">
+    <div class="sb-logo">Nirman<span>X</span><p>Seller Portal</p></div>
 
-<form>
+    <div class="sb-seller">
+      <div class="sb-avatar" id="sbInitial">SS</div>
+      <div>
+        <div class="sb-seller-name" id="sbName">Sharma Suppliers</div>
+        <div class="sb-seller-type">⭐ Verified Seller</div>
+      </div>
+    </div>
 
-<input type="text" placeholder="Product Name">
+    <div class="nav-section">Menu</div>
+    <a class="nav-item active" href="#dashboard" onclick="showSection('dashboard',this)"><span class="ni">📊</span> Dashboard</a>
+    <a class="nav-item" href="#addProduct" onclick="showSection('addProduct',this)"><span class="ni">➕</span> Product Add Karo</a>
+    <a class="nav-item" href="#myProducts" onclick="showSection('myProducts',this)"><span class="ni">📦</span> Mere Products <span class="nav-badge" id="prodCount">4</span></a>
+    <a class="nav-item" href="#orders" onclick="showSection('orders',this)"><span class="ni">🛒</span> Orders <span class="nav-badge">3</span></a>
+    <a class="nav-item" href="#earnings" onclick="showSection('earnings',this)"><span class="ni">💰</span> Earnings</a>
 
-<input type="text" placeholder="Category">
+    <div class="nav-section">Account</div>
+    <a class="nav-item" href="#profile" onclick="showSection('profile',this)"><span class="ni">👤</span> Mera Profile</a>
+    <a class="nav-item" href="https://wa.me/919654171005?text=Mujhe seller support chahiye" target="_blank"><span class="ni">💬</span> NirmanX Support</a>
+    <a class="nav-item" href="../index.html"><span class="ni">🏠</span> Website Dekho</a>
+    <a class="nav-item" href="login.html" style="color:#E74C3C; margin-top:16px;"><span class="ni">🚪</span> Logout</a>
+  </div>
 
-<input type="text" placeholder="Brand">
+  <!-- ══ MAIN ══ -->
+  <div class="dash-main">
 
-<input type="number" placeholder="Price">
+    <!-- ▸ DASHBOARD SECTION -->
+    <div id="sec-dashboard">
+      <div class="dash-topbar">
+        <div>
+          <h1>Seller <span>Dashboard</span></h1>
+          <p style="font-size:13px;color:var(--gray);margin-top:2px;">Welcome back! Aaj ki report — 15 March 2026</p>
+        </div>
+        <div class="topbar-btns">
+          <a href="#addProduct" onclick="showSection('addProduct', null)" class="tb-btn">➕ Product Add Karo</a>
+          <a href="https://wa.me/919654171005" target="_blank" class="tb-btn outline">💬 Support</a>
+        </div>
+      </div>
 
-<input type="file">
+      <!-- PRIVACY NOTICE -->
+      <div class="privacy-notice">
+        <div class="pn-icon">🔒</div>
+        <div>
+          <div class="pn-title">Aapki Privacy 100% Protected Hai</div>
+          <div class="pn-text">
+            Customer ko sirf <strong>product photo, naam, price aur specs</strong> dikhega.<br>
+            Aapka <strong>business naam, phone number aur contact details completely hidden</strong> rahega.<br>
+            Customer sirf <strong>NirmanX ke through</strong> order karega — aapka commission safe hai! ✅
+          </div>
+        </div>
+      </div>
 
-<button>Add Product</button>
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="s-card"><div class="s-icon">📦</div><div class="s-num">4</div><div class="s-lbl">Active Products</div><div class="s-chg up">↑ 1 nayi aaj</div></div>
+        <div class="s-card green"><div class="s-icon">🛒</div><div class="s-num">28</div><div class="s-lbl">Is Mahine Orders</div><div class="s-chg up">↑ 8% vs pichle mahine</div></div>
+        <div class="s-card blue"><div class="s-icon">💰</div><div class="s-num">₹84K</div><div class="s-lbl">Is Mahine Revenue</div><div class="s-chg up">↑ 12% growth</div></div>
+        <div class="s-card purple"><div class="s-icon">⭐</div><div class="s-num">4.7</div><div class="s-lbl">Average Rating</div><div class="s-chg up">↑ Excellent!</div></div>
+      </div>
 
-</form>
+      <!-- RECENT ORDERS PREVIEW -->
+      <div class="orders-card">
+        <div class="sec-hdr"><h2>Recent <span>Orders</span></h2><a href="#orders" onclick="showSection('orders',null)" style="color:var(--orange);font-size:13px;font-weight:600;text-decoration:none;">Sab Dekho →</a></div>
+        <div class="order-row">
+          <div class="order-icon">🏗️</div>
+          <div class="order-info"><div class="order-id">#NX-1248</div><div class="order-prod">UltraTech Cement × 50 bags</div><div class="order-date">Aaj, 10:30 AM — Noida</div></div>
+          <div><div class="order-amount">₹19,000</div><div class="order-note">Commission: ₹950</div></div>
+          <span class="status-pill transit">🚚 Delivery mein</span>
+        </div>
+        <div class="order-row">
+          <div class="order-icon">⚙️</div>
+          <div class="order-info"><div class="order-id">#NX-1245</div><div class="order-prod">TATA TMT Sariya × 200 kg</div><div class="order-date">Kal, 2:15 PM — Delhi</div></div>
+          <div><div class="order-amount">₹13,000</div><div class="order-note">Commission: ₹650</div></div>
+          <span class="status-pill delivered">✅ Delivered</span>
+        </div>
+        <div class="order-row">
+          <div class="order-icon">🧱</div>
+          <div class="order-info"><div class="order-id">#NX-1242</div><div class="order-prod">Red Bricks × 2000 pieces</div><div class="order-date">14 March — Ghaziabad</div></div>
+          <div><div class="order-amount">₹16,000</div><div class="order-note">Commission: ₹800</div></div>
+          <span class="status-pill delivered">✅ Delivered</span>
+        </div>
+      </div>
+    </div>
 
+    <!-- ▸ ADD PRODUCT SECTION -->
+    <div id="sec-addProduct" style="display:none;">
+      <div class="dash-topbar">
+        <h1>➕ Naya Product <span>Add Karo</span></h1>
+      </div>
+
+      <div class="privacy-notice">
+        <div class="pn-icon">👁️</div>
+        <div>
+          <div class="pn-title">Customer ko Kya Dikhega?</div>
+          <div class="pn-text">
+            ✅ <strong>Dikhega:</strong> Product photo, product naam, price, specs, rating<br>
+            ❌ <strong>Nahi Dikhega:</strong> Aapka naam, phone, address, company name<br>
+            Customer order sirf <strong>NirmanX ke zariye</strong> karega.
+          </div>
+        </div>
+      </div>
+
+      <div class="add-prod-card">
+        <div class="sec-hdr"><h2>Product <span>Details</span></h2></div>
+
+        <!-- PHOTO UPLOAD — SABSE PEHLE -->
+        <div style="margin-bottom:20px;">
+          <label style="display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:8px;">📸 Product Ki Photo Upload Karo <span style="color:#E74C3C">*</span> <span style="font-size:12px;color:var(--gray);font-weight:400;">(Max 4 photos, JPG/PNG, Max 5MB each)</span></label>
+          <div class="photo-upload-area" id="uploadArea" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFiles(event)">
+            <input type="file" id="photoInput" multiple accept="image/*" onchange="handlePhotos(event)"/>
+            <div class="upload-icon">📷</div>
+            <div class="upload-text">Photos Click karke ya Drag & Drop karo</div>
+            <div class="upload-sub">Ek acchi photo se zyada customers attract hote hain!</div>
+            <div class="upload-tip">💡 Tip: Cement bag ki seedhi clear photo lo — background saaf ho</div>
+          </div>
+          <div class="photo-previews" id="photoPreviews"></div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-field">
+            <label>🏗️ Category <span style="color:#E74C3C">*</span></label>
+            <select id="prodCat" onchange="updateSubcat()">
+              <option value="">Category chuno</option>
+              <option value="cement">🏗️ Cement</option>
+              <option value="steel">⚙️ Steel / TMT Sariya</option>
+              <option value="bricks">🧱 Bricks / Eent</option>
+              <option value="tiles">🪟 Tiles / Farshi</option>
+              <option value="sand">🪣 Sand / Baalu</option>
+              <option value="paint">🎨 Paint</option>
+              <option value="hardware">🔩 Hardware</option>
+              <option value="plumbing">🪛 Plumbing</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>📦 Product Type <span style="color:#E74C3C">*</span></label>
+            <select id="prodSubcat">
+              <option value="">Pehle category chuno</option>
+            </select>
+          </div>
+          <div class="form-field full">
+            <label>📝 Product Ka Naam <span style="color:#E74C3C">*</span></label>
+            <input type="text" id="prodName" placeholder="Jaise: UltraTech PPC Cement 50kg"/>
+          </div>
+          <div class="form-field">
+            <label>💰 Price (₹) <span style="color:#E74C3C">*</span></label>
+            <input type="number" id="prodPrice" placeholder="Jaise: 380"/>
+          </div>
+          <div class="form-field">
+            <label>📏 Unit</label>
+            <select id="prodUnit">
+              <option>Per Bag</option><option>Per Kg</option><option>Per Piece</option><option>Per Sqft</option><option>Per CFT</option><option>Per Ton</option><option>Per Bucket</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>📊 Stock Available</label>
+            <input type="number" id="prodStock" placeholder="Jaise: 500"/>
+          </div>
+          <div class="form-field">
+            <label>🏷️ Brand Ka Naam</label>
+            <input type="text" id="prodBrand" placeholder="Jaise: UltraTech, TATA"/>
+          </div>
+          <div class="form-field">
+            <label>🔖 Discount % (Optional)</label>
+            <input type="number" id="prodDiscount" placeholder="Jaise: 10 (for 10% off)"/>
+          </div>
+          <div class="form-field">
+            <label>📦 Minimum Order Quantity</label>
+            <input type="text" id="prodMinOrder" placeholder="Jaise: 10 bags"/>
+          </div>
+          <div class="form-field">
+            <label>🚚 Delivery Time</label>
+            <select id="prodDelivery">
+              <option>Same Day</option>
+              <option>24 Ghante</option>
+              <option>2-3 Din</option>
+              <option>3-5 Din</option>
+            </select>
+          </div>
+          <div class="form-field full">
+            <label>📋 Product Specs / Details</label>
+            <input type="text" id="prodSpecs" placeholder="Jaise: 50 Kg, OPC 53 Grade, ISI Certified"/>
+          </div>
+          <div class="form-field full">
+            <label>📝 Product Description (Optional)</label>
+            <textarea id="prodDesc" placeholder="Product ke baare mein kuch aur batao — quality, features, uses..."></textarea>
+          </div>
+
+          <!-- IMPORTANT NOTE -->
+          <div class="form-field full">
+            <div style="background:#FEF3C7;border:1.5px solid #F59E0B;border-radius:12px;padding:14px 16px;">
+              <p style="font-size:13px;font-weight:700;color:#92400E;margin-bottom:6px;">⚠️ Zaroori Baat — Please Dhyan Se Padho:</p>
+              <p style="font-size:13px;color:#92400E;line-height:1.7;">
+                • Product description ya specs mein <strong>apna naam, phone number ya address mat likhna</strong><br>
+                • Agar aapne contact details likhe to aapka product <strong>reject ho jayega</strong><br>
+                • Customer sirf NirmanX ke through contact karega — aapka business safe rahega ✅
+              </p>
+            </div>
+          </div>
+
+          <div class="form-field full" style="display:flex;gap:12px;flex-wrap:wrap;">
+            <button class="tb-btn" style="flex:1;justify-content:center;" onclick="submitProduct()">✅ Product Publish Karo</button>
+            <button class="tb-btn outline" style="justify-content:center;" onclick="saveDraft()">💾 Draft Save Karo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ▸ MY PRODUCTS SECTION -->
+    <div id="sec-myProducts" style="display:none;">
+      <div class="dash-topbar">
+        <h1>Mere <span>Products</span></h1>
+        <a href="#addProduct" onclick="showSection('addProduct',null)" class="tb-btn">➕ Naya Product</a>
+      </div>
+
+      <div class="my-prods-card">
+        <table class="prod-table">
+          <thead>
+            <tr>
+              <th>Photo</th>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Sales</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="myProdTable">
+
+            <tr>
+              <td><div class="prod-thumb">🏗️</div></td>
+              <td>
+                <div class="prod-name-cell">
+                  <strong>UltraTech PPC Cement</strong>
+                  <span>50 Kg • OPC 53 Grade</span>
+                </div>
+                <span class="hidden-badge">🔒 Naam Hidden</span>
+              </td>
+              <td><strong style="color:var(--orange);font-family:'Baloo 2';font-size:15px;">₹380</strong><br><span style="font-size:11px;color:var(--gray);">/bag</span></td>
+              <td>248 bags</td>
+              <td>50 sold</td>
+              <td><span class="pill active">✅ Active</span></td>
+              <td><div class="action-btns"><button class="act-btn act-edit" onclick="editProd('UltraTech PPC Cement')">✏️ Edit</button><button class="act-btn act-del" onclick="deleteProd(this)">🗑️</button></div></td>
+            </tr>
+
+            <tr>
+              <td><div class="prod-thumb">⚙️</div></td>
+              <td>
+                <div class="prod-name-cell">
+                  <strong>TATA TMT Sariya Fe-500D</strong>
+                  <span>8mm / 10mm / 12mm</span>
+                </div>
+                <span class="hidden-badge">🔒 Naam Hidden</span>
+              </td>
+              <td><strong style="color:var(--orange);font-family:'Baloo 2';font-size:15px;">₹65</strong><br><span style="font-size:11px;color:var(--gray);">/kg</span></td>
+              <td>2,400 kg</td>
+              <td>820 kg sold</td>
+              <td><span class="pill active">✅ Active</span></td>
+              <td><div class="action-btns"><button class="act-btn act-edit" onclick="editProd('TATA TMT Sariya')">✏️ Edit</button><button class="act-btn act-del" onclick="deleteProd(this)">🗑️</button></div></td>
+            </tr>
+
+            <tr>
+              <td><div class="prod-thumb">🧱</div></td>
+              <td>
+                <div class="prod-name-cell">
+                  <strong>Red Bricks First Class</strong>
+                  <span>9×4×3 inch • ISI</span>
+                </div>
+                <span class="hidden-badge">🔒 Naam Hidden</span>
+              </td>
+              <td><strong style="color:var(--orange);font-family:'Baloo 2';font-size:15px;">₹8</strong><br><span style="font-size:11px;color:var(--gray);">/piece</span></td>
+              <td>45,000 pcs</td>
+              <td>12,000 sold</td>
+              <td><span class="pill active">✅ Active</span></td>
+              <td><div class="action-btns"><button class="act-btn act-edit" onclick="editProd('Red Bricks')">✏️ Edit</button><button class="act-btn act-del" onclick="deleteProd(this)">🗑️</button></div></td>
+            </tr>
+
+            <tr>
+              <td><div class="prod-thumb">🪟</div></td>
+              <td>
+                <div class="prod-name-cell">
+                  <strong>Kajaria Vitrified Tiles</strong>
+                  <span>600×600 mm • Glossy</span>
+                </div>
+                <span class="hidden-badge">🔒 Naam Hidden</span>
+              </td>
+              <td><strong style="color:var(--orange);font-family:'Baloo 2';font-size:15px;">₹45</strong><br><span style="font-size:11px;color:var(--gray);">/sqft</span></td>
+              <td>800 sqft</td>
+              <td>340 sqft sold</td>
+              <td><span class="pill pending">⏳ Review Mein</span></td>
+              <td><div class="action-btns"><button class="act-btn act-edit" onclick="editProd('Kajaria Tiles')">✏️ Edit</button><button class="act-btn act-del" onclick="deleteProd(this)">🗑️</button></div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ▸ ORDERS SECTION -->
+    <div id="sec-orders" style="display:none;">
+      <div class="dash-topbar"><h1>Mere <span>Orders</span></h1></div>
+
+      <div class="orders-card">
+        <div class="sec-hdr"><h2>Sabhi <span>Orders</span></h2></div>
+
+        <div class="order-row">
+          <div class="order-icon">🏗️</div>
+          <div class="order-info"><div class="order-id">#NX-1248</div><div class="order-prod">UltraTech Cement × 50 bags</div><div class="order-date">15 March 2026 • Noida Sector 62</div></div>
+          <div><div class="order-amount">₹19,000</div><div class="order-note" style="color:var(--green)">Aapka: ₹18,050 (Commission: ₹950)</div></div>
+          <span class="status-pill transit">🚚 Transit</span>
+        </div>
+
+        <div class="order-row">
+          <div class="order-icon">⚙️</div>
+          <div class="order-info"><div class="order-id">#NX-1245</div><div class="order-prod">TATA TMT Sariya × 200 kg</div><div class="order-date">14 March 2026 • Delhi Rohini</div></div>
+          <div><div class="order-amount">₹13,000</div><div class="order-note" style="color:var(--green)">Aapka: ₹12,350 (Commission: ₹650)</div></div>
+          <span class="status-pill delivered">✅ Delivered</span>
+        </div>
+
+        <div class="order-row">
+          <div class="order-icon">🧱</div>
+          <div class="order-info"><div class="order-id">#NX-1242</div><div class="order-prod">Red Bricks × 2000 pieces</div><div class="order-date">13 March 2026 • Ghaziabad</div></div>
+          <div><div class="order-amount">₹16,000</div><div class="order-note" style="color:var(--green)">Aapka: ₹15,200 (Commission: ₹800)</div></div>
+          <span class="status-pill delivered">✅ Delivered</span>
+        </div>
+
+        <div style="background:var(--orange-light);border-radius:12px;padding:14px 16px;margin-top:16px;font-size:13px;color:var(--dark);">
+          <strong>📌 Note:</strong> Customer ka naam, phone aur address aapko tab milega jab NirmanX aapko delivery ke liye confirm karega. Direct contact allowed nahi hai — isse aapka aur customer dono ka data safe rahega. 🔒
+        </div>
+      </div>
+    </div>
+
+    <!-- ▸ EARNINGS SECTION -->
+    <div id="sec-earnings" style="display:none;">
+      <div class="dash-topbar"><h1>Meri <span>Earnings</span></h1></div>
+
+      <div class="earnings-card">
+        <h3>💰 Is Mahine ki Earnings — March 2026</h3>
+        <div class="earn-grid">
+          <div class="earn-item"><div class="e-num">₹84,000</div><div class="e-lbl">Gross Revenue</div></div>
+          <div class="earn-item"><div class="e-num">₹4,200</div><div class="e-lbl">NirmanX Commission (5%)</div></div>
+          <div class="earn-item"><div class="e-num">₹79,800</div><div class="e-lbl">Aapki Net Earning</div></div>
+          <div class="earn-item"><div class="e-num">28</div><div class="e-lbl">Total Orders</div></div>
+        </div>
+        <div class="earn-note">💳 Payment har 7 din mein aapke registered bank account mein transfer hoti hai.</div>
+      </div>
+
+      <div class="my-prods-card">
+        <div class="sec-hdr"><h2>Month-wise <span>Earnings</span></h2></div>
+        <table class="prod-table">
+          <thead><tr><th>Mahina</th><th>Orders</th><th>Revenue</th><th>Commission</th><th>Net Earning</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><strong>March 2026</strong></td><td>28</td><td>₹84,000</td><td>₹4,200</td><td style="color:var(--orange);font-weight:700;">₹79,800</td><td><span class="pill pending">⏳ Processing</span></td></tr>
+            <tr><td><strong>Feb 2026</strong></td><td>24</td><td>₹72,000</td><td>₹3,600</td><td style="color:var(--orange);font-weight:700;">₹68,400</td><td><span class="pill active">✅ Paid</span></td></tr>
+            <tr><td><strong>Jan 2026</strong></td><td>19</td><td>₹58,000</td><td>₹2,900</td><td style="color:var(--orange);font-weight:700;">₹55,100</td><td><span class="pill active">✅ Paid</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ▸ PROFILE SECTION -->
+    <div id="sec-profile" style="display:none;">
+      <div class="dash-topbar"><h1>Mera <span>Profile</span></h1></div>
+
+      <div class="add-prod-card">
+        <div class="sec-hdr"><h2>Business <span>Details</span></h2></div>
+
+        <div class="privacy-notice" style="margin-bottom:20px;">
+          <div class="pn-icon">🔒</div>
+          <div>
+            <div class="pn-title">Ye Details Sirf NirmanX Dekhega</div>
+            <div class="pn-text">Customer ko aapka naam, number ya address kabhi nahi dikhega. Ye information sirf verification ke liye hai.</div>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-field"><label>🏭 Business Naam</label><input type="text" value="Sharma Suppliers Pvt Ltd"/></div>
+          <div class="form-field"><label>👤 Owner Naam</label><input type="text" value="Suresh Sharma"/></div>
+          <div class="form-field"><label>📱 WhatsApp (NirmanX se contact)</label><input type="tel" value="+91 96541 71005"/></div>
+          <div class="form-field"><label>📧 Email</label><input type="email" value="suresh@sharma-suppliers.com"/></div>
+          <div class="form-field"><label>📍 Shehar</label><select><option selected>Noida</option><option>Delhi</option><option>Greater Noida</option><option>Gurugram</option><option>Ghaziabad</option></select></div>
+          <div class="form-field"><label>🏦 Bank Account (Payment ke liye)</label><input type="text" placeholder="Account number"/></div>
+          <div class="form-field"><label>🏦 IFSC Code</label><input type="text" placeholder="IFSC code"/></div>
+          <div class="form-field"><label>📋 GST Number</label><input type="text" placeholder="Optional"/></div>
+          <div class="form-field full">
+            <button class="tb-btn" onclick="showToast('✅ Profile update ho gaya!')">💾 Profile Save Karo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end dash-main -->
+</div><!-- end dash-layout -->
+
+<script src="../script.js"></script>
+<script>
+  // ── SECTION SWITCHER ──
+  function showSection(id, btn) {
+    const sections = ['dashboard','addProduct','myProducts','orders','earnings','profile'];
+    sections.forEach(s => {
+      const el = document.getElementById('sec-' + s);
+      if (el) el.style.display = (s === id) ? 'block' : 'none';
+    });
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    window.scrollTo(0, 0);
+    return false;
+  }
+
+  // ── SUBCATEGORY MAP ──
+  const subcats = {
+    cement: ['PPC Cement','OPC 43 Grade','OPC 53 Grade','White Cement','Rapid Hardening'],
+    steel:  ['TMT Fe-500D','TMT Fe-550D','Structural Steel','MS Plates','Angle Iron'],
+    bricks: ['Red Bricks First Class','Red Bricks Second Class','AAC Block 150mm','AAC Block 100mm','Fly Ash Brick','Concrete Block'],
+    tiles:  ['Floor Tiles Vitrified','Wall Tiles','Bathroom Tiles','Kitchen Tiles','Outdoor Tiles','Mosaic Tiles'],
+    sand:   ['River Sand (Fine)','M-Sand','Coarse Sand','Gitti (Aggregate)'],
+    paint:  ['Interior Emulsion','Exterior Paint','Primer','Putty','Distemper'],
+    hardware: ['Nails & Screws','Nuts & Bolts','Door Hinges','Locks','Wire Mesh'],
+    plumbing: ['PVC Pipes','CPVC Pipes','Fittings','Valves','Taps & Fixtures']
+  };
+
+  function updateSubcat() {
+    const cat = document.getElementById('prodCat').value;
+    const sub = document.getElementById('prodSubcat');
+    sub.innerHTML = '<option value="">Type chuno</option>';
+    if (subcats[cat]) {
+      subcats[cat].forEach(s => {
+        const o = document.createElement('option');
+        o.value = s; o.textContent = s;
+        sub.appendChild(o);
+      });
+    }
+  }
+
+  // ── PHOTO UPLOAD ──
+  let uploadedPhotos = [];
+
+  function handlePhotos(event) {
+    const files = Array.from(event.target.files);
+    processFiles(files);
+  }
+
+  function dragOver(e) { e.preventDefault(); document.getElementById('uploadArea').classList.add('dragover'); }
+  function dragLeave(e) { document.getElementById('uploadArea').classList.remove('dragover'); }
+  function dropFiles(e) {
+    e.preventDefault();
+    document.getElementById('uploadArea').classList.remove('dragover');
+    processFiles(Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/')));
+  }
+
+  function processFiles(files) {
+    if (uploadedPhotos.length + files.length > 4) {
+      showToast('⚠️ Maximum 4 photos allowed!'); return;
+    }
+    files.forEach(file => {
+      if (file.size > 5 * 1024 * 1024) { showToast('⚠️ ' + file.name + ' — 5MB se badi hai!'); return; }
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        uploadedPhotos.push(e.target.result);
+        renderPreviews();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function renderPreviews() {
+    const container = document.getElementById('photoPreviews');
+    container.innerHTML = '';
+    uploadedPhotos.forEach((src, i) => {
+      const div = document.createElement('div');
+      div.className = 'preview-item';
+      div.innerHTML = `<img src="${src}" alt="Photo ${i+1}"/><button class="preview-remove" onclick="removePhoto(${i})">×</button>`;
+      container.appendChild(div);
+    });
+  }
+
+  function removePhoto(i) {
+    uploadedPhotos.splice(i, 1);
+    renderPreviews();
+  }
+
+  // ── SUBMIT PRODUCT ──
+  function submitProduct() {
+    const cat = document.getElementById('prodCat').value;
+    const name = document.getElementById('prodName').value.trim();
+    const price = document.getElementById('prodPrice').value;
+    if (!cat) { showToast('⚠️ Category chuno!'); return; }
+    if (!name) { showToast('⚠️ Product naam daalein!'); return; }
+    if (!price) { showToast('⚠️ Price daalein!'); return; }
+    if (uploadedPhotos.length === 0) { showToast('⚠️ Kam se kam 1 photo zaroori hai!'); return; }
+    showToast('🎉 Product publish ho gaya! NirmanX review karega — 24 ghante mein live hoga.');
+    setTimeout(() => showSection('myProducts', null), 2000);
+  }
+
+  function saveDraft() { showToast('💾 Draft save ho gaya!'); }
+  function editProd(name) { showToast('✏️ ' + name + ' edit mode mein aaya!'); showSection('addProduct', null); }
+  function deleteProd(btn) {
+    if (confirm('Kya aap sach mein ye product delete karna chahte hain?')) {
+      btn.closest('tr').remove();
+      showToast('🗑️ Product delete ho gaya!');
+    }
+  }
+</script>
 </body>
 </html>

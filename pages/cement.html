@@ -1,72 +1,230 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-
-<title>Cement - nirmanX</title>
-
-<link rel="stylesheet" href="../style.css">
-
+<meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cement – NirmanX</title>
+  <link rel="stylesheet" href="../style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .page-hero { background: linear-gradient(135deg, #1A1208, #2D2010); padding: 44px 24px; text-align: center; }
+    .page-hero h1 { font-family: 'Baloo 2'; font-size: 38px; font-weight: 800; color: white; }
+    .page-hero h1 span { color: var(--orange); }
+    .page-hero p { color: #C4B5A5; margin-top: 8px; font-size: 15px; }
+    .page-hero .hero-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
+    .hero-tag { background: rgba(244,111,26,.2); border: 1px solid rgba(244,111,26,.4); color: #FFA05A; font-size: 13px; font-weight: 600; padding: 5px 14px; border-radius: 20px; }
+    .prod-page { max-width: 1200px; margin: 44px auto; padding: 0 24px; }
+    .brand-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
+    .brand-btn { background: white; border: 2px solid var(--border); color: var(--dark); font-family: 'Hind'; font-size: 14px; font-weight: 600; padding: 9px 20px; border-radius: 25px; cursor: pointer; transition: all .2s; }
+    .brand-btn.active, .brand-btn:hover { background: var(--orange); border-color: var(--orange); color: white; }
+    .info-box { background: var(--orange-light); border: 1.5px solid var(--border); border-radius: 16px; padding: 20px 24px; margin-bottom: 30px; display: flex; gap: 20px; flex-wrap: wrap; }
+    .info-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--dark); }
+    .info-item span { font-size: 22px; }
+    .bulk-cta { background: linear-gradient(135deg, var(--orange), var(--orange-dark)); border-radius: 18px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 36px; }
+    .bulk-cta h3 { font-family: 'Baloo 2'; font-size: 22px; font-weight: 800; color: white; }
+    .bulk-cta p { color: rgba(255,255,255,.85); font-size: 14px; margin-top: 4px; }
+    .bulk-cta a { background: white; color: var(--orange); font-family: 'Baloo 2'; font-size: 15px; font-weight: 800; padding: 12px 26px; border-radius: 25px; text-decoration: none; white-space: nowrap; transition: all .2s; display: inline-flex; align-items: center; gap: 8px; }
+    .bulk-cta a:hover { transform: scale(1.03); }
+  </style>
 </head>
-
 <body>
 
-<h1>Cement Available</h1>
+  <div class="ticker-wrap"><div class="ticker"><span>🏗️ Cement pe 10% Off — Aaj ka offer!</span><span>UltraTech, ACC, Ambuja — Sabhi Brands Available</span><span>Bulk Order 50+ bags par extra 5% discount</span><span>Same Day Delivery Delhi NCR</span><span>🏗️ Cement pe 10% Off — Aaj ka offer!</span><span>UltraTech, ACC, Ambuja — Sabhi Brands Available</span><span>Bulk Order 50+ bags par extra 5% discount</span><span>Same Day Delivery Delhi NCR</span></div></div>
 
-<a href="../index.html">⬅ Back to Home</a>
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="logo">Nirman<span>X</span></a>
+      <div class="nav-links" id="navLinks">
+        <a href="../index.html">🏠 Home</a>
+        <a href="products.html">📦 Products</a>
+        <a href="track.html">🔄 Track Order</a>
+        <a href="contact.html">📞 Contact</a>
+        <a href="login.html">👤 Login</a>
+        <a href="cart.html" class="nav-cta">🛒 Cart</a>
+      </div>
+      <button class="hamburger" onclick="toggleNav()">☰</button>
+    </div>
+  </nav>
 
-<div class="product-grid">
+  <div class="page-hero">
+    <h1>🏗️ <span>Cement</span> — Best Prices</h1>
+    <p>UltraTech, ACC, Ambuja aur sabhi top brands — genuine aur fast delivery</p>
+    <div class="hero-tags">
+      <span class="hero-tag">✅ 100% Genuine</span>
+      <span class="hero-tag">🚚 Same Day Delivery</span>
+      <span class="hero-tag">💰 Best Price Guarantee</span>
+      <span class="hero-tag">📦 Bulk Orders Welcome</span>
+    </div>
+  </div>
 
-<div class="product-card">
+  <div class="prod-page">
 
-<img src="../images/cement.jpg">
+    <!-- INFO BAR -->
+    <div class="info-box">
+      <div class="info-item"><span>🚚</span> Same Day Delivery available</div>
+      <div class="info-item"><span>💰</span> Minimum order: 10 bags</div>
+      <div class="info-item"><span>📦</span> Bulk 50+ bags → Extra 5% off</div>
+      <div class="info-item"><span>✅</span> ISI Certified products only</div>
+    </div>
 
-<h3>UltraTech Cement</h3>
+    <!-- BRAND FILTER -->
+    <div class="brand-bar">
+      <button class="brand-btn active" onclick="filterBrand('all', this)">🏪 Sab Brands</button>
+      <button class="brand-btn" onclick="filterBrand('ultratech', this)">UltraTech</button>
+      <button class="brand-btn" onclick="filterBrand('acc', this)">ACC</button>
+      <button class="brand-btn" onclick="filterBrand('ambuja', this)">Ambuja</button>
+      <button class="brand-btn" onclick="filterBrand('shree', this)">Shree Cement</button>
+      <button class="brand-btn" onclick="filterBrand('jk', this)">JK Cement</button>
+    </div>
 
-<p>Price: ₹390 / bag</p>
+    <!-- PRODUCT GRID -->
+    <div class="prod-grid" id="cementGrid">
 
-<p>Seller: Gupta Traders</p>
+      <div class="prod-card" data-brand="ultratech">
+        <div class="prod-img">🏗️<span class="badge-best">BESTSELLER</span><span class="badge-sale">-10%</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">UltraTech</div>
+          <div class="prod-name">PPC Cement Premium</div>
+          <div class="prod-specs">50 Kg • OPC 53 Grade • ISI Certified</div>
+          <div class="prod-rating"><span class="stars">★★★★★</span> 4.9 (1.2k reviews)</div>
+          <div class="prod-price"><span class="price-now">₹380</span><span class="price-old">₹420</span><span class="price-unit">/bag</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('UltraTech PPC Cement', 380)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Namaste! Mujhe UltraTech PPC Cement chahiye. Price aur availability batayein." target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
 
-<p>Delivery: Delhi NCR</p>
+      <div class="prod-card" data-brand="ultratech">
+        <div class="prod-img">🏗️<span class="badge-best">TOP</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">UltraTech</div>
+          <div class="prod-name">OPC 53 Grade Cement</div>
+          <div class="prod-specs">50 Kg • High Strength</div>
+          <div class="prod-rating"><span class="stars">★★★★★</span> 4.8 (890)</div>
+          <div class="prod-price"><span class="price-now">₹390</span><span class="price-unit">/bag</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('UltraTech OPC 53', 390)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe UltraTech OPC 53 Cement chahiye." target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
 
-<button>Add to Cart</button>
+      <div class="prod-card" data-brand="acc">
+        <div class="prod-img">🏗️<span class="badge-sale">-8%</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">ACC</div>
+          <div class="prod-name">Gold Cement PPC</div>
+          <div class="prod-specs">50 Kg • Premium Quality</div>
+          <div class="prod-rating"><span class="stars">★★★★★</span> 4.8 (980)</div>
+          <div class="prod-price"><span class="price-now">₹370</span><span class="price-old">₹400</span><span class="price-unit">/bag</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('ACC Gold Cement', 370)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe ACC Gold Cement chahiye." target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
 
-</div>
+      <div class="prod-card" data-brand="acc">
+        <div class="prod-img">🏗️</div>
+        <div class="prod-body">
+          <div class="prod-brand">ACC</div>
+          <div class="prod-name">Suraksha Plus Cement</div>
+          <div class="prod-specs">50 Kg • OPC 43 Grade</div>
+          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.6 (640)</div>
+          <div class="prod-price"><span class="price-now">₹355</span><span class="price-unit">/bag</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('ACC Suraksha Plus', 355)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe ACC Suraksha Plus Cement chahiye." target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
 
-<div class="product-card">
+      <div class="prod-card" data-brand="ambuja">
+        <div class="prod-img">🏗️<span class="badge-best">POPULAR</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">Ambuja</div>
+          <div class="prod-name">Plus Cement PPC</div>
+          <div class="prod-specs">50 Kg • OPC 43 Grade</div>
+          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.6 (750)</div>
+          <div class="prod-price"><span class="price-now">₹360</span><span class="price-unit">/bag</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('Ambuja Plus Cement', 360)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe Ambuja Cement chahiye." target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
 
-<img src="../images/cement.jpg">
+      <div class="prod-card" data-brand="shree">
+        <div class="prod-img">🏗️</div>
+        <div class="prod-body">
+          <div class="prod-brand">Shree Cement</div>
+          <div class="prod-name">Bangur Cement OPC</div>
+          <div class="prod-specs">50 Kg • OPC 53 Grade</div>
+          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.5 (480)</div>
+          <div class="prod-price"><span class="price-now">₹350</span><span class="price-unit">/bag</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('Shree Bangur Cement', 350)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe Shree Bangur Cement chahiye." target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
 
-<h3>ACC Cement</h3>
+      <div class="prod-card" data-brand="jk">
+        <div class="prod-img">🏗️<span class="badge-sale">-6%</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">JK Cement</div>
+          <div class="prod-name">JK Super Cement OPC</div>
+          <div class="prod-specs">50 Kg • High Performance</div>
+          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.5 (390)</div>
+          <div class="prod-price"><span class="price-now">₹345</span><span class="price-old">₹368</span><span class="price-unit">/bag</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('JK Super Cement', 345)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe JK Super Cement chahiye." target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
 
-<p>Price: ₹385 / bag</p>
+      <div class="prod-card" data-brand="ultratech">
+        <div class="prod-img">🏗️</div>
+        <div class="prod-body">
+          <div class="prod-brand">UltraTech</div>
+          <div class="prod-name">Birla White Cement</div>
+          <div class="prod-specs">50 Kg • White Finish</div>
+          <div class="prod-rating"><span class="stars">★★★★★</span> 4.7 (320)</div>
+          <div class="prod-price"><span class="price-now">₹680</span><span class="price-unit">/bag</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('Birla White Cement', 680)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe Birla White Cement chahiye." target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
 
-<p>Seller: Sharma Suppliers</p>
+    </div>
 
-<p>Delivery: Delhi NCR</p>
+    <!-- BULK ORDER CTA -->
+    <div class="bulk-cta">
+      <div>
+        <h3>📦 Bulk Order Chahiye? (50+ Bags)</h3>
+        <p>Extra 5-15% discount milega! Seedha WhatsApp par quote maango.</p>
+      </div>
+      <a href="https://wa.me/919654171005?text=Namaste! Mujhe cement ka bulk order karna hai. Please quote dijiye." target="_blank">💬 Bulk Quote Maango</a>
+    </div>
 
-<button>Add to Cart</button>
+  </div>
 
-</div>
+  <div class="wa-float">
+    <div class="wa-bubble" id="waBubble">💬 <strong>Cement order karo!</strong><br><small>Best price guaranteed</small></div>
+    <a href="https://wa.me/919654171005?text=Namaste! Mujhe cement chahiye." target="_blank" class="wa-btn" id="waBtn">💬</a>
+  </div>
+  <div class="call-float"><a href="tel:+919654171005" class="call-btn">📞 Call for Bulk Order</a></div>
 
-<div class="product-card">
-
-<img src="../images/cement.jpg">
-
-<h3>Ambuja Cement</h3>
-
-<p>Price: ₹395 / bag</p>
-
-<p>Seller: Aggarwal Materials</p>
-
-<p>Delivery: Delhi NCR</p>
-
-<button>Add to Cart</button>
-
-</div>
-
-</div>
-
+  <script src="../script.js"></script>
+  <script>
+    function filterBrand(brand, btn) {
+      document.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('#cementGrid .prod-card').forEach(card => {
+        card.style.display = (brand === 'all' || card.dataset.brand === brand) ? 'block' : 'none';
+      });
+    }
+  </script>
 </body>
-
 </html>

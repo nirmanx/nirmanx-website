@@ -1,0 +1,200 @@
+!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invoice – NirmanX</title>
+  <link rel="stylesheet" href="../style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .inv-page { max-width: 820px; margin: 40px auto; padding: 0 24px 60px; }
+    .inv-topbar { display: flex; gap: 12px; justify-content: flex-end; margin-bottom: 20px; flex-wrap: wrap; }
+    .btn-print { background: var(--dark); color: white; border: none; border-radius: 10px; padding: 11px 22px; font-family: 'Baloo 2'; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all .2s; }
+    .btn-print:hover { background: var(--black); }
+    .btn-wa-inv { background: var(--whatsapp); color: white; border: none; border-radius: 10px; padding: 11px 22px; font-family: 'Baloo 2'; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all .2s; text-decoration: none; }
+    .btn-wa-inv:hover { background: #1EB858; }
+    .invoice-box { background: white; border: 2px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,.08); }
+    .inv-header { background: linear-gradient(135deg, #1A1208, #2D2010); padding: 32px 36px; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px; }
+    .inv-logo { font-family: 'Baloo 2'; font-size: 34px; font-weight: 800; color: var(--orange); }
+    .inv-logo span { color: white; }
+    .inv-logo p { font-size: 13px; color: #C4B5A5; font-family: 'Hind'; margin-top: 4px; }
+    .inv-title { text-align: right; }
+    .inv-title h2 { font-family: 'Baloo 2'; font-size: 28px; font-weight: 800; color: white; letter-spacing: 2px; }
+    .inv-title p { color: #C4B5A5; font-size: 13px; margin-top: 4px; }
+    .inv-title .inv-num { color: var(--orange); font-size: 18px; font-weight: 700; margin-top: 6px; }
+    .inv-body { padding: 32px 36px; }
+    .inv-parties { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 28px; }
+    .party-box h4 { font-family: 'Baloo 2'; font-size: 13px; font-weight: 700; color: var(--orange); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+    .party-box p { font-size: 14px; line-height: 1.8; color: var(--dark); }
+    .party-box strong { font-family: 'Baloo 2'; font-size: 16px; }
+    .inv-details { display: flex; gap: 24px; flex-wrap: wrap; background: var(--light); border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; }
+    .inv-detail-item { font-size: 13px; }
+    .inv-detail-item span { display: block; color: var(--gray); font-size: 11px; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 3px; }
+    .inv-detail-item strong { font-family: 'Baloo 2'; font-size: 15px; color: var(--dark); }
+    .inv-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 14px; }
+    .inv-table th { background: var(--orange); color: white; padding: 12px 14px; text-align: left; font-family: 'Baloo 2'; font-size: 14px; }
+    .inv-table th:last-child, .inv-table td:last-child { text-align: right; }
+    .inv-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--dark); }
+    .inv-table tr:hover td { background: var(--orange-light); }
+    .inv-table .item-name { font-weight: 600; }
+    .inv-table .item-spec { font-size: 12px; color: var(--gray); margin-top: 2px; }
+    .inv-totals { display: flex; justify-content: flex-end; }
+    .totals-box { min-width: 280px; }
+    .total-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; border-bottom: 1px solid var(--border); }
+    .total-row:last-child { border-bottom: none; }
+    .total-row.grand { font-family: 'Baloo 2'; font-size: 20px; font-weight: 800; color: var(--orange); padding-top: 12px; margin-top: 4px; border-top: 2px solid var(--orange); }
+    .inv-footer { background: var(--light); border-top: 2px solid var(--border); padding: 22px 36px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
+    .inv-footer p { font-size: 13px; color: var(--gray); }
+    .inv-footer .thank { font-family: 'Baloo 2'; font-size: 16px; font-weight: 700; color: var(--orange); }
+    .status-badge { display: inline-flex; align-items: center; gap: 6px; background: #D1FAE5; color: #065F46; font-size: 13px; font-weight: 700; padding: 5px 14px; border-radius: 20px; }
+    @media print {
+      .inv-topbar { display: none; }
+      .inv-page { margin: 0; padding: 0; }
+      .invoice-box { border: none; box-shadow: none; border-radius: 0; }
+      nav, .ticker-wrap { display: none; }
+    }
+    @media(max-width:600px) { .inv-header, .inv-body { padding: 20px; } .inv-parties { grid-template-columns: 1fr; } .inv-totals { justify-content: stretch; } .totals-box { width: 100%; } }
+  </style>
+</head>
+<body>
+
+  <div class="ticker-wrap"><div class="ticker"><span>📄 NirmanX Invoice — GST Compliant</span><span>Print ya PDF save karo</span><span>Help: +91 96541 71005</span><span>📄 NirmanX Invoice — GST Compliant</span><span>Print ya PDF save karo</span><span>Help: +91 96541 71005</span></div></div>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="logo">Nirman<span>X</span></a>
+      <div class="nav-links" id="navLinks">
+        <a href="../index.html">🏠 Home</a>
+        <a href="products.html">📦 Products</a>
+        <a href="track.html">🔄 Track Order</a>
+        <a href="contact.html">📞 Contact</a>
+        <a href="cart.html" class="nav-cta">🛒 Cart</a>
+      </div>
+      <button class="hamburger" onclick="toggleNav()">☰</button>
+    </div>
+  </nav>
+
+  <div class="inv-page">
+    <div class="inv-topbar">
+      <span class="status-badge">✅ Payment Received</span>
+      <button class="btn-print" onclick="window.print()">🖨️ Print / Save PDF</button>
+      <a href="https://wa.me/919654171005?text=Namaste! Mujhe invoice NX-INV-2026-1234 ki copy chahiye." target="_blank" class="btn-wa-inv">💬 WhatsApp Copy</a>
+    </div>
+
+    <div class="invoice-box">
+      <!-- HEADER -->
+      <div class="inv-header">
+        <div class="inv-logo">
+          Nirman<span>X</span>
+          <p>India's Construction Marketplace<br>support@nirmanx.in | +91 96541 71005<br>Delhi NCR, India | GSTIN: 07XXXXX1234X1Z5</p>
+        </div>
+        <div class="inv-title">
+          <h2>INVOICE</h2>
+          <p>Tax Invoice / Bill of Supply</p>
+          <div class="inv-num">#NX-INV-2026-1234</div>
+        </div>
+      </div>
+
+      <!-- BODY -->
+      <div class="inv-body">
+
+        <!-- PARTIES -->
+        <div class="inv-parties">
+          <div class="party-box">
+            <h4>Bill To / Khareednaar</h4>
+            <p><strong>Rajesh Sharma</strong><br>+91 98765 43210<br>rajesh@email.com<br>Plot 45, Sector 62<br>Noida, Uttar Pradesh — 201309<br>GSTIN: N/A (Individual)</p>
+          </div>
+          <div class="party-box">
+            <h4>Delivery Address</h4>
+            <p><strong>Construction Site</strong><br>Plot 45, Sector 62, Noida<br>Near Sector 62 Metro Station<br>Uttar Pradesh — 201309<br><br>📞 Driver Contact: +91 96541 71005</p>
+          </div>
+        </div>
+
+        <!-- INVOICE DETAILS -->
+        <div class="inv-details">
+          <div class="inv-detail-item"><span>Invoice No.</span><strong>#NX-INV-2026-1234</strong></div>
+          <div class="inv-detail-item"><span>Invoice Date</span><strong>15 March 2026</strong></div>
+          <div class="inv-detail-item"><span>Due Date</span><strong>15 March 2026</strong></div>
+          <div class="inv-detail-item"><span>Payment Mode</span><strong>UPI / Online</strong></div>
+          <div class="inv-detail-item"><span>Order Status</span><strong style="color:var(--green)">✅ Delivered</strong></div>
+        </div>
+
+        <!-- ITEMS TABLE -->
+        <table class="inv-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Product</th>
+              <th>Qty</th>
+              <th>Rate</th>
+              <th>GST (18%)</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><div class="item-name">UltraTech PPC Cement</div><div class="item-spec">50 Kg bag • OPC 53 Grade • ISI Certified</div></td>
+              <td>50 bags</td>
+              <td>₹380</td>
+              <td>₹3,420</td>
+              <td>₹22,420</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><div class="item-name">TATA TMT Sariya Fe-500D</div><div class="item-spec">12mm • BIS Certified • Per Kg</div></td>
+              <td>200 kg</td>
+              <td>₹65</td>
+              <td>₹2,340</td>
+              <td>₹15,340</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><div class="item-name">River Sand (Fine)</div><div class="item-spec">Construction Grade • Per CFT</div></td>
+              <td>20 CFT</td>
+              <td>₹55</td>
+              <td>₹198</td>
+              <td>₹1,298</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><div class="item-name">Delivery Charge</div><div class="item-spec">Same Day Delivery — Noida Sector 62</div></td>
+              <td>1</td>
+              <td>₹0</td>
+              <td>—</td>
+              <td><span style="color:var(--green); font-weight:700;">FREE</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- TOTALS -->
+        <div class="inv-totals">
+          <div class="totals-box">
+            <div class="total-row"><span>Subtotal</span><span>₹38,000</span></div>
+            <div class="total-row"><span>GST Total (18%)</span><span>₹5,958</span></div>
+            <div class="total-row"><span>Discount (10% Offer)</span><span style="color:var(--green)">- ₹3,800</span></div>
+            <div class="total-row"><span>Delivery</span><span style="color:var(--green)">FREE ✅</span></div>
+            <div class="total-row grand"><span>Total Payable</span><span>₹40,158</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FOOTER -->
+      <div class="inv-footer">
+        <div>
+          <p class="thank">🙏 Dhanyawad! NirmanX chose karne ke liye shukriya.</p>
+          <p>Koi sawaal? Call: +91 96541 71005 | WhatsApp: wa.me/919654171005</p>
+        </div>
+        <div style="text-align:right;">
+          <p style="font-size:12px; color:var(--gray);">Authorized Signature</p>
+          <p style="font-family:'Baloo 2'; font-size:18px; color:var(--orange); margin-top:18px;">NirmanX</p>
+          <p style="font-size:12px; color:var(--gray);">Verified Digital Invoice</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>

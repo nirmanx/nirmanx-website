@@ -1,22 +1,263 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="hi">
 <head>
-
-<title>Cart - nirmanX</title>
-
-<link rel="stylesheet" href="../style.css">
-
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Products – NirmanX</title>
+  <link rel="stylesheet" href="../style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .page-hero { background: linear-gradient(135deg, #1A1208, #2D2010); padding: 40px 24px; text-align: center; }
+    .page-hero h1 { font-family: 'Baloo 2'; font-size: 36px; font-weight: 800; color: white; }
+    .page-hero h1 span { color: var(--orange); }
+    .page-hero p { color: #C4B5A5; margin-top: 8px; font-size: 15px; }
+    .filter-bar { background: white; border-bottom: 2px solid var(--border); padding: 16px 24px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .filter-btn { background: var(--light); border: 1.5px solid var(--border); color: var(--dark); font-family: 'Hind'; font-size: 14px; font-weight: 600; padding: 8px 18px; border-radius: 25px; cursor: pointer; transition: all .2s; }
+    .filter-btn.active, .filter-btn:hover { background: var(--orange); border-color: var(--orange); color: white; }
+    .products-page { max-width: 1200px; margin: auto; padding: 40px 24px; }
+    .all-prod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+  </style>
 </head>
+<body>
 
-<body onload="loadCart()">
+  <!-- TICKER -->
+  <div class="ticker-wrap"><div class="ticker"><span>Free Delivery on orders above ₹5000</span><span>Delhi, Noida, Greater Noida, Gurugram, Ghaziabad</span><span>Bulk Order? WhatsApp: +91 96541 71005</span><span>Same Day Delivery Available</span><span>Free Delivery on orders above ₹5000</span><span>Delhi, Noida, Greater Noida, Gurugram, Ghaziabad</span><span>Bulk Order? WhatsApp: +91 96541 71005</span><span>Same Day Delivery Available</span></div></div>
 
-<h1>Your Cart</h1>
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="logo">Nirman<span>X</span></a>
+      <div class="nav-links" id="navLinks">
+        <a href="../index.html">🏠 Home</a>
+        <a href="products.html">📦 Products</a>
+        <a href="track.html">🔄 Track Order</a>
+        <a href="contact.html">📞 Contact</a>
+        <a href="login.html">👤 Login</a>
+        <a href="cart.html" class="nav-cta">🛒 Cart</a>
+      </div>
+      <button class="hamburger" onclick="toggleNav()">☰</button>
+    </div>
+  </nav>
 
-<a href="../index.html">⬅ Back to Home</a>
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <h1>Saare <span>Products</span></h1>
+    <p>Best quality construction material — genuine brands, best prices</p>
+  </div>
 
-<div id="cart-items"></div>
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterProducts('all', this)">🏪 Sab Dekho</button>
+    <button class="filter-btn" onclick="filterProducts('cement', this)">🏗️ Cement</button>
+    <button class="filter-btn" onclick="filterProducts('steel', this)">⚙️ Steel</button>
+    <button class="filter-btn" onclick="filterProducts('bricks', this)">🧱 Bricks</button>
+    <button class="filter-btn" onclick="filterProducts('tiles', this)">🪟 Tiles</button>
+    <button class="filter-btn" onclick="filterProducts('sand', this)">🪣 Sand</button>
+    <button class="filter-btn" onclick="filterProducts('paint', this)">🎨 Paint</button>
+  </div>
 
+  <!-- PRODUCTS GRID -->
+  <div class="products-page">
+    <div class="all-prod-grid" id="productGrid">
+
+      <div class="prod-card" data-cat="cement">
+        <div class="prod-img">🏗️<span class="badge-best">BESTSELLER</span><span class="badge-sale">-10%</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">UltraTech</div>
+          <div class="prod-name">PPC Cement Premium</div>
+          <div class="prod-specs">50 Kg • OPC 53 Grade</div>
+          <div class="prod-rating"><span class="stars">★★★★★</span> 4.9 (1.2k)</div>
+          <div class="prod-price"><span class="price-now">₹380</span><span class="price-old">₹420</span><span class="price-unit">/bag</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('UltraTech PPC Cement', 380)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe UltraTech Cement chahiye" target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="cement">
+        <div class="prod-img">🏗️<span class="badge-best">TOP</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">ACC</div>
+          <div class="prod-name">Gold Cement PPC</div>
+          <div class="prod-specs">50 Kg • Premium Quality</div>
+          <div class="prod-rating"><span class="stars">★★★★★</span> 4.8 (980)</div>
+          <div class="prod-price"><span class="price-now">₹370</span><span class="price-unit">/bag</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('ACC Gold Cement', 370)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe ACC Cement chahiye" target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="cement">
+        <div class="prod-img">🏗️</div>
+        <div class="prod-body">
+          <div class="prod-brand">Ambuja</div>
+          <div class="prod-name">Plus Cement</div>
+          <div class="prod-specs">50 Kg • OPC 43 Grade</div>
+          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.6 (750)</div>
+          <div class="prod-price"><span class="price-now">₹360</span><span class="price-unit">/bag</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('Ambuja Plus Cement', 360)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe Ambuja Cement chahiye" target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="steel">
+        <div class="prod-img">⚙️<span class="badge-best">TOP RATED</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">TATA Steel</div>
+          <div class="prod-name">TMT Sariya Fe-500D</div>
+          <div class="prod-specs">8mm / 10mm / 12mm</div>
+          <div class="prod-rating"><span class="stars">★★★★★</span> 4.8 (856)</div>
+          <div class="prod-price"><span class="price-now">₹65</span><span class="price-unit">/kg</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('TATA TMT Sariya', 65)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe TATA TMT Sariya chahiye" target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="steel">
+        <div class="prod-img">⚙️</div>
+        <div class="prod-body">
+          <div class="prod-brand">JSW Steel</div>
+          <div class="prod-name">Neosteel 550D TMT</div>
+          <div class="prod-specs">10mm / 12mm / 16mm</div>
+          <div class="prod-rating"><span class="stars">★★★★★</span> 4.7 (620)</div>
+          <div class="prod-price"><span class="price-now">₹63</span><span class="price-unit">/kg</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('JSW Neosteel 550D', 63)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe JSW Steel chahiye" target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="bricks">
+        <div class="prod-img">🧱<span class="badge-sale">SALE</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">Local Premium</div>
+          <div class="prod-name">Red Bricks (Lal Eent)</div>
+          <div class="prod-specs">First Class • 9×4×3 inch</div>
+          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.6 (432)</div>
+          <div class="prod-price"><span class="price-now">₹8</span><span class="price-old">₹10</span><span class="price-unit">/piece</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('Red Bricks', 8)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe Red Bricks chahiye" target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="bricks">
+        <div class="prod-img">🧱</div>
+        <div class="prod-body">
+          <div class="prod-brand">AAC Block</div>
+          <div class="prod-name">Lightweight AAC Block</div>
+          <div class="prod-specs">600×200×150 mm</div>
+          <div class="prod-rating"><span class="stars">★★★★★</span> 4.8 (310)</div>
+          <div class="prod-price"><span class="price-now">₹45</span><span class="price-unit">/piece</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('AAC Block', 45)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe AAC Block chahiye" target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="tiles">
+        <div class="prod-img">🪟<span class="badge-best">NEW</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">Kajaria</div>
+          <div class="prod-name">Vitrified Floor Tiles</div>
+          <div class="prod-specs">600×600 mm • Glossy</div>
+          <div class="prod-rating"><span class="stars">★★★★★</span> 4.7 (234)</div>
+          <div class="prod-price"><span class="price-now">₹45</span><span class="price-unit">/sqft</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('Kajaria Vitrified Tiles', 45)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe Kajaria Tiles chahiye" target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="tiles">
+        <div class="prod-img">🪟</div>
+        <div class="prod-body">
+          <div class="prod-brand">Somany</div>
+          <div class="prod-name">Wall Tiles (Matt)</div>
+          <div class="prod-specs">300×600 mm • Matt Finish</div>
+          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.5 (189)</div>
+          <div class="prod-price"><span class="price-now">₹38</span><span class="price-unit">/sqft</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('Somany Wall Tiles', 38)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe Somany Wall Tiles chahiye" target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="sand">
+        <div class="prod-img">🪣</div>
+        <div class="prod-body">
+          <div class="prod-brand">River Sand</div>
+          <div class="prod-name">Fine River Sand</div>
+          <div class="prod-specs">Per CFT • Construction Grade</div>
+          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.5 (210)</div>
+          <div class="prod-price"><span class="price-now">₹55</span><span class="price-unit">/CFT</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('River Sand', 55)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe River Sand chahiye" target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="paint">
+        <div class="prod-img">🎨<span class="badge-best">POPULAR</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">Asian Paints</div>
+          <div class="prod-name">Royale Shyne Emulsion</div>
+          <div class="prod-specs">20 Ltr Bucket</div>
+          <div class="prod-rating"><span class="stars">★★★★★</span> 4.9 (540)</div>
+          <div class="prod-price"><span class="price-now">₹3200</span><span class="price-unit">/bucket</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('Asian Paints Royale Shyne', 3200)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe Asian Paints chahiye" target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="prod-card" data-cat="paint">
+        <div class="prod-img">🎨</div>
+        <div class="prod-body">
+          <div class="prod-brand">Berger</div>
+          <div class="prod-name">Weathercoat Paint</div>
+          <div class="prod-specs">20 Ltr • Exterior Use</div>
+          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.6 (380)</div>
+          <div class="prod-price"><span class="price-now">₹2800</span><span class="price-unit">/bucket</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('Berger Weathercoat', 2800)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe Berger Paint chahiye" target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WHATSAPP FLOAT -->
+  <div class="wa-float">
+    <div class="wa-bubble" id="waBubble">💬 <strong>Order karo WhatsApp par!</strong><br><small>+91 96541 71005</small></div>
+    <a href="https://wa.me/919654171005?text=Namaste! Mujhe construction material chahiye." target="_blank" class="wa-btn" id="waBtn">💬</a>
+  </div>
+
+  <script src="../script.js"></script>
+  <script>
+    function filterProducts(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.prod-card').forEach(card => {
+        card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'block' : 'none';
+      });
+    }
+  </script>
 </body>
-
 </html>

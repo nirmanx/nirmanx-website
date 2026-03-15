@@ -1,46 +1,221 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="hi">
 <head>
-
-<title>Steel Products</title>
-
-<link rel="stylesheet" href="../style.css">
-
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Steel / Sariya – NirmanX</title>
+  <link rel="stylesheet" href="../style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .page-hero { background: linear-gradient(135deg, #1A1208, #2D2010); padding: 44px 24px; text-align: center; }
+    .page-hero h1 { font-family: 'Baloo 2'; font-size: 38px; font-weight: 800; color: white; }
+    .page-hero h1 span { color: var(--orange); }
+    .page-hero p { color: #C4B5A5; margin-top: 8px; font-size: 15px; }
+    .hero-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
+    .hero-tag { background: rgba(244,111,26,.2); border: 1px solid rgba(244,111,26,.4); color: #FFA05A; font-size: 13px; font-weight: 600; padding: 5px 14px; border-radius: 20px; }
+    .prod-page { max-width: 1200px; margin: 44px auto; padding: 0 24px; }
+    .brand-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+    .brand-btn { background: white; border: 2px solid var(--border); color: var(--dark); font-family: 'Hind'; font-size: 14px; font-weight: 600; padding: 9px 20px; border-radius: 25px; cursor: pointer; transition: all .2s; }
+    .brand-btn.active, .brand-btn:hover { background: var(--orange); border-color: var(--orange); color: white; }
+    .info-box { background: var(--orange-light); border: 1.5px solid var(--border); border-radius: 16px; padding: 20px 24px; margin-bottom: 28px; display: flex; gap: 20px; flex-wrap: wrap; }
+    .info-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--dark); }
+    .info-item span { font-size: 20px; }
+    .size-guide { background: white; border: 1.5px solid var(--border); border-radius: 16px; padding: 22px; margin-bottom: 28px; }
+    .size-guide h3 { font-family: 'Baloo 2'; font-size: 20px; font-weight: 800; margin-bottom: 14px; }
+    .size-guide h3 span { color: var(--orange); }
+    .size-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .size-table th { background: var(--orange); color: white; padding: 10px 14px; text-align: left; font-family: 'Baloo 2'; }
+    .size-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    .size-table tr:hover td { background: var(--orange-light); }
+    .bulk-cta { background: linear-gradient(135deg, var(--orange), var(--orange-dark)); border-radius: 18px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 36px; }
+    .bulk-cta h3 { font-family: 'Baloo 2'; font-size: 22px; font-weight: 800; color: white; }
+    .bulk-cta p { color: rgba(255,255,255,.85); font-size: 14px; margin-top: 4px; }
+    .bulk-cta a { background: white; color: var(--orange); font-family: 'Baloo 2'; font-size: 15px; font-weight: 800; padding: 12px 26px; border-radius: 25px; text-decoration: none; white-space: nowrap; transition: all .2s; display: inline-flex; align-items: center; gap: 8px; }
+    .bulk-cta a:hover { transform: scale(1.03); }
+  </style>
 </head>
-
 <body>
 
-<h1>Steel & TMT Bars</h1>
+  <div class="ticker-wrap"><div class="ticker"><span>⚙️ TATA, JSW, Kamdhenu Steel — Sabhi Available</span><span>TMT Sariya — 8mm se 32mm tak</span><span>Bulk 1 Ton+ par Special Discount</span><span>Same Day Delivery Delhi NCR</span><span>⚙️ TATA, JSW, Kamdhenu Steel — Sabhi Available</span><span>TMT Sariya — 8mm se 32mm tak</span><span>Bulk 1 Ton+ par Special Discount</span><span>Same Day Delivery Delhi NCR</span></div></div>
 
-<a href="../index.html">⬅ Back to Home</a>
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="logo">Nirman<span>X</span></a>
+      <div class="nav-links" id="navLinks">
+        <a href="../index.html">🏠 Home</a>
+        <a href="products.html">📦 Products</a>
+        <a href="track.html">🔄 Track Order</a>
+        <a href="contact.html">📞 Contact</a>
+        <a href="login.html">👤 Login</a>
+        <a href="cart.html" class="nav-cta">🛒 Cart</a>
+      </div>
+      <button class="hamburger" onclick="toggleNav()">☰</button>
+    </div>
+  </nav>
 
-<div class="product">
+  <div class="page-hero">
+    <h1>⚙️ Steel / <span>TMT Sariya</span></h1>
+    <p>TATA, JSW, Kamdhenu — top brands ka genuine steel, best price mein</p>
+    <div class="hero-tags">
+      <span class="hero-tag">✅ BIS Certified</span>
+      <span class="hero-tag">🚚 Same Day Delivery</span>
+      <span class="hero-tag">📦 1 Kg se Bulk Order</span>
+      <span class="hero-tag">💰 Market se Sasta</span>
+    </div>
+  </div>
 
-<h3>TATA TMT Steel Bar</h3>
+  <div class="prod-page">
 
-<p>Price: ₹65/kg</p>
+    <div class="info-box">
+      <div class="info-item"><span>⚙️</span> Fe-500D & Fe-550D Grade Available</div>
+      <div class="info-item"><span>📏</span> 8mm se 32mm tak saari sizes</div>
+      <div class="info-item"><span>🏋️</span> 1 Kg se lekar Full Truck load</div>
+      <div class="info-item"><span>✅</span> BIS / ISI Certified Only</div>
+    </div>
 
-<button onclick="addToCart('TATA TMT Steel',65)">
-Add to Cart
-</button>
+    <!-- SIZE GUIDE TABLE -->
+    <div class="size-guide">
+      <h3>📏 Sariya <span>Size Guide</span> — Kaunsi Size Kahan Use Hoti Hai</h3>
+      <table class="size-table">
+        <tr><th>Size</th><th>Use</th><th>Price/Kg</th></tr>
+        <tr><td>8mm</td><td>Slab stirrups, light work</td><td>₹62–65</td></tr>
+        <tr><td>10mm</td><td>Column ties, beam stirrups</td><td>₹62–65</td></tr>
+        <tr><td>12mm</td><td>Slab main bars, beams</td><td>₹63–66</td></tr>
+        <tr><td>16mm</td><td>Column main bars</td><td>₹64–67</td></tr>
+        <tr><td>20mm</td><td>Heavy columns, foundations</td><td>₹64–68</td></tr>
+        <tr><td>25mm+</td><td>Industrial / large structures</td><td>Call for price</td></tr>
+      </table>
+    </div>
 
-</div>
+    <!-- BRAND FILTER -->
+    <div class="brand-bar">
+      <button class="brand-btn active" onclick="filterBrand('all', this)">🏪 Sab Brands</button>
+      <button class="brand-btn" onclick="filterBrand('tata', this)">TATA Steel</button>
+      <button class="brand-btn" onclick="filterBrand('jsw', this)">JSW</button>
+      <button class="brand-btn" onclick="filterBrand('kamdhenu', this)">Kamdhenu</button>
+      <button class="brand-btn" onclick="filterBrand('sail', this)">SAIL</button>
+    </div>
 
-<div class="product">
+    <!-- PRODUCT GRID -->
+    <div class="prod-grid" id="steelGrid">
 
-<h3>JSW Steel Bar</h3>
+      <div class="prod-card" data-brand="tata">
+        <div class="prod-img">⚙️<span class="badge-best">BESTSELLER</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">TATA Steel</div>
+          <div class="prod-name">TMT Sariya Fe-500D</div>
+          <div class="prod-specs">8mm / 10mm / 12mm • BIS Certified</div>
+          <div class="prod-rating"><span class="stars">★★★★★</span> 4.8 (856)</div>
+          <div class="prod-price"><span class="price-now">₹65</span><span class="price-unit">/kg</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('TATA TMT Sariya Fe-500D', 65)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe TATA TMT Sariya chahiye. Size aur quantity batata hoon." target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
 
-<p>Price: ₹63/kg</p>
+      <div class="prod-card" data-brand="tata">
+        <div class="prod-img">⚙️<span class="badge-best">PREMIUM</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">TATA Steel</div>
+          <div class="prod-name">TMT Sariya Fe-550D</div>
+          <div class="prod-specs">12mm / 16mm / 20mm</div>
+          <div class="prod-rating"><span class="stars">★★★★★</span> 4.9 (420)</div>
+          <div class="prod-price"><span class="price-now">₹68</span><span class="price-unit">/kg</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('TATA TMT Fe-550D', 68)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe TATA TMT Fe-550D chahiye." target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
 
-<button onclick="addToCart('JSW Steel',63)">
-Add to Cart
-</button>
+      <div class="prod-card" data-brand="jsw">
+        <div class="prod-img">⚙️<span class="badge-sale">-3%</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">JSW Steel</div>
+          <div class="prod-name">Neosteel 550D TMT</div>
+          <div class="prod-specs">10mm / 12mm / 16mm</div>
+          <div class="prod-rating"><span class="stars">★★★★★</span> 4.7 (620)</div>
+          <div class="prod-price"><span class="price-now">₹63</span><span class="price-old">₹65</span><span class="price-unit">/kg</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('JSW Neosteel 550D', 63)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe JSW Neosteel Sariya chahiye." target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
 
-</div>
+      <div class="prod-card" data-brand="jsw">
+        <div class="prod-img">⚙️</div>
+        <div class="prod-body">
+          <div class="prod-brand">JSW Steel</div>
+          <div class="prod-name">JSW Fe-500D TMT Bar</div>
+          <div class="prod-specs">8mm / 10mm / 12mm</div>
+          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.6 (380)</div>
+          <div class="prod-price"><span class="price-now">₹62</span><span class="price-unit">/kg</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('JSW Fe-500D TMT', 62)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe JSW Fe-500D TMT chahiye." target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
 
-<script src="../script.js"></script>
+      <div class="prod-card" data-brand="kamdhenu">
+        <div class="prod-img">⚙️<span class="badge-best">POPULAR</span></div>
+        <div class="prod-body">
+          <div class="prod-brand">Kamdhenu</div>
+          <div class="prod-name">Kamdhenu TMT Fe-500</div>
+          <div class="prod-specs">8mm / 10mm / 12mm / 16mm</div>
+          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.5 (510)</div>
+          <div class="prod-price"><span class="price-now">₹60</span><span class="price-unit">/kg</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('Kamdhenu TMT Fe-500', 60)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe Kamdhenu TMT Sariya chahiye." target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
 
+      <div class="prod-card" data-brand="sail">
+        <div class="prod-img">⚙️</div>
+        <div class="prod-body">
+          <div class="prod-brand">SAIL</div>
+          <div class="prod-name">SAIL TMT Bar Fe-500</div>
+          <div class="prod-specs">10mm / 12mm / 16mm / 20mm</div>
+          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.5 (290)</div>
+          <div class="prod-price"><span class="price-now">₹61</span><span class="price-unit">/kg</span></div>
+          <div class="prod-actions">
+            <button class="btn-cart" onclick="addToCart('SAIL TMT Fe-500', 61)">🛒 Cart</button>
+            <a href="https://wa.me/919654171005?text=Mujhe SAIL TMT Bar chahiye." target="_blank" class="btn-wa">💬</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bulk-cta">
+      <div>
+        <h3>🏗️ 1 Ton ya usse Zyada Steel Chahiye?</h3>
+        <p>Bulk order par special price milegi! Quote ke liye WhatsApp karo.</p>
+      </div>
+      <a href="https://wa.me/919654171005?text=Namaste! Mujhe steel ka bulk order quote chahiye." target="_blank">💬 Bulk Quote Maango</a>
+    </div>
+
+  </div>
+
+  <div class="wa-float">
+    <div class="wa-bubble" id="waBubble">💬 <strong>Steel order karo!</strong></div>
+    <a href="https://wa.me/919654171005?text=Mujhe TMT Sariya chahiye." target="_blank" class="wa-btn" id="waBtn">💬</a>
+  </div>
+  <div class="call-float"><a href="tel:+919654171005" class="call-btn">📞 Bulk Order Call</a></div>
+
+  <script src="../script.js"></script>
+  <script>
+    function filterBrand(brand, btn) {
+      document.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('#steelGrid .prod-card').forEach(card => {
+        card.style.display = (brand === 'all' || card.dataset.brand === brand) ? 'block' : 'none';
+      });
+    }
+  </script>
 </body>
-
 </html>
