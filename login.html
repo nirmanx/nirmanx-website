@@ -6,33 +6,48 @@
   <title>Login – NirmanX</title>
   <link rel="stylesheet" href="../style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    .login-page { min-height: 100vh; background: linear-gradient(135deg, #1A1208, #2D2010, #4A3018); display: flex; align-items: center; justify-content: center; padding: 30px 20px; }
-    .login-box { background: white; border-radius: 24px; padding: 40px 36px; width: 100%; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
-    .login-logo { font-family: 'Baloo 2'; font-size: 32px; font-weight: 800; color: var(--orange); text-align: center; margin-bottom: 6px; }
-    .login-logo span { color: var(--black); }
-    .login-sub { text-align: center; color: var(--gray); font-size: 14px; margin-bottom: 28px; }
-    .login-tabs { display: flex; background: var(--light); border-radius: 12px; padding: 4px; margin-bottom: 24px; }
-    .login-tab { flex: 1; padding: 10px; border: none; background: transparent; font-family: 'Hind'; font-size: 14px; font-weight: 600; color: var(--gray); border-radius: 10px; cursor: pointer; transition: all .2s; }
-    .login-tab.active { background: var(--orange); color: white; box-shadow: 0 3px 10px var(--orange-glow); }
-    .form-field { margin-bottom: 15px; }
-    .form-field label { display: block; font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 7px; }
-    .form-field input { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 14px; font-family: 'Hind'; font-size: 15px; outline: none; transition: border .2s; background: var(--light); }
-    .form-field input:focus { border-color: var(--orange); background: white; }
-    .btn-login { width: 100%; background: var(--orange); color: white; border: none; border-radius: 12px; padding: 14px; font-family: 'Baloo 2'; font-size: 17px; font-weight: 700; cursor: pointer; transition: all .2s; margin-top: 6px; }
-    .btn-login:hover { background: var(--orange-dark); }
-    .login-divider { text-align: center; color: var(--gray); font-size: 13px; margin: 18px 0; position: relative; }
-    .login-divider::before, .login-divider::after { content: ''; position: absolute; top: 50%; width: 40%; height: 1px; background: var(--border); }
-    .login-divider::before { left: 0; }
-    .login-divider::after { right: 0; }
-    .btn-wa-login { width: 100%; background: var(--whatsapp); color: white; border: none; border-radius: 12px; padding: 13px; font-family: 'Baloo 2'; font-size: 16px; font-weight: 700; cursor: pointer; transition: all .2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .btn-wa-login:hover { background: #1EB858; }
-    .signup-form { display: none; }
-    .signup-form.show { display: block; }
-    .login-form.hide { display: none; }
+    .login-page{min-height:100vh;background:linear-gradient(135deg,#1A1208,#2D2010,#4A3018);display:flex;align-items:center;justify-content:center;padding:30px 20px}
+    .login-box{background:white;border-radius:24px;padding:40px 36px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+    .login-logo{font-family:'Baloo 2';font-size:32px;font-weight:800;color:var(--orange);text-align:center;margin-bottom:6px}
+    .login-logo span{color:var(--black)}
+    .login-sub{text-align:center;color:var(--gray);font-size:14px;margin-bottom:26px}
+    .login-tabs{display:flex;background:var(--light);border-radius:12px;padding:4px;margin-bottom:22px}
+    .login-tab{flex:1;padding:10px;border:none;background:transparent;font-family:'Hind';font-size:14px;font-weight:600;color:var(--gray);border-radius:10px;cursor:pointer;transition:all .2s}
+    .login-tab.active{background:var(--orange);color:white;box-shadow:0 3px 10px var(--orange-glow)}
+    .form-field{margin-bottom:15px}
+    .form-field label{display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:7px}
+    .form-field input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'Hind';font-size:15px;outline:none;transition:border .2s;background:var(--light)}
+    .form-field input:focus{border-color:var(--orange);background:white}
+    .btn-login{width:100%;background:var(--orange);color:white;border:none;border-radius:12px;padding:14px;font-family:'Baloo 2';font-size:17px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:6px}
+    .btn-login:hover{background:var(--orange-dark)}
+    .signup-form{display:none}
+    .signup-form.show{display:block}
+    .welcome-popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center}
+    .welcome-popup.show{display:flex}
+    .welcome-box{background:white;border-radius:24px;padding:40px;text-align:center;max-width:380px;width:90%;animation:fadeUp .4s ease}
+    .welcome-box .w-icon{font-size:60px;margin-bottom:16px}
+    .welcome-box h2{font-family:'Baloo 2';font-size:28px;font-weight:800;color:var(--black);margin-bottom:8px}
+    .welcome-box h2 span{color:var(--orange)}
+    .welcome-box p{color:var(--gray);font-size:15px;margin-bottom:20px}
+    .btn-welcome{background:var(--orange);color:white;border:none;border-radius:25px;padding:13px 32px;font-family:'Baloo 2';font-size:16px;font-weight:700;cursor:pointer;transition:all .2s}
+    .btn-welcome:hover{background:var(--orange-dark)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
   </style>
 </head>
 <body>
+
+  <!-- WELCOME POPUP -->
+  <div class="welcome-popup" id="welcomePopup">
+    <div class="welcome-box">
+      <div class="w-icon">🏗️</div>
+      <h2>Welcome to <span>NirmanX!</span></h2>
+      <p id="welcomeName">Namaste! Aap successfully login ho gaye hain.</p>
+      <p style="font-size:13px;color:var(--gray);">India ka trusted construction material marketplace</p>
+      <button class="btn-welcome" onclick="closeWelcome()">🛒 Shopping Shuru Karo!</button>
+    </div>
+  </div>
 
   <div class="login-page">
     <div class="login-box">
@@ -45,43 +60,121 @@
       </div>
 
       <!-- LOGIN FORM -->
-      <div class="login-form" id="loginForm">
-        <div class="form-field"><label>📱 Phone Number</label><input type="tel" placeholder="+91 XXXXX XXXXX"/></div>
-        <div class="form-field"><label>🔒 Password</label><input type="password" placeholder="Password daalein"/></div>
+      <div id="loginForm">
+        <div class="form-field"><label>📱 Phone Number</label><input type="tel" id="loginPhone" placeholder="+91 XXXXX XXXXX"/></div>
+        <div class="form-field"><label>🔒 Password</label><input type="password" id="loginPass" placeholder="Apna password daalein"/></div>
         <button class="btn-login" onclick="doLogin()">🔓 Login Karo</button>
-        <div class="login-divider">ya</div>
-        <button class="btn-wa-login" onclick="waLogin()">💬 WhatsApp se Login</button>
+        <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--gray);">Account nahi hai? <a href="#" onclick="switchTab('signup')" style="color:var(--orange);font-weight:600;">Sign Up Karo</a></p>
       </div>
 
       <!-- SIGNUP FORM -->
       <div class="signup-form" id="signupForm">
-        <div class="form-field"><label>👤 Poora Naam</label><input type="text" placeholder="Aapka naam"/></div>
-        <div class="form-field"><label>📱 Phone Number</label><input type="tel" placeholder="+91 XXXXX XXXXX"/></div>
-        <div class="form-field"><label>📍 Shehar</label>
-          <select style="width:100%;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'Hind';font-size:15px;outline:none;background:var(--light);">
+        <div class="form-field"><label>👤 Poora Naam *</label><input type="text" id="signupName" placeholder="Aapka poora naam"/></div>
+        <div class="form-field"><label>📱 Phone Number *</label><input type="tel" id="signupPhone" placeholder="+91 XXXXX XXXXX"/></div>
+        <div class="form-field"><label>📍 Shehar *</label>
+          <select id="signupCity" style="width:100%;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'Hind';font-size:14px;outline:none;background:var(--light);">
+            <option value="">Shehar select karo</option>
             <option>Delhi</option><option>Noida</option><option>Greater Noida</option><option>Gurugram</option><option>Ghaziabad</option>
           </select>
         </div>
-        <div class="form-field"><label>🔒 Password</label><input type="password" placeholder="Password banayein"/></div>
+        <div class="form-field"><label>🔒 Password *</label><input type="password" id="signupPass" placeholder="Strong password banayein (min 6)"/></div>
+        <div class="form-field"><label>🔒 Password Confirm *</label><input type="password" id="signupPass2" placeholder="Password dobara daalein"/></div>
         <button class="btn-login" onclick="doSignup()">✅ Account Banao</button>
+        <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--gray);">Pehle se account hai? <a href="#" onclick="switchTab('login')" style="color:var(--orange);font-weight:600;">Login Karo</a></p>
       </div>
 
-      <p style="text-align:center; margin-top:18px; font-size:13px; color:var(--gray);">
-        <a href="../index.html" style="color:var(--orange); text-decoration:none; font-weight:600;">← Wapas Home par Jao</a>
+      <p style="text-align:center;margin-top:18px;font-size:13px;color:var(--gray);">
+        <a href="../index.html" style="color:var(--orange);text-decoration:none;font-weight:600;">← Wapas Home par Jao</a>
       </p>
     </div>
   </div>
 
   <script src="../script.js"></script>
   <script>
+    const { createClient } = supabase;
+    const sb = createClient(
+      'https://ddgwdesqicrneikxrcnj.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZ3dkZXNxaWNybmVpa3hyY25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3Mzc1MTksImV4cCI6MjA4OTMxMzUxOX0.AFH7Sfat5XnYFYocdbjZlYhL5iLG1dO6wXm_FHycAqo'
+    );
+
     function switchTab(tab) {
-      document.querySelectorAll('.login-tab').forEach((t, i) => t.classList.toggle('active', (i === 0 && tab === 'login') || (i === 1 && tab === 'signup')));
-      document.getElementById('loginForm').classList.toggle('hide', tab !== 'login');
-      document.getElementById('signupForm').classList.toggle('show', tab === 'signup');
+      document.querySelectorAll('.login-tab').forEach((t,i) => t.classList.toggle('active',(i===0&&tab==='login')||(i===1&&tab==='signup')));
+      document.getElementById('loginForm').style.display = tab==='login'?'block':'none';
+      document.getElementById('signupForm').classList.toggle('show', tab==='signup');
     }
-    function doLogin() { showToast('✅ Login ho gaya! Welcome back 👋'); setTimeout(() => window.location.href = '../index.html', 1500); }
-    function doSignup() { showToast('🎉 Account ban gaya! Welcome to NirmanX'); setTimeout(() => window.location.href = '../index.html', 1500); }
-    function waLogin() { window.open('https://wa.me/919654171005?text=Mujhe NirmanX account access chahiye', '_blank'); }
+
+    async function doSignup() {
+      const name = document.getElementById('signupName').value.trim();
+      const phone = document.getElementById('signupPhone').value.trim();
+      const city = document.getElementById('signupCity').value;
+      const pass = document.getElementById('signupPass').value;
+      const pass2 = document.getElementById('signupPass2').value;
+
+      if(!name||!phone||!city||!pass){showToast('⚠️ Saari fields fill karein!');return;}
+      if(pass!==pass2){showToast('❌ Passwords match nahi kar rahe!');return;}
+      if(pass.length<6){showToast('⚠️ Password min 6 characters ka hona chahiye!');return;}
+
+      const btn = document.querySelectorAll('.btn-login')[1];
+      btn.textContent='⏳ Account ban raha hai...';
+      btn.disabled=true;
+
+      // Check if phone already exists
+      const {data:existing} = await sb.from('customers').select('phone').eq('phone',phone);
+      if(existing&&existing.length>0){
+        showToast('❌ Ye phone number pehle se registered hai!');
+        btn.textContent='✅ Account Banao';
+        btn.disabled=false;
+        return;
+      }
+
+      const {error} = await sb.from('customers').insert([{
+        full_name: name,
+        phone: phone,
+        password: pass,
+        city: city
+      }]);
+
+      if(error){
+        showToast('❌ Error: '+error.message);
+        btn.textContent='✅ Account Banao';
+        btn.disabled=false;
+        return;
+      }
+
+      localStorage.setItem('nx_user', JSON.stringify({name, phone, city}));
+      document.getElementById('welcomeName').textContent = 'Namaste ' + name + '! Aapka account ban gaya hai. 🎉';
+      document.getElementById('welcomePopup').classList.add('show');
+    }
+
+    async function doLogin() {
+      const phone = document.getElementById('loginPhone').value.trim();
+      const pass = document.getElementById('loginPass').value;
+
+      if(!phone||!pass){showToast('⚠️ Phone aur password daalein!');return;}
+
+      const btn = document.querySelector('.btn-login');
+      btn.textContent='⏳ Login ho raha hai...';
+      btn.disabled=true;
+
+      const {data,error} = await sb.from('customers').select('*').eq('phone',phone).eq('password',pass);
+
+      if(error||!data||data.length===0){
+        showToast('❌ Phone ya password galat hai!');
+        btn.textContent='🔓 Login Karo';
+        btn.disabled=false;
+        return;
+      }
+
+      const user = data[0];
+      localStorage.setItem('nx_user', JSON.stringify({name:user.full_name, phone:user.phone, city:user.city}));
+      document.getElementById('welcomeName').textContent = 'Namaste ' + user.full_name + '! Welcome back NirmanX par! 🎉';
+      document.getElementById('welcomePopup').classList.add('show');
+    }
+
+    function closeWelcome() {
+      document.getElementById('welcomePopup').classList.remove('show');
+      window.location.href = '../index.html';
+    }
   </script>
 </body>
 </html>
