@@ -6,93 +6,503 @@
   <title>Seller Register – NirmanX</title>
   <link rel="stylesheet" href="../style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    .page-hero { background: linear-gradient(135deg, #1A1208, #2D2010); padding: 50px 24px; text-align: center; }
-    .page-hero h1 { font-family: 'Baloo 2'; font-size: 38px; font-weight: 800; color: white; }
-    .page-hero h1 span { color: var(--orange); }
-    .page-hero p { color: #C4B5A5; margin-top: 10px; font-size: 16px; }
-    .seller-page { max-width: 1100px; margin: 50px auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
-    .seller-benefits h2 { font-family: 'Baloo 2'; font-size: 26px; font-weight: 800; margin-bottom: 22px; }
-    .seller-benefits h2 span { color: var(--orange); }
-    .benefit-card { background: white; border: 1.5px solid var(--border); border-radius: 14px; padding: 18px; display: flex; gap: 14px; align-items: flex-start; margin-bottom: 13px; transition: all .2s; }
-    .benefit-card:hover { border-color: var(--orange); transform: translateX(4px); }
-    .b-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--orange-light); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-    .benefit-card h4 { font-family: 'Baloo 2'; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-    .benefit-card p { font-size: 13px; color: var(--gray); line-height: 1.6; }
-    .seller-form { background: white; border: 2px solid var(--border); border-radius: 20px; padding: 30px; }
-    .seller-form h2 { font-family: 'Baloo 2'; font-size: 24px; font-weight: 800; margin-bottom: 22px; }
-    .seller-form h2 span { color: var(--orange); }
-    .form-field { margin-bottom: 15px; }
-    .form-field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 7px; }
-    .form-field input, .form-field select, .form-field textarea { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 14px; font-family: 'Hind'; font-size: 14px; outline: none; transition: border .2s; background: var(--light); }
-    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--orange); background: white; }
-    .form-field textarea { height: 90px; resize: vertical; }
-    .btn-register { width: 100%; background: var(--orange); color: white; border: none; border-radius: 12px; padding: 15px; font-family: 'Baloo 2'; font-size: 17px; font-weight: 700; cursor: pointer; transition: all .2s; }
-    .btn-register:hover { background: var(--orange-dark); transform: translateY(-1px); }
-    @media(max-width:700px) { .seller-page { grid-template-columns: 1fr; } }
+    .page-hero{background:linear-gradient(135deg,#1A1208,#2D2010);padding:50px 24px;text-align:center}
+    .page-hero h1{font-family:'Baloo 2';font-size:38px;font-weight:800;color:white}
+    .page-hero h1 span{color:var(--orange)}
+    .page-hero p{color:#C4B5A5;margin-top:10px;font-size:16px}
+    .seller-page{max-width:1100px;margin:40px auto;padding:0 24px;display:grid;grid-template-columns:1fr 1.2fr;gap:40px}
+    .seller-benefits h2{font-family:'Baloo 2';font-size:24px;font-weight:800;margin-bottom:18px}
+    .seller-benefits h2 span{color:var(--orange)}
+    .benefit-card{background:white;border:1.5px solid var(--border);border-radius:14px;padding:16px;display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;transition:all .2s}
+    .benefit-card:hover{border-color:var(--orange);transform:translateX(3px)}
+    .b-icon{width:42px;height:42px;border-radius:11px;background:var(--orange-light);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+    .benefit-card h4{font-family:'Baloo 2';font-size:15px;font-weight:700;margin-bottom:3px}
+    .benefit-card p{font-size:13px;color:var(--gray);line-height:1.5}
+    .biz-model{background:linear-gradient(135deg,#1A1208,#2D2010);border-radius:16px;padding:20px;margin-top:16px}
+    .biz-model h4{font-family:'Baloo 2';font-size:15px;font-weight:800;color:var(--orange);margin-bottom:14px;text-align:center}
+    .biz-step{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px 14px;color:white;font-size:14px;font-weight:600;text-align:center;margin-bottom:6px}
+    .biz-arrow{text-align:center;color:#C4B5A5;font-size:16px;margin-bottom:6px}
+    .biz-step.active{background:var(--orange);border-color:var(--orange)}
+    .seller-form{background:white;border:2px solid var(--border);border-radius:20px;padding:28px}
+    .step-header{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:white;font-family:'Baloo 2';font-size:15px;font-weight:700;padding:10px 16px;border-radius:10px;margin:18px 0 14px;display:flex;align-items:center;gap:8px}
+    .form-field{margin-bottom:13px}
+    .form-field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--dark)}
+    .form-field input,.form-field select,.form-field textarea{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:11px 13px;font-family:'Hind';font-size:14px;outline:none;transition:border .2s;background:var(--light);color:var(--black)}
+    .form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--orange);background:white}
+    .form-field textarea{height:75px;resize:vertical}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    .photo-area{border:2.5px dashed var(--border);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all .3s;background:var(--light);position:relative}
+    .photo-area:hover{border-color:var(--orange);background:var(--orange-light)}
+    .photo-area input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .photo-area .upload-icon{font-size:32px;margin-bottom:8px}
+    .photo-area p{font-size:13px;color:var(--gray)}
+    .photo-area .upload-tip{font-size:12px;color:var(--orange);font-weight:600;margin-top:6px}
+    .photo-previews{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .preview-item{position:relative;width:80px;height:80px;border-radius:10px;overflow:hidden;border:2px solid var(--border)}
+    .preview-item img{width:100%;height:100%;object-fit:cover}
+    .preview-remove{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:#E74C3C;color:white;border:none;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center}
+    .offer-field{background:linear-gradient(135deg,#FFF3E8,#FFE8D0);border:2px solid var(--orange);border-radius:12px;padding:14px}
+    .offer-field label{color:var(--orange-dark)!important;font-weight:700!important}
+    .offer-field input{background:white!important}
+    .warning-box{background:#FEF3C7;border:1.5px solid #F59E0B;border-radius:10px;padding:12px 14px;margin-bottom:14px}
+    .warning-box p{font-size:12px;color:#92400E;line-height:1.6}
+    .btn-register{width:100%;background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:white;border:none;border-radius:12px;padding:16px;font-family:'Baloo 2';font-size:18px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:8px;box-shadow:0 6px 20px rgba(244,111,26,.4)}
+    .btn-register:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(244,111,26,.5)}
+    .btn-register:disabled{background:var(--gray);box-shadow:none;transform:none;cursor:not-allowed}
+    .success-box{display:none;background:linear-gradient(135deg,#D1FAE5,#A7F3D0);border:2px solid #27AE60;border-radius:16px;padding:28px;text-align:center;margin-top:20px}
+    .success-box .s-icon{font-size:56px;margin-bottom:12px}
+    .success-box h3{font-family:'Baloo 2';font-size:24px;color:#065F46;margin-bottom:10px}
+    .success-box p{color:#065F46;font-size:14px;line-height:1.8;margin-bottom:8px}
+    .reg-id-box{display:inline-block;background:white;border:2px solid #27AE60;border-radius:10px;padding:10px 20px;font-family:'Baloo 2';font-size:18px;font-weight:800;color:var(--orange);margin:12px 0}
+    .success-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+    @media(max-width:800px){.seller-page{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.form-row-3{grid-template-columns:1fr 1fr}}
   </style>
 </head>
 <body>
 
-  <div class="ticker-wrap"><div class="ticker"><span>🏭 1000+ Sellers Already Joined!</span><span>Free Registration — No Commission for 3 Months</span><span>10,000+ Buyers Ready to Order</span><span>🏭 1000+ Sellers Already Joined!</span><span>Free Registration — No Commission for 3 Months</span><span>10,000+ Buyers Ready to Order</span></div></div>
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>🏭 Seller Registration — Bilkul FREE!</span>
+    <span>Product Register Karo — Website Par Live Ho Jao</span>
+    <span>Factory • Wholesaler • Dealer • Distributor — Sab Welcome!</span>
+    <span>Customers Seedha Aapka Product Dekh Kar Buy Karenge</span>
+    <span>🏭 Seller Registration — Bilkul FREE!</span>
+    <span>Product Register Karo — Website Par Live Ho Jao</span>
+  </div>
+</div>
 
-  <nav>
-    <div class="nav-inner">
-      <a href="../index.html" class="logo">Nirman<span>X</span></a>
-      <div class="nav-links" id="navLinks">
-        <a href="../index.html">🏠 Home</a>
-        <a href="products.html">📦 Products</a>
-        <a href="contact.html">📞 Contact</a>
-        <a href="login.html">👤 Login</a>
-        <a href="cart.html" class="nav-cta">🛒 Cart</a>
-      </div>
-      <button class="hamburger" onclick="toggleNav()">☰</button>
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="logo">Nirman<span>X</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="../index.html">🏠 Home</a>
+      <a href="products.html">📦 Products</a>
+      <a href="contact.html">📞 Contact</a>
+      <a href="login.html">👤 Login</a>
+      <a href="cart.html" class="nav-cta">🛒 Cart</a>
     </div>
-  </nav>
+    <button class="hamburger" onclick="toggleNav()">☰</button>
+  </div>
+</nav>
 
-  <div class="page-hero">
-    <h1>NirmanX par <span>Becho & Badhao</span></h1>
-    <p>10,000+ buyers tak pahuncho — free mein register karo aaj hi!</p>
+<div class="page-hero">
+  <h1>NirmanX par <span>Seller Bano</span></h1>
+  <p>Apna material list karo — customers tak pahuncho — free mein register karo! 🚀</p>
+</div>
+
+<div class="seller-page">
+
+  <!-- LEFT BENEFITS -->
+  <div class="seller-benefits">
+    <h2>Seller Banne ke <span>Fayde</span></h2>
+
+    <div class="benefit-card">
+      <div class="b-icon">👁️</div>
+      <div><h4>Product Website Par Dikhega</h4><p>Register karte hi product website par live — customers seedha dekh kar buy karenge.</p></div>
+    </div>
+    <div class="benefit-card">
+      <div class="b-icon">👥</div>
+      <div><h4>Hazaaron Customers</h4><p>Delhi NCR ke active buyers tak pahuncho — koi marketing nahi chahiye.</p></div>
+    </div>
+    <div class="benefit-card">
+      <div class="b-icon">💰</div>
+      <div><h4>Zero Commission — 3 Mahine</h4><p>Pehle 3 mahine bilkul free — sirf orders aate rahenge!</p></div>
+    </div>
+    <div class="benefit-card">
+      <div class="b-icon">🔒</div>
+      <div><h4>Privacy Protected</h4><p>Aapka naam/number customers ko nahi dikhega — sirf product dikhega.</p></div>
+    </div>
+    <div class="benefit-card">
+      <div class="b-icon">💳</div>
+      <div><h4>Fast Payment</h4><p>Har order ka payment 24-48 ghante mein bank account mein.</p></div>
+    </div>
+
+    <!-- BUSINESS MODEL -->
+    <div class="biz-model">
+      <h4>🏭 Hamara Business Model</h4>
+      <div class="biz-step">🏭 Factory / Manufacturer</div>
+      <div class="biz-arrow">↓</div>
+      <div class="biz-step">🏪 Wholesaler / Distributor</div>
+      <div class="biz-arrow">↓</div>
+      <div class="biz-step">🤝 Dealer / Supplier (Aap)</div>
+      <div class="biz-arrow">↓</div>
+      <div class="biz-step active">🌐 NirmanX Platform</div>
+      <div class="biz-arrow">↓</div>
+      <div class="biz-step">👤 Customer → Buy Karta Hai</div>
+    </div>
   </div>
 
-  <div class="seller-page">
-    <div class="seller-benefits">
-      <h2>Seller Banne ke <span>Fayde</span></h2>
-      <div class="benefit-card"><div class="b-icon">👥</div><div><h4>10,000+ Buyers</h4><p>Delhi NCR ke hazaaron active buyers tak seedha pahuncho.</p></div></div>
-      <div class="benefit-card"><div class="b-icon">💰</div><div><h4>Zero Commission</h4><p>Pehle 3 mahine bilkul free — koi bhi commission nahi.</p></div></div>
-      <div class="benefit-card"><div class="b-icon">📱</div><div><h4>Easy Dashboard</h4><p>Mobile se apna stock aur orders manage karo asaani se.</p></div></div>
-      <div class="benefit-card"><div class="b-icon">🚚</div><div><h4>Delivery Support</h4><p>Humari delivery team aapke orders deliver karegi.</p></div></div>
-      <div class="benefit-card"><div class="b-icon">💳</div><div><h4>Fast Payments</h4><p>Har order ka payment 24-48 ghante mein aapke account mein.</p></div></div>
-      <div class="benefit-card"><div class="b-icon">📊</div><div><h4>Sales Analytics</h4><p>Apni sales, reviews aur performance track karo.</p></div></div>
+  <!-- RIGHT FORM -->
+  <div class="seller-form">
+    <div style="font-family:'Baloo 2';font-size:22px;font-weight:800;margin-bottom:4px">Register Karo <span style="color:var(--orange)">— Free!</span></div>
+    <p style="color:var(--gray);font-size:13px;margin-bottom:4px">Form bharo → Product turant website par live ho jayega ✅</p>
+
+    <!-- STEP 1 — SELLER INFO -->
+    <div class="step-header">👤 STEP 1 — Aapki Business Details</div>
+
+    <div class="form-field">
+      <label>🏭 Business / Company / Dukaan ka Naam *</label>
+      <input type="text" id="businessName" placeholder="Jaise: Sharma Building Materials Pvt Ltd"/>
+    </div>
+    <div class="form-field">
+      <label>👤 Owner / Manager ka Naam *</label>
+      <input type="text" id="ownerName" placeholder="Aapka poora naam"/>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label>📱 WhatsApp Number *</label>
+        <input type="tel" id="sellerPhone" placeholder="+91 XXXXX XXXXX" maxlength="13"/>
+      </div>
+      <div class="form-field">
+        <label>📧 Email Address</label>
+        <input type="email" id="sellerEmail" placeholder="email@example.com"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label>📍 Aapka Shehar *</label>
+        <select id="sellerCity">
+          <option value="">Shehar chuno</option>
+          <option>Delhi</option>
+          <option>Noida</option>
+          <option>Greater Noida</option>
+          <option>Gurugram</option>
+          <option>Ghaziabad</option>
+          <option>Faridabad</option>
+          <option>Meerut</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>🏢 Aap Kaun Hain? *</label>
+        <select id="sellerType">
+          <option value="">Select karo</option>
+          <option>Factory / Manufacturer</option>
+          <option>Wholesaler</option>
+          <option>Distributor</option>
+          <option>Dealer</option>
+          <option>Supplier</option>
+          <option>Retailer</option>
+        </select>
+      </div>
     </div>
 
-    <div class="seller-form">
-      <h2>Seller <span>Register Karo</span></h2>
-      <div class="form-field"><label>🏭 Company / Dukaan ka Naam</label><input type="text" placeholder="Jaise: Sharma Building Materials"/></div>
-      <div class="form-field"><label>👤 Owner ka Naam</label><input type="text" placeholder="Aapka poora naam"/></div>
-      <div class="form-field"><label>📱 WhatsApp Number</label><input type="tel" placeholder="+91 XXXXX XXXXX"/></div>
-      <div class="form-field"><label>📧 Email Address</label><input type="email" placeholder="email@example.com"/></div>
-      <div class="form-field"><label>📍 Shehar / Area</label>
-        <select><option>Delhi</option><option>Noida</option><option>Greater Noida</option><option>Gurugram</option><option>Ghaziabad</option></select>
+    <!-- STEP 2 — PRODUCT INFO -->
+    <div class="step-header">📦 STEP 2 — Product Details (Website Par Dikhega)</div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label>🏗️ Category *</label>
+        <select id="sellerCategory" onchange="updateSubcat()">
+          <option value="">Category chuno</option>
+          <option value="cement">🏗️ Cement</option>
+          <option value="steel">⚙️ Steel / TMT Sariya</option>
+          <option value="bricks">🧱 Bricks / Eent</option>
+          <option value="tiles">🪟 Tiles / Farshi</option>
+          <option value="sand">🪣 Sand / Baalu</option>
+          <option value="paint">🎨 Paint</option>
+          <option value="hardware">🔩 Hardware</option>
+          <option value="plumbing">🪛 Plumbing</option>
+        </select>
       </div>
-      <div class="form-field"><label>🏗️ Aap Kya Bechte Hain?</label>
-        <select><option>Cement</option><option>Steel / TMT Sariya</option><option>Bricks / Eent</option><option>Tiles / Farshi</option><option>Sand / Baalu</option><option>Paint</option><option>Multiple Materials</option></select>
+      <div class="form-field">
+        <label>📋 Product Type *</label>
+        <select id="prodSubcat">
+          <option value="">Pehle category chuno</option>
+        </select>
       </div>
-      <div class="form-field"><label>💬 Kuch Aur Batana Chahte Hain?</label><textarea placeholder="Aapki company ke baare mein thoda batayein..."></textarea></div>
-      <button class="btn-register" onclick="registerSeller()">🚀 Free Register Karo!</button>
     </div>
-  </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label>🏷️ Brand Name *</label>
+        <input type="text" id="brandName" placeholder="Jaise: UltraTech, TATA"/>
+      </div>
+      <div class="form-field">
+        <label>📦 Product Ka Naam *</label>
+        <input type="text" id="productName" placeholder="Jaise: PPC Cement 50kg Bag"/>
+      </div>
+    </div>
+    <div class="form-field">
+      <label>📋 Product Specs / Details</label>
+      <input type="text" id="productSpecs" placeholder="Jaise: 50 Kg, OPC 53 Grade, ISI Certified"/>
+    </div>
 
-  <div class="wa-float">
-    <div class="wa-bubble" id="waBubble">💬 <strong>Seller banne mein help?</strong></div>
-    <a href="https://wa.me/919654171005?text=Main NirmanX par seller banana chahta hoon" target="_blank" class="wa-btn" id="waBtn">💬</a>
-  </div>
+    <!-- PRICE -->
+    <div class="step-header">💰 STEP 3 — Price & Offer</div>
 
-  <script src="../script.js"></script>
-  <script>
-    function registerSeller() {
-      showToast('🎉 Registration ho gaya! Hum 24 ghante mein call karenge.');
+    <div class="form-row-3">
+      <div class="form-field">
+        <label>💰 Price (₹) *</label>
+        <input type="number" id="productPrice" placeholder="Jaise: 380" min="1"/>
+      </div>
+      <div class="form-field">
+        <label>📏 Unit *</label>
+        <select id="productUnit">
+          <option>Per Bag</option>
+          <option>Per Kg</option>
+          <option>Per Ton</option>
+          <option>Per Piece</option>
+          <option>Per Sqft</option>
+          <option>Per CFT</option>
+          <option>Per Bucket</option>
+          <option>Per Litre</option>
+          <option>Per Bundle</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>🔖 Discount %</label>
+        <input type="number" id="productDiscount" placeholder="Jaise: 10" min="0" max="90"/>
+      </div>
+    </div>
+
+    <!-- TODAY'S OFFER -->
+    <div class="offer-field form-field">
+      <label>🔥 Today's Special Offer (Optional)</label>
+      <input type="text" id="todayOffer" placeholder="Jaise: Buy 50 bags get 2 free! Ya: Aaj sirf ₹350/bag"/>
+    </div>
+
+    <!-- DELIVERY & STOCK -->
+    <div class="step-header">🚚 STEP 4 — Delivery & Stock</div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label>🚚 Delivery Time *</label>
+        <select id="deliveryTime">
+          <option>Same Day</option>
+          <option>24 Ghante Mein</option>
+          <option>2-3 Din Mein</option>
+          <option>3-5 Din Mein</option>
+          <option>5-7 Din Mein</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>📦 Minimum Order *</label>
+        <input type="text" id="minOrder" placeholder="Jaise: 10 bags ya 100 kg"/>
+      </div>
+    </div>
+    <div class="form-field">
+      <label>📊 Stock Available</label>
+      <input type="text" id="productStock" placeholder="Jaise: 500 bags available hai"/>
+    </div>
+
+    <!-- PHOTO UPLOAD -->
+    <div class="step-header">📸 STEP 5 — Product Photo</div>
+
+    <div class="photo-area" id="photoArea">
+      <input type="file" id="photoInput" multiple accept="image/*" onchange="handlePhotos(event)"/>
+      <div class="upload-icon">📷</div>
+      <p>Photos click karke ya drag & drop karo</p>
+      <p class="upload-tip">💡 Clear photo se zyada customers attract hote hain! (Max 4 photos)</p>
+    </div>
+    <div class="photo-previews" id="photoPreviews"></div>
+
+    <!-- DESCRIPTION -->
+    <div class="step-header">📝 STEP 6 — Description</div>
+
+    <div class="form-field">
+      <label>📝 Product Description (Optional)</label>
+      <textarea id="productDesc" placeholder="Product ke baare mein batao — quality, features, uses, kahan use hoga..."></textarea>
+    </div>
+
+    <div class="warning-box">
+      <p>⚠️ <strong>Zaroori:</strong> Description ya kisi bhi field mein apna <strong>naam, phone number ya address mat likhna</strong>. Likha to product reject hoga. Customer sirf NirmanX ke through order karega — aapka business safe rahega. 🔒</p>
+    </div>
+
+    <button class="btn-register" id="regBtn" onclick="registerSeller()">
+      🚀 Register Karo — Product Live Karo!
+    </button>
+
+    <!-- SUCCESS -->
+    <div class="success-box" id="successBox">
+      <div class="s-icon">🎉</div>
+      <h3>Registration Ho Gaya!</h3>
+      <p>Aapka product <strong>website par live ho gaya!</strong><br>
+      Customers ab aapka product dekh kar order kar sakte hain.</p>
+      <p>NirmanX team <strong>24 ghante mein</strong> aapko WhatsApp par contact karegi.</p>
+      <div class="reg-id-box" id="regIdBox">NX-XXXXXX</div>
+      <p style="font-size:12px;color:#065F46">⬆️ Ye Registration ID save kar lo — support ke liye kaam aayega</p>
+      <div class="success-btns">
+        <a href="products.html" style="background:var(--orange);color:white;padding:12px 24px;border-radius:25px;text-decoration:none;font-family:'Baloo 2';font-weight:700;font-size:15px">👁️ Website Par Dekho</a>
+        <a href="seller-dashboard.html" style="background:var(--dark);color:white;padding:12px 24px;border-radius:25px;text-decoration:none;font-family:'Baloo 2';font-weight:700;font-size:15px">📊 Seller Dashboard</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- WA FLOAT -->
+<div class="wa-float">
+  <div class="wa-bubble" id="waBubble">💬 <strong>Seller banne mein help?</strong><br><small>+91 96541 71005</small></div>
+  <a href="https://wa.me/919654171005?text=Namaste! Main NirmanX par seller banana chahta hoon." target="_blank" class="wa-btn" id="waBtn">💬</a>
+</div>
+<div class="call-float">
+  <a href="tel:+919654171005" class="call-btn">📞 Help Chahiye?</a>
+</div>
+
+<script src="../script.js"></script>
+<script>
+  const { createClient } = supabase;
+  const sb = createClient(
+    'https://ddgwdesqicrneikxrcnj.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZ3dkZXNxaWNybmVpa3hyY25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3Mzc1MTksImV4cCI6MjA4OTMxMzUxOX0.AFH7Sfat5XnYFYocdbjZlYhL5iLG1dO6wXm_FHycAqo'
+  );
+
+  // Photo upload
+  let uploadedPhotos = [];
+
+  function handlePhotos(e) {
+    const files = Array.from(e.target.files);
+    if(uploadedPhotos.length + files.length > 4){
+      showToast('⚠️ Maximum 4 photos!'); return;
     }
-  </script>
+    files.forEach(file => {
+      if(file.size > 5*1024*1024){ showToast('⚠️ '+file.name+' bahut badi hai! Max 5MB'); return; }
+      const reader = new FileReader();
+      reader.onload = ev => {
+        uploadedPhotos.push(ev.target.result);
+        renderPreviews();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function renderPreviews() {
+    const c = document.getElementById('photoPreviews');
+    c.innerHTML = uploadedPhotos.map((src,i) => `
+      <div class="preview-item">
+        <img src="${src}"/>
+        <button class="preview-remove" onclick="removePhoto(${i})">×</button>
+      </div>`).join('');
+  }
+
+  function removePhoto(i) {
+    uploadedPhotos.splice(i,1);
+    renderPreviews();
+  }
+
+  // Subcategories
+  const subcats = {
+    cement:['PPC Cement','OPC 43 Grade','OPC 53 Grade','White Cement','Rapid Hardening Cement'],
+    steel:['TMT Bar Fe-500D','TMT Bar Fe-550D','Structural Steel','MS Plate','Angle Iron','Channel'],
+    bricks:['Red Brick First Class','Red Brick Second Class','AAC Block 150mm','AAC Block 100mm','Fly Ash Brick','Concrete Block'],
+    tiles:['Floor Tiles Vitrified','Wall Tiles','Bathroom Floor Tiles','Kitchen Wall Tiles','Outdoor Tiles','Mosaic Tiles'],
+    sand:['River Sand Fine','M-Sand Manufactured','Coarse Sand','Gitti Stone Aggregate'],
+    paint:['Interior Emulsion','Exterior Weathercoat','Primer','Wall Putty','Distemper','Enamel'],
+    hardware:['Nails & Screws','Nuts & Bolts','Wire Mesh','Door Hinges','Locks & Latches','Binding Wire'],
+    plumbing:['PVC Pipe','CPVC Pipe','GI Pipe','Fittings & Joints','Valves','Taps & Faucets']
+  };
+
+  function updateSubcat() {
+    const cat = document.getElementById('sellerCategory').value;
+    const sub = document.getElementById('prodSubcat');
+    sub.innerHTML = '<option value="">Type chuno</option>';
+    if(subcats[cat]) subcats[cat].forEach(s => {
+      const o = document.createElement('option');
+      o.value = s; o.textContent = s; sub.appendChild(o);
+    });
+  }
+
+  // MAIN REGISTER FUNCTION
+  async function registerSeller() {
+    const businessName = document.getElementById('businessName').value.trim();
+    const ownerName    = document.getElementById('ownerName').value.trim();
+    const phone        = document.getElementById('sellerPhone').value.trim();
+    const email        = document.getElementById('sellerEmail').value.trim();
+    const city         = document.getElementById('sellerCity').value;
+    const sellerType   = document.getElementById('sellerType').value;
+    const category     = document.getElementById('sellerCategory').value;
+    const subcat       = document.getElementById('prodSubcat').value;
+    const brandName    = document.getElementById('brandName').value.trim();
+    const productName  = document.getElementById('productName').value.trim();
+    const specs        = document.getElementById('productSpecs').value.trim();
+    const price        = document.getElementById('productPrice').value;
+    const unit         = document.getElementById('productUnit').value;
+    const discount     = document.getElementById('productDiscount').value || 0;
+    const todayOffer   = document.getElementById('todayOffer').value.trim();
+    const deliveryTime = document.getElementById('deliveryTime').value;
+    const minOrder     = document.getElementById('minOrder').value.trim();
+    const stock        = document.getElementById('productStock').value.trim();
+    const description  = document.getElementById('productDesc').value.trim();
+    const photoUrl     = uploadedPhotos[0] || '';
+
+    // Validation
+    if(!businessName){ showToast('⚠️ Business naam zaroori hai!'); return; }
+    if(!ownerName){ showToast('⚠️ Owner naam zaroori hai!'); return; }
+    if(!phone || phone.replace(/\D/g,'').length < 10){ showToast('⚠️ Valid phone number daalein!'); return; }
+    if(!city){ showToast('⚠️ Shehar select karo!'); return; }
+    if(!sellerType){ showToast('⚠️ Aap kaun hain ye select karo!'); return; }
+    if(!category){ showToast('⚠️ Category select karo!'); return; }
+    if(!brandName){ showToast('⚠️ Brand naam zaroori hai!'); return; }
+    if(!productName){ showToast('⚠️ Product naam zaroori hai!'); return; }
+    if(!price || parseFloat(price) <= 0){ showToast('⚠️ Valid price daalein!'); return; }
+    if(!minOrder){ showToast('⚠️ Minimum order quantity daalein!'); return; }
+
+    const btn = document.getElementById('regBtn');
+    btn.textContent = '⏳ Register ho raha hai...';
+    btn.disabled = true;
+
+    try {
+      // 1 — Seller save karo
+      const { data: sellerData, error: sellerErr } = await sb
+        .from('sellers')
+        .insert([{
+          business_name: businessName,
+          owner_name: ownerName,
+          phone: phone,
+          email: email,
+          city: city,
+          whatsapp: phone
+        }])
+        .select();
+
+      if(sellerErr) throw sellerErr;
+
+      // 2 — Product save karo — website par live hoga
+      const { error: prodErr } = await sb.from('products').insert([{
+        seller_id: sellerData[0].id,
+        seller_phone: phone,
+        category: category,
+        brand_name: brandName,
+        product_name: productName,
+        specs: specs || subcat,
+        price: parseFloat(price),
+        unit: unit,
+        discount: parseFloat(discount),
+        offer_text: todayOffer,
+        min_order: minOrder,
+        stock: stock,
+        delivery_time: deliveryTime,
+        photo_url: photoUrl,
+        status: 'active'
+      }]);
+
+      if(prodErr) throw prodErr;
+
+      // Save seller locally
+      localStorage.setItem('nx_seller', JSON.stringify({
+        name: businessName,
+        phone: phone,
+        city: city,
+        type: sellerType
+      }));
+
+      // Registration ID
+      const regId = 'NX-S-' + Date.now().toString().slice(-6);
+      document.getElementById('regIdBox').textContent = regId;
+      document.getElementById('successBox').style.display = 'block';
+      document.getElementById('successBox').scrollIntoView({behavior:'smooth'});
+      showToast('🎉 Registration successful! Product live ho gaya!');
+
+    } catch(err) {
+      console.error(err);
+      showToast('❌ Error: ' + err.message);
+      btn.textContent = '🚀 Register Karo — Product Live Karo!';
+      btn.disabled = false;
+    }
+  }
+</script>
 </body>
 </html>
