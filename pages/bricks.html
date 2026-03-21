@@ -1,35 +1,36 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="hi">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bricks / Eent – NirmanX</title>
+  <title>Bricks – NirmanX</title>
   <link rel="stylesheet" href="../style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    .page-hero { background: linear-gradient(135deg, #1A1208, #2D2010); padding: 44px 24px; text-align: center; }
-    .page-hero h1 { font-family: 'Baloo 2'; font-size: 38px; font-weight: 800; color: white; }
-    .page-hero h1 span { color: var(--orange); }
-    .page-hero p { color: #C4B5A5; margin-top: 8px; }
-    .hero-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
-    .hero-tag { background: rgba(244,111,26,.2); border: 1px solid rgba(244,111,26,.4); color: #FFA05A; font-size: 13px; font-weight: 600; padding: 5px 14px; border-radius: 20px; }
-    .prod-page { max-width: 1200px; margin: 44px auto; padding: 0 24px; }
-    .brand-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
-    .brand-btn { background: white; border: 2px solid var(--border); color: var(--dark); font-family: 'Hind'; font-size: 14px; font-weight: 600; padding: 9px 20px; border-radius: 25px; cursor: pointer; transition: all .2s; }
-    .brand-btn.active, .brand-btn:hover { background: var(--orange); border-color: var(--orange); color: white; }
-    .info-box { background: var(--orange-light); border: 1.5px solid var(--border); border-radius: 16px; padding: 20px 24px; margin-bottom: 28px; display: flex; gap: 20px; flex-wrap: wrap; }
-    .info-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
-    .info-item span { font-size: 20px; }
-    .bulk-cta { background: linear-gradient(135deg, var(--orange), var(--orange-dark)); border-radius: 18px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 36px; }
-    .bulk-cta h3 { font-family: 'Baloo 2'; font-size: 22px; font-weight: 800; color: white; }
-    .bulk-cta p { color: rgba(255,255,255,.85); font-size: 14px; margin-top: 4px; }
-    .bulk-cta a { background: white; color: var(--orange); font-family: 'Baloo 2'; font-size: 15px; font-weight: 800; padding: 12px 26px; border-radius: 25px; text-decoration: none; white-space: nowrap; transition: all .2s; }
-    .bulk-cta a:hover { transform: scale(1.03); }
+    .page-hero{background:linear-gradient(135deg,#1A1208,#2D2010);padding:44px 24px;text-align:center}
+    .page-hero h1{font-family:'Baloo 2';font-size:38px;font-weight:800;color:white}
+    .page-hero h1 span{color:var(--orange)}
+    .page-hero p{color:#C4B5A5;margin-top:8px}
+    .hero-tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+    .hero-tag{background:rgba(244,111,26,.2);border:1px solid rgba(244,111,26,.4);color:#FFA05A;font-size:13px;font-weight:600;padding:5px 14px;border-radius:20px}
+    .prod-page{max-width:1200px;margin:40px auto;padding:0 24px}
+    .brand-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+    .brand-btn{background:white;border:2px solid var(--border);color:var(--dark);font-family:'Hind';font-size:14px;font-weight:600;padding:8px 18px;border-radius:25px;cursor:pointer;transition:all .2s}
+    .brand-btn.active,.brand-btn:hover{background:var(--orange);border-color:var(--orange);color:white}
+    .info-box{background:var(--orange-light);border:1.5px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:24px;display:flex;gap:20px;flex-wrap:wrap}
+    .info-item{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+    .bulk-cta{background:linear-gradient(135deg,var(--orange),var(--orange-dark));border-radius:18px;padding:22px 26px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:32px}
+    .bulk-cta h3{font-family:'Baloo 2';font-size:20px;font-weight:800;color:white}
+    .bulk-cta p{color:rgba(255,255,255,.85);font-size:14px;margin-top:4px}
+    .bulk-cta a{background:white;color:var(--orange);font-family:'Baloo 2';font-size:15px;font-weight:800;padding:12px 24px;border-radius:25px;text-decoration:none;white-space:nowrap}
+    .offer-badge{background:linear-gradient(135deg,#E74C3C,#C0392B);color:white;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;display:inline-block;margin-top:5px}
+    .min-order-txt{font-size:11px;color:var(--gray);margin-top:3px}
   </style>
 </head>
 <body>
 
-  <div class="ticker-wrap"><div class="ticker"><span>🧱 Red Bricks, AAC Block, Fly Ash — Sab Available</span><span>Minimum Order 500 Bricks</span><span>Bulk 10,000+ par Extra 10% Discount</span><span>Same Day Delivery Delhi NCR</span><span>🧱 Red Bricks, AAC Block, Fly Ash — Sab Available</span><span>Minimum Order 500 Bricks</span><span>Bulk 10,000+ par Extra 10% Discount</span><span>Same Day Delivery Delhi NCR</span></div></div>
+  <div class="ticker-wrap"><div class="ticker"><span>🧱 Red Bricks, AAC Block, Fly Ash Available</span><span>Min Order 500 Bricks</span><span>Bulk 10,000+ par Extra Discount</span><span>Same Day Delivery Delhi NCR</span><span>🧱 Red Bricks, AAC Block Available</span></div></div>
 
   <nav>
     <div class="nav-inner">
@@ -39,7 +40,8 @@
         <a href="products.html">📦 Products</a>
         <a href="track.html">🔄 Track Order</a>
         <a href="contact.html">📞 Contact</a>
-        <a href="login.html">👤 Login</a>
+        <a href="login.html" id="loginNavBtn">👤 Login</a>
+        <span id="userBadge" style="display:none;background:var(--orange);color:white;font-size:13px;font-weight:700;padding:6px 14px;border-radius:20px;cursor:pointer;" onclick="logoutUser()">👤 <span id="userName"></span> ✕</span>
         <a href="cart.html" class="nav-cta">🛒 Cart</a>
       </div>
       <button class="hamburger" onclick="toggleNav()">☰</button>
@@ -48,134 +50,38 @@
 
   <div class="page-hero">
     <h1>🧱 Bricks / <span>Eent</span></h1>
-    <p>Red Bricks, AAC Blocks, Fly Ash Bricks — sabhi types available</p>
+    <p>Red Bricks, AAC Blocks, Fly Ash — sabhi types available</p>
     <div class="hero-tags">
-      <span class="hero-tag">✅ First Class Quality</span>
+      <span class="hero-tag">✅ First Class</span>
       <span class="hero-tag">🚚 Truck Delivery</span>
-      <span class="hero-tag">📦 500 se Bulk Order</span>
+      <span class="hero-tag">📦 500 se Bulk</span>
       <span class="hero-tag">💰 Best Rates</span>
     </div>
   </div>
 
   <div class="prod-page">
-
     <div class="info-box">
-      <div class="info-item"><span>🧱</span> Minimum order: 500 bricks</div>
-      <div class="info-item"><span>🚚</span> Truck delivery available</div>
-      <div class="info-item"><span>📦</span> 10,000+ bricks → Extra 10% off</div>
-      <div class="info-item"><span>✅</span> First Class certified only</div>
+      <div class="info-item">🧱 Min order: 500 bricks</div>
+      <div class="info-item">🚚 Truck delivery available</div>
+      <div class="info-item">📦 10,000+ bricks → Extra discount</div>
+      <div class="info-item">✅ First Class certified</div>
     </div>
 
-    <div class="brand-bar">
-      <button class="brand-btn active" onclick="filterBrand('all', this)">🏪 Sab Types</button>
-      <button class="brand-btn" onclick="filterBrand('red', this)">🧱 Red Bricks</button>
-      <button class="brand-btn" onclick="filterBrand('aac', this)">🔲 AAC Block</button>
-      <button class="brand-btn" onclick="filterBrand('flyash', this)">⬜ Fly Ash</button>
-      <button class="brand-btn" onclick="filterBrand('cco', this)">🟫 CCO Block</button>
+    <div class="brand-bar" id="brandBar">
+      <button class="brand-btn active" onclick="filterBrand('all',this)">🏪 Sab Types</button>
     </div>
 
     <div class="prod-grid" id="bricksGrid">
-
-      <div class="prod-card" data-brand="red">
-        <div class="prod-img">🧱<span class="badge-best">BESTSELLER</span><span class="badge-sale">-20%</span></div>
-        <div class="prod-body">
-          <div class="prod-brand">Local Premium</div>
-          <div class="prod-name">Red Bricks First Class</div>
-          <div class="prod-specs">9×4×3 inch • ISI Standard</div>
-          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.6 (432)</div>
-          <div class="prod-price"><span class="price-now">₹8</span><span class="price-old">₹10</span><span class="price-unit">/piece</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('Red Bricks First Class', 8)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe Red Bricks chahiye. Quantity batata hoon." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="red">
-        <div class="prod-img">🧱</div>
-        <div class="prod-body">
-          <div class="prod-brand">Premium Grade</div>
-          <div class="prod-name">Red Bricks Second Class</div>
-          <div class="prod-specs">9×4×3 inch • Good Quality</div>
-          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.3 (280)</div>
-          <div class="prod-price"><span class="price-now">₹6</span><span class="price-unit">/piece</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('Red Bricks Second Class', 6)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe Second Class Bricks chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="aac">
-        <div class="prod-img">🔲<span class="badge-best">POPULAR</span></div>
-        <div class="prod-body">
-          <div class="prod-brand">AAC Block</div>
-          <div class="prod-name">Lightweight AAC Block</div>
-          <div class="prod-specs">600×200×150 mm • Light Weight</div>
-          <div class="prod-rating"><span class="stars">★★★★★</span> 4.8 (310)</div>
-          <div class="prod-price"><span class="price-now">₹45</span><span class="price-unit">/piece</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('AAC Block 150mm', 45)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe AAC Block chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="aac">
-        <div class="prod-img">🔲</div>
-        <div class="prod-body">
-          <div class="prod-brand">AAC Block</div>
-          <div class="prod-name">AAC Block 100mm</div>
-          <div class="prod-specs">600×200×100 mm • Partition Wall</div>
-          <div class="prod-rating"><span class="stars">★★★★★</span> 4.7 (220)</div>
-          <div class="prod-price"><span class="price-now">₹32</span><span class="price-unit">/piece</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('AAC Block 100mm', 32)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe AAC Block 100mm chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="flyash">
-        <div class="prod-img">⬜<span class="badge-sale">-15%</span></div>
-        <div class="prod-body">
-          <div class="prod-brand">Fly Ash Brick</div>
-          <div class="prod-name">Fly Ash Brick Standard</div>
-          <div class="prod-specs">9×4×3 inch • Eco Friendly</div>
-          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.5 (190)</div>
-          <div class="prod-price"><span class="price-now">₹7</span><span class="price-old">₹8.5</span><span class="price-unit">/piece</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('Fly Ash Brick', 7)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe Fly Ash Bricks chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="cco">
-        <div class="prod-img">🟫</div>
-        <div class="prod-body">
-          <div class="prod-brand">CCO Block</div>
-          <div class="prod-name">Solid Concrete Block</div>
-          <div class="prod-specs">400×200×200 mm • Heavy Duty</div>
-          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.4 (145)</div>
-          <div class="prod-price"><span class="price-now">₹38</span><span class="price-unit">/piece</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('Solid Concrete Block', 38)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe Concrete Block chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
+      <div style="text-align:center;padding:40px;color:var(--gray);grid-column:1/-1">⏳ Products load ho rahe hain...</div>
     </div>
 
     <div class="bulk-cta">
       <div>
         <h3>🧱 10,000+ Bricks Chahiye?</h3>
-        <p>Truck mein delivery + extra 10% discount. Quote ke liye WhatsApp karo!</p>
+        <p>Truck delivery + extra discount. Quote ke liye WhatsApp karo!</p>
       </div>
-      <a href="https://wa.me/919654171005?text=Namaste! Mujhe bulk bricks order karne hain." target="_blank">💬 Bulk Quote Maango</a>
+      <a href="https://wa.me/919654171005?text=Mujhe bulk bricks order karne hain." target="_blank">💬 Bulk Quote Maango</a>
     </div>
-
   </div>
 
   <div class="wa-float">
@@ -186,13 +92,87 @@
 
   <script src="../script.js"></script>
   <script>
-    function filterBrand(brand, btn) {
-      document.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelectorAll('#bricksGrid .prod-card').forEach(card => {
-        card.style.display = (brand === 'all' || card.dataset.brand === brand) ? 'block' : 'none';
-      });
+    const { createClient } = supabase;
+    const sb = createClient(
+      'https://ddgwdesqicrneikxrcnj.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZ3dkZXNxaWNybmVpa3hyY25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3Mzc1MTksImV4cCI6MjA4OTMxMzUxOX0.AFH7Sfat5XnYFYocdbjZlYhL5iLG1dO6wXm_FHycAqo'
+    );
+
+    const nxUser=JSON.parse(localStorage.getItem('nx_user'));
+    if(nxUser){
+      const lb=document.getElementById('loginNavBtn');
+      const ub=document.getElementById('userBadge');
+      const un=document.getElementById('userName');
+      if(lb)lb.style.display='none';
+      if(ub)ub.style.display='inline-flex';
+      if(un)un.textContent=nxUser.name.split(' ')[0];
     }
+    function logoutUser(){localStorage.removeItem('nx_user');window.location.reload();}
+
+    let allProds=[];
+
+    async function loadBricks(){
+      const{data}=await sb.from('products').select('*').eq('category','bricks').eq('status','active').order('created_at',{ascending:false});
+      allProds=data||[];
+      const brands=[...new Set(allProds.map(p=>p.brand_name))];
+      const bar=document.getElementById('brandBar');
+      brands.forEach(b=>{
+        const btn=document.createElement('button');
+        btn.className='brand-btn';
+        btn.textContent=b;
+        btn.onclick=()=>filterBrand(b,btn);
+        bar.appendChild(btn);
+      });
+      renderProds(allProds);
+    }
+
+    function renderProds(prods){
+      const grid=document.getElementById('bricksGrid');
+      if(!prods||prods.length===0){
+        grid.innerHTML=`<div style="text-align:center;padding:50px;grid-column:1/-1">
+          <div style="font-size:50px;margin-bottom:12px">🧱</div>
+          <h3 style="font-family:'Baloo 2';margin-bottom:8px">Abhi Koi Product Nahi</h3>
+          <p style="color:var(--gray);margin-bottom:16px">Jald hi products add honge!</p>
+          <a href="https://wa.me/919654171005?text=Mujhe bricks chahiye" target="_blank" class="btn-primary" style="text-decoration:none">💬 WhatsApp Order</a>
+        </div>`;
+        return;
+      }
+      grid.innerHTML=prods.map(p=>{
+        const orig=p.discount>0?Math.round(p.price*100/(100-p.discount)):null;
+        const hasPhoto=p.photo_url&&p.photo_url.length>100;
+        return`<div class="prod-card">
+          <div class="prod-img" style="${hasPhoto?'padding:0':''}">
+            ${hasPhoto?`<img src="${p.photo_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='🧱'">`:'🧱'}
+            ${p.discount>0?`<span class="badge-sale">-${p.discount}%</span>`:''}
+            <span class="badge-best">${p.delivery_time||'Fast'}</span>
+          </div>
+          <div class="prod-body">
+            <div class="prod-brand">${p.brand_name}</div>
+            <div class="prod-name">${p.product_name}</div>
+            <div class="prod-specs">${p.specs||''}</div>
+            ${p.offer_text?`<div style="background:#E74C3C;color:white;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;display:inline-block;margin-top:5px">🔥 ${p.offer_text}</div>`:''}
+            ${p.min_order?`<div style="font-size:11px;color:var(--gray);margin-top:3px">📦 Min: ${p.min_order}</div>`:''}
+            <div class="prod-price">
+              <span class="price-now">₹${parseFloat(p.price).toLocaleString('en-IN')}</span>
+              ${orig?`<span class="price-old">₹${orig.toLocaleString('en-IN')}</span>`:''}
+              <span class="price-unit">${p.unit||''}</span>
+            </div>
+            <div class="prod-actions">
+              <button class="btn-cart" onclick="addToCart('${p.product_name.replace(/'/g,"\\'")}',${p.price})">🛒 Cart</button>
+              <a href="https://wa.me/919654171005?text=Mujhe ${encodeURIComponent(p.product_name)} chahiye" target="_blank" class="btn-wa">💬</a>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function filterBrand(brand,btn){
+      document.querySelectorAll('.brand-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProds(brand==='all'?allProds:allProds.filter(p=>p.brand_name===brand));
+    }
+
+    loadBricks();
   </script>
 </body>
 </html>

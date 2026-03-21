@@ -6,40 +6,40 @@
   <title>Contact – NirmanX</title>
   <link rel="stylesheet" href="../style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    .page-hero { background: linear-gradient(135deg, #1A1208, #2D2010); padding: 40px 24px; text-align: center; }
-    .page-hero h1 { font-family: 'Baloo 2'; font-size: 36px; font-weight: 800; color: white; }
-    .page-hero h1 span { color: var(--orange); }
-    .page-hero p { color: #C4B5A5; margin-top: 8px; }
-    .contact-page { max-width: 1100px; margin: 50px auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-    .contact-info h2 { font-family: 'Baloo 2'; font-size: 26px; font-weight: 800; margin-bottom: 24px; }
-    .contact-info h2 span { color: var(--orange); }
-    .contact-card { background: white; border: 1.5px solid var(--border); border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 16px; margin-bottom: 14px; transition: all .2s; }
-    .contact-card:hover { border-color: var(--orange); transform: translateX(4px); }
-    .contact-card .c-icon { width: 50px; height: 50px; border-radius: 13px; background: var(--orange-light); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
-    .contact-card h4 { font-family: 'Baloo 2'; font-size: 15px; font-weight: 700; margin-bottom: 3px; }
-    .contact-card p { font-size: 14px; color: var(--gray); }
-    .contact-card a { color: var(--orange); text-decoration: none; font-weight: 600; }
-    .contact-form { background: white; border: 1.5px solid var(--border); border-radius: 20px; padding: 30px; }
-    .contact-form h2 { font-family: 'Baloo 2'; font-size: 24px; font-weight: 800; margin-bottom: 22px; }
-    .contact-form h2 span { color: var(--orange); }
-    .form-field { margin-bottom: 16px; }
-    .form-field label { display: block; font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 7px; }
-    .form-field input, .form-field select, .form-field textarea { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 14px; font-family: 'Hind'; font-size: 14px; color: var(--black); outline: none; transition: border .2s; background: var(--light); }
-    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--orange); background: white; }
-    .form-field textarea { height: 110px; resize: vertical; }
-    .btn-submit { width: 100%; background: var(--orange); color: white; border: none; border-radius: 12px; padding: 14px; font-family: 'Baloo 2'; font-size: 17px; font-weight: 700; cursor: pointer; transition: all .2s; margin-top: 4px; }
-    .btn-submit:hover { background: var(--orange-dark); transform: translateY(-1px); }
-    .wa-contact { background: linear-gradient(135deg, #25D366, #128C7E); border-radius: 16px; padding: 20px; text-align: center; margin-top: 14px; }
-    .wa-contact p { color: white; font-weight: 600; margin-bottom: 12px; }
-    .wa-contact a { background: white; color: #25D366; font-family: 'Baloo 2'; font-size: 15px; font-weight: 800; padding: 11px 26px; border-radius: 25px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all .2s; }
-    .wa-contact a:hover { transform: scale(1.03); }
-    @media(max-width:700px) { .contact-page { grid-template-columns: 1fr; } }
+    .page-hero{background:linear-gradient(135deg,#1A1208,#2D2010);padding:44px 24px;text-align:center}
+    .page-hero h1{font-family:'Baloo 2';font-size:36px;font-weight:800;color:white}
+    .page-hero h1 span{color:var(--orange)}
+    .page-hero p{color:#C4B5A5;margin-top:8px}
+    .contact-page{max-width:1100px;margin:50px auto;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:40px}
+    .contact-info h2{font-family:'Baloo 2';font-size:26px;font-weight:800;margin-bottom:22px}
+    .contact-info h2 span{color:var(--orange)}
+    .contact-card{background:white;border:1.5px solid var(--border);border-radius:16px;padding:18px;display:flex;align-items:center;gap:16px;margin-bottom:14px;transition:all .2s;text-decoration:none;color:var(--black)}
+    .contact-card:hover{border-color:var(--orange);transform:translateX(4px)}
+    .c-icon{width:48px;height:48px;border-radius:12px;background:var(--orange-light);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+    .contact-card h4{font-family:'Baloo 2';font-size:15px;font-weight:700;margin-bottom:3px}
+    .contact-card p{font-size:14px;color:var(--gray)}
+    .contact-card a{color:var(--orange);text-decoration:none;font-weight:600}
+    .contact-form{background:white;border:1.5px solid var(--border);border-radius:20px;padding:28px}
+    .contact-form h2{font-family:'Baloo 2';font-size:22px;font-weight:800;margin-bottom:20px}
+    .contact-form h2 span{color:var(--orange)}
+    .form-field{margin-bottom:14px}
+    .form-field label{display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px}
+    .form-field input,.form-field select,.form-field textarea{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;font-family:'Hind';font-size:14px;outline:none;transition:border .2s;background:var(--light);color:var(--black)}
+    .form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--orange);background:white}
+    .form-field textarea{height:100px;resize:vertical}
+    .btn-submit{width:100%;background:var(--orange);color:white;border:none;border-radius:12px;padding:14px;font-family:'Baloo 2';font-size:17px;font-weight:700;cursor:pointer;transition:all .2s}
+    .btn-submit:hover{background:var(--orange-dark)}
+    .wa-contact{background:linear-gradient(135deg,#25D366,#128C7E);border-radius:16px;padding:18px;text-align:center;margin-top:14px}
+    .wa-contact p{color:white;font-weight:600;margin-bottom:10px;font-size:14px}
+    .wa-contact a{background:white;color:#25D366;font-family:'Baloo 2';font-size:14px;font-weight:800;padding:10px 24px;border-radius:25px;text-decoration:none}
+    @media(max-width:700px){.contact-page{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
 
-  <div class="ticker-wrap"><div class="ticker"><span>📞 Call: +91 96541 71005</span><span>💬 WhatsApp 24/7 Available</span><span>📧 support@nirmanx.in</span><span>📞 Call: +91 96541 71005</span><span>💬 WhatsApp 24/7 Available</span><span>📧 support@nirmanx.in</span></div></div>
+  <div class="ticker-wrap"><div class="ticker"><span>📞 Call: +91 96541 71005</span><span>💬 WhatsApp 24/7 Available</span><span>📧 support@nirmanx.in</span><span>📞 Call: +91 96541 71005</span><span>💬 WhatsApp 24/7 Available</span></div></div>
 
   <nav>
     <div class="nav-inner">
@@ -49,7 +49,8 @@
         <a href="products.html">📦 Products</a>
         <a href="track.html">🔄 Track Order</a>
         <a href="contact.html">📞 Contact</a>
-        <a href="login.html">👤 Login</a>
+        <a href="login.html" id="loginNavBtn">👤 Login</a>
+        <span id="userBadge" style="display:none;background:var(--orange);color:white;font-size:13px;font-weight:700;padding:6px 14px;border-radius:20px;cursor:pointer;" onclick="logoutUser()">👤 <span id="userName"></span> ✕</span>
         <a href="cart.html" class="nav-cta">🛒 Cart</a>
       </div>
       <button class="hamburger" onclick="toggleNav()">☰</button>
@@ -64,48 +65,48 @@
   <div class="contact-page">
     <div class="contact-info">
       <h2>Humse <span>Baat Karo</span></h2>
-      <div class="contact-card">
+      <a href="tel:+919654171005" class="contact-card">
         <div class="c-icon">📞</div>
-        <div><h4>Phone / Call</h4><p><a href="tel:+919654171005">+91 96541 71005</a></p></div>
-      </div>
-      <div class="contact-card">
+        <div><h4>Phone / Call</h4><p>+91 96541 71005</p></div>
+      </a>
+      <a href="https://wa.me/919654171005" target="_blank" class="contact-card">
         <div class="c-icon">💬</div>
-        <div><h4>WhatsApp</h4><p><a href="https://wa.me/919654171005" target="_blank">+91 96541 71005</a> (24/7)</p></div>
-      </div>
-      <div class="contact-card">
+        <div><h4>WhatsApp</h4><p>+91 96541 71005 (24/7)</p></div>
+      </a>
+      <a href="mailto:support@nirmanx.in" class="contact-card">
         <div class="c-icon">📧</div>
-        <div><h4>Email</h4><p><a href="mailto:support@nirmanx.in">support@nirmanx.in</a></p></div>
-      </div>
+        <div><h4>Email</h4><p>support@nirmanx.in</p></div>
+      </a>
       <div class="contact-card">
         <div class="c-icon">🕐</div>
-        <div><h4>Working Hours</h4><p>Mon–Sat: 8:00 AM – 8:00 PM<br>Sunday: 9:00 AM – 5:00 PM</p></div>
+        <div><h4>Working Hours</h4><p>Mon–Sat: 8AM – 8PM<br>Sunday: 9AM – 5PM</p></div>
       </div>
       <div class="contact-card">
         <div class="c-icon">📍</div>
         <div><h4>Service Areas</h4><p>Delhi • Noida • Greater Noida<br>Gurugram • Ghaziabad</p></div>
       </div>
       <div class="wa-contact">
-        <p>⚡ Sabse Fast Response WhatsApp par milega!</p>
+        <p>⚡ Sabse Fast Response WhatsApp par!</p>
         <a href="https://wa.me/919654171005?text=Namaste! Mujhe NirmanX se help chahiye." target="_blank">💬 WhatsApp Karo Abhi</a>
       </div>
     </div>
 
     <div class="contact-form">
       <h2>Message <span>Bhejo</span></h2>
-      <div class="form-field"><label>👤 Aapka Naam</label><input type="text" placeholder="Jaise: Rajesh Kumar"/></div>
-      <div class="form-field"><label>📱 Phone Number</label><input type="tel" placeholder="+91 XXXXX XXXXX"/></div>
+      <div class="form-field"><label>👤 Aapka Naam *</label><input type="text" id="cName" placeholder="Poora naam"/></div>
+      <div class="form-field"><label>📱 Phone Number *</label><input type="tel" id="cPhone" placeholder="+91 XXXXX XXXXX"/></div>
       <div class="form-field"><label>📍 Aapka Shehar</label>
-        <select>
+        <select id="cCity">
           <option>Delhi</option><option>Noida</option><option>Greater Noida</option><option>Gurugram</option><option>Ghaziabad</option>
         </select>
       </div>
-      <div class="form-field"><label>🏗️ Kis Material ki Zaroorat Hai?</label>
-        <select>
+      <div class="form-field"><label>🏗️ Kis Material ki Zaroorat?</label>
+        <select id="cMaterial">
           <option>Cement</option><option>Steel / TMT Sariya</option><option>Bricks / Eent</option><option>Tiles / Farshi</option><option>Sand / Baalu</option><option>Paint</option><option>Kuch Aur</option>
         </select>
       </div>
-      <div class="form-field"><label>💬 Aapka Message</label><textarea placeholder="Aapki zaroorat ya sawaal yahan likhein..."></textarea></div>
-      <button class="btn-submit" onclick="submitForm()">📨 Message Bhejo</button>
+      <div class="form-field"><label>💬 Aapka Message</label><textarea id="cMsg" placeholder="Aapki zaroorat ya sawaal yahan likhein..."></textarea></div>
+      <button class="btn-submit" onclick="submitContact()">📨 Message Bhejo</button>
     </div>
   </div>
 
@@ -116,8 +117,26 @@
 
   <script src="../script.js"></script>
   <script>
-    function submitForm() {
-      showToast('✅ Message bhej diya! Hum jald hi contact karenge.');
+    const nxUser = JSON.parse(localStorage.getItem('nx_user'));
+    if(nxUser){
+      const lb=document.getElementById('loginNavBtn');
+      const ub=document.getElementById('userBadge');
+      const un=document.getElementById('userName');
+      if(lb) lb.style.display='none';
+      if(ub) ub.style.display='inline-flex';
+      if(un) un.textContent=nxUser.name.split(' ')[0];
+    }
+    function logoutUser(){ localStorage.removeItem('nx_user'); window.location.reload(); }
+
+    function submitContact(){
+      const name = document.getElementById('cName').value.trim();
+      const phone = document.getElementById('cPhone').value.trim();
+      if(!name || !phone){ showToast('⚠️ Naam aur phone zaroori hai!'); return; }
+      const msg = document.getElementById('cMsg').value.trim();
+      const material = document.getElementById('cMaterial').value;
+      const waText = encodeURIComponent(`Namaste! Main ${name} bol raha hoon.\nPhone: ${phone}\nMaterial: ${material}\nMessage: ${msg || 'Query hai'}`);
+      window.open('https://wa.me/919654171005?text=' + waText, '_blank');
+      showToast('✅ Message WhatsApp par bheja ja raha hai!');
     }
   </script>
 </body>

@@ -20,11 +20,6 @@
     .b-icon{width:42px;height:42px;border-radius:11px;background:var(--orange-light);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
     .benefit-card h4{font-family:'Baloo 2';font-size:15px;font-weight:700;margin-bottom:3px}
     .benefit-card p{font-size:13px;color:var(--gray);line-height:1.5}
-    .biz-model{background:linear-gradient(135deg,#1A1208,#2D2010);border-radius:16px;padding:20px;margin-top:16px}
-    .biz-model h4{font-family:'Baloo 2';font-size:15px;font-weight:800;color:var(--orange);margin-bottom:14px;text-align:center}
-    .biz-step{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px 14px;color:white;font-size:14px;font-weight:600;text-align:center;margin-bottom:6px}
-    .biz-arrow{text-align:center;color:#C4B5A5;font-size:16px;margin-bottom:6px}
-    .biz-step.active{background:var(--orange);border-color:var(--orange)}
     .seller-form{background:white;border:2px solid var(--border);border-radius:20px;padding:28px}
     .step-header{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:white;font-family:'Baloo 2';font-size:15px;font-weight:700;padding:10px 16px;border-radius:10px;margin:18px 0 14px;display:flex;align-items:center;gap:8px}
     .form-field{margin-bottom:13px}
@@ -81,7 +76,8 @@
       <a href="../index.html">🏠 Home</a>
       <a href="products.html">📦 Products</a>
       <a href="contact.html">📞 Contact</a>
-      <a href="login.html">👤 Login</a>
+      <a href="login.html" id="loginNavBtn">👤 Login</a>
+      <span id="userBadge" style="display:none;background:var(--orange);color:white;font-size:13px;font-weight:700;padding:6px 14px;border-radius:20px;cursor:pointer;" onclick="logoutUser()">👤 <span id="userName"></span> ✕</span>
       <a href="cart.html" class="nav-cta">🛒 Cart</a>
     </div>
     <button class="hamburger" onclick="toggleNav()">☰</button>
@@ -119,19 +115,9 @@
       <div class="b-icon">💳</div>
       <div><h4>Fast Payment</h4><p>Har order ka payment 24-48 ghante mein bank account mein.</p></div>
     </div>
-
-    <!-- BUSINESS MODEL -->
-    <div class="biz-model">
-      <h4>🏭 Hamara Business Model</h4>
-      <div class="biz-step">🏭 Factory / Manufacturer</div>
-      <div class="biz-arrow">↓</div>
-      <div class="biz-step">🏪 Wholesaler / Distributor</div>
-      <div class="biz-arrow">↓</div>
-      <div class="biz-step">🤝 Dealer / Supplier (Aap)</div>
-      <div class="biz-arrow">↓</div>
-      <div class="biz-step active">🌐 NirmanX Platform</div>
-      <div class="biz-arrow">↓</div>
-      <div class="biz-step">👤 Customer → Buy Karta Hai</div>
+    <div class="benefit-card">
+      <div class="b-icon">🚚</div>
+      <div><h4>Delivery Support</h4><p>NirmanX ki delivery team aapke orders deliver karegi.</p></div>
     </div>
   </div>
 
@@ -140,7 +126,7 @@
     <div style="font-family:'Baloo 2';font-size:22px;font-weight:800;margin-bottom:4px">Register Karo <span style="color:var(--orange)">— Free!</span></div>
     <p style="color:var(--gray);font-size:13px;margin-bottom:4px">Form bharo → Product turant website par live ho jayega ✅</p>
 
-    <!-- STEP 1 — SELLER INFO -->
+    <!-- STEP 1 -->
     <div class="step-header">👤 STEP 1 — Aapki Business Details</div>
 
     <div class="form-field">
@@ -190,8 +176,8 @@
       </div>
     </div>
 
-    <!-- STEP 2 — PRODUCT INFO -->
-    <div class="step-header">📦 STEP 2 — Product Details (Website Par Dikhega)</div>
+    <!-- STEP 2 -->
+    <div class="step-header">📦 STEP 2 — Product Details</div>
 
     <div class="form-row">
       <div class="form-field">
@@ -230,7 +216,7 @@
       <input type="text" id="productSpecs" placeholder="Jaise: 50 Kg, OPC 53 Grade, ISI Certified"/>
     </div>
 
-    <!-- PRICE -->
+    <!-- STEP 3 -->
     <div class="step-header">💰 STEP 3 — Price & Offer</div>
 
     <div class="form-row-3">
@@ -258,13 +244,12 @@
       </div>
     </div>
 
-    <!-- TODAY'S OFFER -->
     <div class="offer-field form-field">
       <label>🔥 Today's Special Offer (Optional)</label>
-      <input type="text" id="todayOffer" placeholder="Jaise: Buy 50 bags get 2 free! Ya: Aaj sirf ₹350/bag"/>
+      <input type="text" id="todayOffer" placeholder="Jaise: Buy 50 bags get 2 free!"/>
     </div>
 
-    <!-- DELIVERY & STOCK -->
+    <!-- STEP 4 -->
     <div class="step-header">🚚 STEP 4 — Delivery & Stock</div>
 
     <div class="form-row">
@@ -288,7 +273,7 @@
       <input type="text" id="productStock" placeholder="Jaise: 500 bags available hai"/>
     </div>
 
-    <!-- PHOTO UPLOAD -->
+    <!-- STEP 5 -->
     <div class="step-header">📸 STEP 5 — Product Photo</div>
 
     <div class="photo-area" id="photoArea">
@@ -299,16 +284,16 @@
     </div>
     <div class="photo-previews" id="photoPreviews"></div>
 
-    <!-- DESCRIPTION -->
+    <!-- STEP 6 -->
     <div class="step-header">📝 STEP 6 — Description</div>
 
     <div class="form-field">
       <label>📝 Product Description (Optional)</label>
-      <textarea id="productDesc" placeholder="Product ke baare mein batao — quality, features, uses, kahan use hoga..."></textarea>
+      <textarea id="productDesc" placeholder="Product ke baare mein batao — quality, features, uses..."></textarea>
     </div>
 
     <div class="warning-box">
-      <p>⚠️ <strong>Zaroori:</strong> Description ya kisi bhi field mein apna <strong>naam, phone number ya address mat likhna</strong>. Likha to product reject hoga. Customer sirf NirmanX ke through order karega — aapka business safe rahega. 🔒</p>
+      <p>⚠️ <strong>Zaroori:</strong> Kisi bhi field mein apna <strong>naam, phone number ya address mat likhna</strong>. Customer sirf NirmanX ke through order karega — aapka business safe rahega. 🔒</p>
     </div>
 
     <button class="btn-register" id="regBtn" onclick="registerSeller()">
@@ -323,13 +308,12 @@
       Customers ab aapka product dekh kar order kar sakte hain.</p>
       <p>NirmanX team <strong>24 ghante mein</strong> aapko WhatsApp par contact karegi.</p>
       <div class="reg-id-box" id="regIdBox">NX-XXXXXX</div>
-      <p style="font-size:12px;color:#065F46">⬆️ Ye Registration ID save kar lo — support ke liye kaam aayega</p>
+      <p style="font-size:12px;color:#065F46">⬆️ Ye Registration ID save kar lo</p>
       <div class="success-btns">
         <a href="products.html" style="background:var(--orange);color:white;padding:12px 24px;border-radius:25px;text-decoration:none;font-family:'Baloo 2';font-weight:700;font-size:15px">👁️ Website Par Dekho</a>
         <a href="seller-dashboard.html" style="background:var(--dark);color:white;padding:12px 24px;border-radius:25px;text-decoration:none;font-family:'Baloo 2';font-weight:700;font-size:15px">📊 Seller Dashboard</a>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -350,63 +334,64 @@
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZ3dkZXNxaWNybmVpa3hyY25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3Mzc1MTksImV4cCI6MjA4OTMxMzUxOX0.AFH7Sfat5XnYFYocdbjZlYhL5iLG1dO6wXm_FHycAqo'
   );
 
+  const nxUser = JSON.parse(localStorage.getItem('nx_user'));
+  if(nxUser){
+    const lb=document.getElementById('loginNavBtn');
+    const ub=document.getElementById('userBadge');
+    const un=document.getElementById('userName');
+    if(lb) lb.style.display='none';
+    if(ub) ub.style.display='inline-flex';
+    if(un) un.textContent=nxUser.name.split(' ')[0];
+  }
+  function logoutUser(){ localStorage.removeItem('nx_user'); window.location.reload(); }
+
   // Photo upload
   let uploadedPhotos = [];
 
-  function handlePhotos(e) {
+  function handlePhotos(e){
     const files = Array.from(e.target.files);
-    if(uploadedPhotos.length + files.length > 4){
-      showToast('⚠️ Maximum 4 photos!'); return;
-    }
-    files.forEach(file => {
-      if(file.size > 5*1024*1024){ showToast('⚠️ '+file.name+' bahut badi hai! Max 5MB'); return; }
-      const reader = new FileReader();
-      reader.onload = ev => {
-        uploadedPhotos.push(ev.target.result);
-        renderPreviews();
-      };
+    if(uploadedPhotos.length+files.length>4){ showToast('⚠️ Max 4 photos!'); return; }
+    files.forEach(file=>{
+      if(file.size>5*1024*1024){ showToast('⚠️ '+file.name+' bahut badi! Max 5MB'); return; }
+      const reader=new FileReader();
+      reader.onload=ev=>{ uploadedPhotos.push(ev.target.result); renderPreviews(); };
       reader.readAsDataURL(file);
     });
   }
 
-  function renderPreviews() {
-    const c = document.getElementById('photoPreviews');
-    c.innerHTML = uploadedPhotos.map((src,i) => `
+  function renderPreviews(){
+    document.getElementById('photoPreviews').innerHTML=uploadedPhotos.map((src,i)=>`
       <div class="preview-item">
         <img src="${src}"/>
         <button class="preview-remove" onclick="removePhoto(${i})">×</button>
       </div>`).join('');
   }
 
-  function removePhoto(i) {
-    uploadedPhotos.splice(i,1);
-    renderPreviews();
-  }
+  function removePhoto(i){ uploadedPhotos.splice(i,1); renderPreviews(); }
 
   // Subcategories
   const subcats = {
     cement:['PPC Cement','OPC 43 Grade','OPC 53 Grade','White Cement','Rapid Hardening Cement'],
-    steel:['TMT Bar Fe-500D','TMT Bar Fe-550D','Structural Steel','MS Plate','Angle Iron','Channel'],
+    steel:['TMT Bar Fe-500D','TMT Bar Fe-550D','Structural Steel','MS Plate','Angle Iron'],
     bricks:['Red Brick First Class','Red Brick Second Class','AAC Block 150mm','AAC Block 100mm','Fly Ash Brick','Concrete Block'],
-    tiles:['Floor Tiles Vitrified','Wall Tiles','Bathroom Floor Tiles','Kitchen Wall Tiles','Outdoor Tiles','Mosaic Tiles'],
-    sand:['River Sand Fine','M-Sand Manufactured','Coarse Sand','Gitti Stone Aggregate'],
-    paint:['Interior Emulsion','Exterior Weathercoat','Primer','Wall Putty','Distemper','Enamel'],
-    hardware:['Nails & Screws','Nuts & Bolts','Wire Mesh','Door Hinges','Locks & Latches','Binding Wire'],
-    plumbing:['PVC Pipe','CPVC Pipe','GI Pipe','Fittings & Joints','Valves','Taps & Faucets']
+    tiles:['Floor Tiles Vitrified','Wall Tiles','Bathroom Floor Tiles','Kitchen Wall Tiles','Outdoor Tiles'],
+    sand:['River Sand Fine','M-Sand','Coarse Sand','Gitti Aggregate'],
+    paint:['Interior Emulsion','Exterior Weathercoat','Primer','Wall Putty','Distemper'],
+    hardware:['Nails & Screws','Nuts & Bolts','Wire Mesh','Door Hinges','Binding Wire'],
+    plumbing:['PVC Pipe','CPVC Pipe','GI Pipe','Fittings','Taps & Faucets']
   };
 
-  function updateSubcat() {
-    const cat = document.getElementById('sellerCategory').value;
-    const sub = document.getElementById('prodSubcat');
-    sub.innerHTML = '<option value="">Type chuno</option>';
-    if(subcats[cat]) subcats[cat].forEach(s => {
-      const o = document.createElement('option');
-      o.value = s; o.textContent = s; sub.appendChild(o);
+  function updateSubcat(){
+    const cat=document.getElementById('sellerCategory').value;
+    const sub=document.getElementById('prodSubcat');
+    sub.innerHTML='<option value="">Type chuno</option>';
+    if(subcats[cat]) subcats[cat].forEach(s=>{
+      const o=document.createElement('option');
+      o.value=s; o.textContent=s; sub.appendChild(o);
     });
   }
 
-  // MAIN REGISTER FUNCTION
-  async function registerSeller() {
+  async function registerSeller(){
     const businessName = document.getElementById('businessName').value.trim();
     const ownerName    = document.getElementById('ownerName').value.trim();
     const phone        = document.getElementById('sellerPhone').value.trim();
@@ -420,87 +405,69 @@
     const specs        = document.getElementById('productSpecs').value.trim();
     const price        = document.getElementById('productPrice').value;
     const unit         = document.getElementById('productUnit').value;
-    const discount     = document.getElementById('productDiscount').value || 0;
+    const discount     = document.getElementById('productDiscount').value||0;
     const todayOffer   = document.getElementById('todayOffer').value.trim();
     const deliveryTime = document.getElementById('deliveryTime').value;
     const minOrder     = document.getElementById('minOrder').value.trim();
     const stock        = document.getElementById('productStock').value.trim();
     const description  = document.getElementById('productDesc').value.trim();
-    const photoUrl     = uploadedPhotos[0] || '';
+    const photoUrl     = uploadedPhotos[0]||'';
 
-    // Validation
     if(!businessName){ showToast('⚠️ Business naam zaroori hai!'); return; }
     if(!ownerName){ showToast('⚠️ Owner naam zaroori hai!'); return; }
-    if(!phone || phone.replace(/\D/g,'').length < 10){ showToast('⚠️ Valid phone number daalein!'); return; }
+    if(!phone||phone.replace(/\D/g,'').length<10){ showToast('⚠️ Valid phone number daalein!'); return; }
     if(!city){ showToast('⚠️ Shehar select karo!'); return; }
-    if(!sellerType){ showToast('⚠️ Aap kaun hain ye select karo!'); return; }
+    if(!sellerType){ showToast('⚠️ Aap kaun hain select karo!'); return; }
     if(!category){ showToast('⚠️ Category select karo!'); return; }
     if(!brandName){ showToast('⚠️ Brand naam zaroori hai!'); return; }
     if(!productName){ showToast('⚠️ Product naam zaroori hai!'); return; }
-    if(!price || parseFloat(price) <= 0){ showToast('⚠️ Valid price daalein!'); return; }
-    if(!minOrder){ showToast('⚠️ Minimum order quantity daalein!'); return; }
+    if(!price||parseFloat(price)<=0){ showToast('⚠️ Valid price daalein!'); return; }
+    if(!minOrder){ showToast('⚠️ Minimum order daalein!'); return; }
 
-    const btn = document.getElementById('regBtn');
-    btn.textContent = '⏳ Register ho raha hai...';
-    btn.disabled = true;
+    const btn=document.getElementById('regBtn');
+    btn.textContent='⏳ Register ho raha hai...';
+    btn.disabled=true;
 
-    try {
-      // 1 — Seller save karo
-      const { data: sellerData, error: sellerErr } = await sb
-        .from('sellers')
-        .insert([{
-          business_name: businessName,
-          owner_name: ownerName,
-          phone: phone,
-          email: email,
-          city: city,
-          whatsapp: phone
-        }])
-        .select();
-
+    try{
+      const{data:sellerData,error:sellerErr}=await sb.from('sellers').insert([{
+        business_name:businessName,owner_name:ownerName,phone:phone,
+        email:email,city:city,whatsapp:phone
+      }]).select();
       if(sellerErr) throw sellerErr;
 
-      // 2 — Product save karo — website par live hoga
-      const { error: prodErr } = await sb.from('products').insert([{
-        seller_id: sellerData[0].id,
-        seller_phone: phone,
-        category: category,
-        brand_name: brandName,
-        product_name: productName,
-        specs: specs || subcat,
-        price: parseFloat(price),
-        unit: unit,
-        discount: parseFloat(discount),
-        offer_text: todayOffer,
-        min_order: minOrder,
-        stock: stock,
-        delivery_time: deliveryTime,
-        photo_url: photoUrl,
-        status: 'active'
+      const{error:prodErr}=await sb.from('products').insert([{
+        seller_id:sellerData[0].id,
+        seller_phone:phone,
+        category:category,
+        brand_name:brandName,
+        product_name:productName,
+        specs:specs||subcat,
+        price:parseFloat(price),
+        unit:unit,
+        discount:parseFloat(discount),
+        offer_text:todayOffer,
+        min_order:minOrder,
+        stock:stock,
+        delivery_time:deliveryTime,
+        photo_url:photoUrl,
+        status:'active'
       }]);
-
       if(prodErr) throw prodErr;
 
-      // Save seller locally
-      localStorage.setItem('nx_seller', JSON.stringify({
-        name: businessName,
-        phone: phone,
-        city: city,
-        type: sellerType
+      localStorage.setItem('nx_seller',JSON.stringify({
+        name:businessName,phone:phone,city:city,type:sellerType
       }));
 
-      // Registration ID
-      const regId = 'NX-S-' + Date.now().toString().slice(-6);
-      document.getElementById('regIdBox').textContent = regId;
-      document.getElementById('successBox').style.display = 'block';
+      const regId='NX-S-'+Date.now().toString().slice(-6);
+      document.getElementById('regIdBox').textContent=regId;
+      document.getElementById('successBox').style.display='block';
       document.getElementById('successBox').scrollIntoView({behavior:'smooth'});
       showToast('🎉 Registration successful! Product live ho gaya!');
 
-    } catch(err) {
-      console.error(err);
-      showToast('❌ Error: ' + err.message);
-      btn.textContent = '🚀 Register Karo — Product Live Karo!';
-      btn.disabled = false;
+    }catch(err){
+      showToast('❌ Error: '+err.message);
+      btn.textContent='🚀 Register Karo — Product Live Karo!';
+      btn.disabled=false;
     }
   }
 </script>

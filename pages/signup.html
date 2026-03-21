@@ -6,110 +6,159 @@
   <title>Sign Up – NirmanX</title>
   <link rel="stylesheet" href="../style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    .signup-page { min-height: 100vh; background: linear-gradient(135deg, #1A1208, #2D2010, #4A3018); display: flex; align-items: center; justify-content: center; padding: 30px 20px; }
-    .signup-box { background: white; border-radius: 24px; padding: 40px 36px; width: 100%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
-    .signup-logo { font-family: 'Baloo 2'; font-size: 32px; font-weight: 800; color: var(--orange); text-align: center; margin-bottom: 4px; }
-    .signup-logo span { color: var(--black); }
-    .signup-sub { text-align: center; color: var(--gray); font-size: 14px; margin-bottom: 26px; }
-    .acc-tabs { display: flex; background: var(--light); border-radius: 12px; padding: 4px; margin-bottom: 22px; }
-    .acc-tab { flex: 1; padding: 10px; border: none; background: transparent; font-family: 'Hind'; font-size: 14px; font-weight: 600; color: var(--gray); border-radius: 10px; cursor: pointer; transition: all .2s; }
-    .acc-tab.active { background: var(--orange); color: white; box-shadow: 0 3px 10px var(--orange-glow); }
-    .form-field { margin-bottom: 14px; }
-    .form-field label { display: block; font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 6px; }
-    .form-field input, .form-field select { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 14px; font-family: 'Hind'; font-size: 14px; outline: none; transition: border .2s; background: var(--light); color: var(--black); }
-    .form-field input:focus, .form-field select:focus { border-color: var(--orange); background: white; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .btn-signup { width: 100%; background: var(--orange); color: white; border: none; border-radius: 12px; padding: 14px; font-family: 'Baloo 2'; font-size: 17px; font-weight: 700; cursor: pointer; transition: all .2s; margin-top: 6px; }
-    .btn-signup:hover { background: var(--orange-dark); transform: translateY(-1px); }
-    .terms { font-size: 12px; color: var(--gray); text-align: center; margin-top: 12px; line-height: 1.6; }
-    .terms a { color: var(--orange); text-decoration: none; font-weight: 600; }
-    .divider { text-align: center; color: var(--gray); font-size: 13px; margin: 16px 0; position: relative; }
-    .divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: 42%; height: 1px; background: var(--border); }
-    .divider::before { left: 0; } .divider::after { right: 0; }
-    .btn-wa-reg { width: 100%; background: var(--whatsapp); color: white; border: none; border-radius: 12px; padding: 13px; font-family: 'Baloo 2'; font-size: 15px; font-weight: 700; cursor: pointer; transition: all .2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .btn-wa-reg:hover { background: #1EB858; }
-    .already-login { text-align: center; margin-top: 18px; font-size: 13px; color: var(--gray); }
-    .already-login a { color: var(--orange); text-decoration: none; font-weight: 600; }
-    .seller-extra { display: none; }
-    .seller-extra.show { display: block; }
-    @media(max-width:480px) { .signup-box { padding: 28px 20px; } .form-row { grid-template-columns: 1fr; } }
+    .auth-page{min-height:100vh;background:linear-gradient(135deg,#1A1208,#2D2010,#4A3018);display:flex;align-items:center;justify-content:center;padding:30px 20px}
+    .auth-box{background:white;border-radius:24px;padding:40px 36px;width:100%;max-width:460px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+    .auth-logo{font-family:'Baloo 2';font-size:34px;font-weight:800;color:var(--orange);text-align:center;margin-bottom:4px}
+    .auth-logo span{color:var(--black)}
+    .auth-sub{text-align:center;color:var(--gray);font-size:14px;margin-bottom:24px}
+    .form-field{margin-bottom:14px}
+    .form-field label{display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px}
+    .form-field input,.form-field select{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'Hind';font-size:15px;outline:none;transition:border .2s;background:var(--light);color:var(--black)}
+    .form-field input:focus,.form-field select:focus{border-color:var(--orange);background:white}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .btn-auth{width:100%;background:var(--orange);color:white;border:none;border-radius:12px;padding:14px;font-family:'Baloo 2';font-size:17px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px}
+    .btn-auth:hover{background:var(--orange-dark);transform:translateY(-1px)}
+    .btn-auth:disabled{background:var(--gray);transform:none;cursor:not-allowed}
+    .error-msg{background:#FEE2E2;border:1.5px solid #E74C3C;border-radius:10px;padding:12px;font-size:13px;color:#C0392B;margin-bottom:14px;display:none}
+    .welcome-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:9999;align-items:center;justify-content:center}
+    .welcome-overlay.show{display:flex}
+    .welcome-card{background:white;border-radius:24px;padding:44px 36px;text-align:center;max-width:400px;width:90%;animation:popIn .4s ease}
+    @keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+    .w-emoji{font-size:64px;margin-bottom:16px}
+    .w-title{font-family:'Baloo 2';font-size:30px;font-weight:800;color:var(--black);margin-bottom:8px}
+    .w-title span{color:var(--orange)}
+    .w-name{font-family:'Baloo 2';font-size:20px;font-weight:700;color:var(--orange);margin-bottom:10px}
+    .w-msg{color:var(--gray);font-size:14px;line-height:1.7;margin-bottom:22px}
+    .w-btn{background:var(--orange);color:white;border:none;border-radius:25px;padding:14px 36px;font-family:'Baloo 2';font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(244,111,26,.4)}
+    .w-btn:hover{background:var(--orange-dark)}
+    @media(max-width:480px){.auth-box{padding:28px 20px}.form-row{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="signup-page">
-    <div class="signup-box">
-      <div class="signup-logo">Nirman<span>X</span></div>
-      <div class="signup-sub">Naya account banao — bilkul free!</div>
 
-      <!-- ACCOUNT TYPE TABS -->
-      <div class="acc-tabs">
-        <button class="acc-tab active" onclick="switchType('customer')">🏠 Customer</button>
-        <button class="acc-tab" onclick="switchType('contractor')">👷 Contractor</button>
-        <button class="acc-tab" onclick="switchType('seller')">🏭 Seller</button>
-      </div>
+  <div class="welcome-overlay" id="welcomeOverlay">
+    <div class="welcome-card">
+      <div class="w-emoji">🎉</div>
+      <div class="w-title">Welcome to <span>NirmanX!</span></div>
+      <div class="w-name" id="wName"></div>
+      <div class="w-msg">Aapka account successfully ban gaya hai!<br>Ab aap construction material order kar sakte hain.</div>
+      <button class="w-btn" onclick="window.location.href='../index.html'">🛒 Shopping Shuru Karo!</button>
+    </div>
+  </div>
 
-      <!-- FORM -->
+  <div class="auth-page">
+    <div class="auth-box">
+      <div class="auth-logo">Nirman<span>X</span></div>
+      <div class="auth-sub">Naya account banao — bilkul free!</div>
+      <div class="error-msg" id="errorMsg"></div>
+
       <div class="form-row">
-        <div class="form-field"><label>👤 Pehla Naam</label><input type="text" id="firstName" placeholder="Pehla naam"/></div>
-        <div class="form-field"><label>👤 Aakhri Naam</label><input type="text" id="lastName" placeholder="Aakhri naam"/></div>
+        <div class="form-field">
+          <label>👤 Pehla Naam *</label>
+          <input type="text" id="firstName" placeholder="Pehla naam"/>
+        </div>
+        <div class="form-field">
+          <label>👤 Aakhri Naam</label>
+          <input type="text" id="lastName" placeholder="Aakhri naam"/>
+        </div>
       </div>
-      <div class="form-field"><label>📱 WhatsApp Number</label><input type="tel" id="phone" placeholder="+91 XXXXX XXXXX"/></div>
-      <div class="form-field"><label>📧 Email Address</label><input type="email" id="email" placeholder="email@example.com"/></div>
-      <div class="form-field"><label>📍 Aapka Shehar</label>
+      <div class="form-field">
+        <label>📱 Phone Number *</label>
+        <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" maxlength="13"/>
+      </div>
+      <div class="form-field">
+        <label>📍 Aapka Shehar *</label>
         <select id="city">
-          <option value="">Shehar select karo</option>
-          <option>Delhi</option><option>Noida</option><option>Greater Noida</option><option>Gurugram</option><option>Ghaziabad</option>
+          <option value="">Shehar chuno</option>
+          <option>Delhi</option>
+          <option>Noida</option>
+          <option>Greater Noida</option>
+          <option>Gurugram</option>
+          <option>Ghaziabad</option>
+          <option>Other</option>
         </select>
       </div>
-
-      <!-- SELLER EXTRA FIELDS -->
-      <div class="seller-extra" id="sellerExtra">
-        <div class="form-field"><label>🏭 Company / Dukaan ka Naam</label><input type="text" placeholder="Company naam"/></div>
-        <div class="form-field"><label>🏗️ Aap Kya Bechte Hain?</label>
-          <select>
-            <option>Cement</option><option>Steel / TMT Sariya</option><option>Bricks</option><option>Tiles</option><option>Multiple Materials</option>
-          </select>
-        </div>
-        <div class="form-field"><label>📋 GST Number (Optional)</label><input type="text" placeholder="GST number"/></div>
+      <div class="form-field">
+        <label>🔒 Password * (min 6 characters)</label>
+        <input type="password" id="password" placeholder="Strong password banayein"/>
+      </div>
+      <div class="form-field">
+        <label>🔒 Password Confirm *</label>
+        <input type="password" id="confirmPass" placeholder="Password dobara daalein"/>
       </div>
 
-      <div class="form-field"><label>🔒 Password</label><input type="password" id="password" placeholder="Strong password banayein"/></div>
-      <div class="form-field"><label>🔒 Password Confirm Karo</label><input type="password" id="confirmPass" placeholder="Password dobara daalein"/></div>
+      <button class="btn-auth" id="signupBtn" onclick="doSignup()">✅ Account Banao — Free!</button>
 
-      <button class="btn-signup" onclick="doSignup()">✅ Account Banao — Free!</button>
-
-      <div class="divider">ya</div>
-      <button class="btn-wa-reg" onclick="waSignup()">💬 WhatsApp se Quick Register</button>
-
-      <p class="terms">Register karke aap hamare <a href="#">Terms of Service</a> aur <a href="#">Privacy Policy</a> se agree karte hain.</p>
-      <div class="already-login">Pehle se account hai? <a href="login.html">Login Karo →</a></div>
+      <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--gray)">
+        Pehle se account hai? <a href="login.html" style="color:var(--orange);font-weight:600">Login Karo →</a>
+      </p>
+      <p style="text-align:center;margin-top:10px">
+        <a href="../index.html" style="color:var(--orange);font-size:13px;font-weight:600;text-decoration:none">← Wapas Home</a>
+      </p>
     </div>
   </div>
 
   <script src="../script.js"></script>
   <script>
-    let accountType = 'customer';
-    function switchType(type) {
-      accountType = type;
-      document.querySelectorAll('.acc-tab').forEach((t, i) => {
-        t.classList.toggle('active', ['customer','contractor','seller'][i] === type);
-      });
-      document.getElementById('sellerExtra').classList.toggle('show', type === 'seller');
+    const { createClient } = supabase;
+    const sb = createClient(
+      'https://ddgwdesqicrneikxrcnj.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZ3dkZXNxaWNybmVpa3hyY25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3Mzc1MTksImV4cCI6MjA4OTMxMzUxOX0.AFH7Sfat5XnYFYocdbjZlYhL5iLG1dO6wXm_FHycAqo'
+    );
+
+    function showError(msg){
+      const el = document.getElementById('errorMsg');
+      el.textContent = msg;
+      el.style.display = 'block';
     }
-    function doSignup() {
-      const phone = document.getElementById('phone').value.trim();
-      const pass = document.getElementById('password').value;
-      const confirm = document.getElementById('confirmPass').value;
-      const city = document.getElementById('city').value;
-      if (!phone || !pass || !city) { showToast('⚠️ Saari fields fill karein!'); return; }
-      if (pass !== confirm) { showToast('❌ Passwords match nahi kar rahe!'); return; }
-      if (pass.length < 6) { showToast('⚠️ Password kam se kam 6 characters ka hona chahiye!'); return; }
-      showToast('🎉 Account ban gaya! Welcome to NirmanX 🏗️');
-      setTimeout(() => window.location.href = '../index.html', 2000);
-    }
-    function waSignup() {
-      window.open('https://wa.me/919654171005?text=Namaste! Main NirmanX par naya account banana chahta hoon.', '_blank');
+
+    async function doSignup(){
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName  = document.getElementById('lastName').value.trim();
+      const phone     = document.getElementById('phone').value.trim();
+      const city      = document.getElementById('city').value;
+      const pass      = document.getElementById('password').value;
+      const pass2     = document.getElementById('confirmPass').value;
+      const fullName  = firstName + (lastName ? ' ' + lastName : '');
+
+      if(!firstName){ showError('⚠️ Pehla naam daalein!'); return; }
+      if(!phone || phone.replace(/\D/g,'').length < 10){ showError('⚠️ Valid phone number daalein!'); return; }
+      if(!city){ showError('⚠️ Shehar select karo!'); return; }
+      if(!pass || pass.length < 6){ showError('⚠️ Password min 6 characters ka hona chahiye!'); return; }
+      if(pass !== pass2){ showError('❌ Dono passwords match nahi kar rahe!'); return; }
+
+      const btn = document.getElementById('signupBtn');
+      btn.textContent = '⏳ Account ban raha hai...';
+      btn.disabled = true;
+      document.getElementById('errorMsg').style.display = 'none';
+
+      const { data: existing } = await sb.from('customers').select('phone').eq('phone', phone);
+      if(existing && existing.length > 0){
+        showError('❌ Ye phone number pehle se registered hai!');
+        btn.textContent = '✅ Account Banao — Free!';
+        btn.disabled = false;
+        return;
+      }
+
+      const { data, error } = await sb.from('customers').insert([{
+        full_name: fullName, phone: phone, password: pass, city: city
+      }]).select();
+
+      if(error){
+        showError('❌ Error: ' + error.message);
+        btn.textContent = '✅ Account Banao — Free!';
+        btn.disabled = false;
+        return;
+      }
+
+      localStorage.setItem('nx_user', JSON.stringify({
+        name: fullName, phone: phone, city: city, id: data[0].id
+      }));
+
+      document.getElementById('wName').textContent = 'Namaste, ' + firstName + '! 👋';
+      document.getElementById('welcomeOverlay').classList.add('show');
     }
   </script>
 </body>

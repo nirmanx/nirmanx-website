@@ -3,36 +3,32 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tiles / Farshi – NirmanX</title>
+  <title>Tiles – NirmanX</title>
   <link rel="stylesheet" href="../style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    .page-hero { background: linear-gradient(135deg, #1A1208, #2D2010); padding: 44px 24px; text-align: center; }
-    .page-hero h1 { font-family: 'Baloo 2'; font-size: 38px; font-weight: 800; color: white; }
-    .page-hero h1 span { color: var(--orange); }
-    .page-hero p { color: #C4B5A5; margin-top: 8px; }
-    .hero-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
-    .hero-tag { background: rgba(244,111,26,.2); border: 1px solid rgba(244,111,26,.4); color: #FFA05A; font-size: 13px; font-weight: 600; padding: 5px 14px; border-radius: 20px; }
-    .prod-page { max-width: 1200px; margin: 44px auto; padding: 0 24px; }
-    .brand-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
-    .brand-btn { background: white; border: 2px solid var(--border); color: var(--dark); font-family: 'Hind'; font-size: 14px; font-weight: 600; padding: 9px 20px; border-radius: 25px; cursor: pointer; transition: all .2s; }
-    .brand-btn.active, .brand-btn:hover { background: var(--orange); border-color: var(--orange); color: white; }
-    .info-box { background: var(--orange-light); border: 1.5px solid var(--border); border-radius: 16px; padding: 20px 24px; margin-bottom: 28px; display: flex; gap: 20px; flex-wrap: wrap; }
-    .info-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
-    .info-item span { font-size: 20px; }
-    .type-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
-    .type-btn { background: var(--light); border: 1.5px solid var(--border); color: var(--dark); font-family: 'Hind'; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: all .2s; }
-    .type-btn.active, .type-btn:hover { background: var(--dark); color: white; border-color: var(--dark); }
-    .bulk-cta { background: linear-gradient(135deg, var(--orange), var(--orange-dark)); border-radius: 18px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 36px; }
-    .bulk-cta h3 { font-family: 'Baloo 2'; font-size: 22px; font-weight: 800; color: white; }
-    .bulk-cta p { color: rgba(255,255,255,.85); font-size: 14px; margin-top: 4px; }
-    .bulk-cta a { background: white; color: var(--orange); font-family: 'Baloo 2'; font-size: 15px; font-weight: 800; padding: 12px 26px; border-radius: 25px; text-decoration: none; white-space: nowrap; transition: all .2s; }
-    .bulk-cta a:hover { transform: scale(1.03); }
+    .page-hero{background:linear-gradient(135deg,#1A1208,#2D2010);padding:44px 24px;text-align:center}
+    .page-hero h1{font-family:'Baloo 2';font-size:38px;font-weight:800;color:white}
+    .page-hero h1 span{color:var(--orange)}
+    .page-hero p{color:#C4B5A5;margin-top:8px}
+    .hero-tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+    .hero-tag{background:rgba(244,111,26,.2);border:1px solid rgba(244,111,26,.4);color:#FFA05A;font-size:13px;font-weight:600;padding:5px 14px;border-radius:20px}
+    .prod-page{max-width:1200px;margin:40px auto;padding:0 24px}
+    .brand-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+    .brand-btn{background:white;border:2px solid var(--border);color:var(--dark);font-family:'Hind';font-size:14px;font-weight:600;padding:8px 18px;border-radius:25px;cursor:pointer;transition:all .2s}
+    .brand-btn.active,.brand-btn:hover{background:var(--orange);border-color:var(--orange);color:white}
+    .info-box{background:var(--orange-light);border:1.5px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:24px;display:flex;gap:20px;flex-wrap:wrap}
+    .info-item{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+    .bulk-cta{background:linear-gradient(135deg,var(--orange),var(--orange-dark));border-radius:18px;padding:22px 26px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:32px}
+    .bulk-cta h3{font-family:'Baloo 2';font-size:20px;font-weight:800;color:white}
+    .bulk-cta p{color:rgba(255,255,255,.85);font-size:14px;margin-top:4px}
+    .bulk-cta a{background:white;color:var(--orange);font-family:'Baloo 2';font-size:15px;font-weight:800;padding:12px 24px;border-radius:25px;text-decoration:none;white-space:nowrap}
   </style>
 </head>
 <body>
 
-  <div class="ticker-wrap"><div class="ticker"><span>🪟 Kajaria, Somany, Asian Granito — Top Brands</span><span>Floor Tiles, Wall Tiles, Vitrified Tiles</span><span>100+ Designs Available</span><span>Free Sample Available — WhatsApp karo</span><span>🪟 Kajaria, Somany, Asian Granito — Top Brands</span><span>Floor Tiles, Wall Tiles, Vitrified Tiles</span><span>100+ Designs Available</span><span>Free Sample Available — WhatsApp karo</span></div></div>
+  <div class="ticker-wrap"><div class="ticker"><span>🪟 Kajaria, Somany, Asian Granito — Top Brands</span><span>Floor, Wall, Bathroom Tiles</span><span>100+ Designs Available</span><span>Free Sample — WhatsApp karo</span><span>🪟 Kajaria, Somany Available</span></div></div>
 
   <nav>
     <div class="nav-inner">
@@ -42,7 +38,8 @@
         <a href="products.html">📦 Products</a>
         <a href="track.html">🔄 Track Order</a>
         <a href="contact.html">📞 Contact</a>
-        <a href="login.html">👤 Login</a>
+        <a href="login.html" id="loginNavBtn">👤 Login</a>
+        <span id="userBadge" style="display:none;background:var(--orange);color:white;font-size:13px;font-weight:700;padding:6px 14px;border-radius:20px;cursor:pointer;" onclick="logoutUser()">👤 <span id="userName"></span> ✕</span>
         <a href="cart.html" class="nav-cta">🛒 Cart</a>
       </div>
       <button class="hamburger" onclick="toggleNav()">☰</button>
@@ -51,7 +48,7 @@
 
   <div class="page-hero">
     <h1>🪟 Tiles / <span>Farshi</span></h1>
-    <p>Kajaria, Somany, Asian Granito — 100+ designs, best price mein</p>
+    <p>Top brands — 100+ designs, best price mein</p>
     <div class="hero-tags">
       <span class="hero-tag">✅ Top Brands</span>
       <span class="hero-tag">🎨 100+ Designs</span>
@@ -61,164 +58,28 @@
   </div>
 
   <div class="prod-page">
-
     <div class="info-box">
-      <div class="info-item"><span>🎨</span> Floor, Wall, Bathroom — sabhi types</div>
-      <div class="info-item"><span>📐</span> 300×300 se 800×800 mm tak</div>
-      <div class="info-item"><span>🆓</span> Free sample available</div>
-      <div class="info-item"><span>💰</span> 200+ sqft order par extra 8% off</div>
+      <div class="info-item">🎨 Floor, Wall, Bathroom — sabhi types</div>
+      <div class="info-item">📐 300×300 se 800×800 mm</div>
+      <div class="info-item">🆓 Free sample available</div>
+      <div class="info-item">💰 200+ sqft → Extra 8% off</div>
     </div>
 
-    <!-- TYPE FILTER -->
-    <div class="type-bar">
-      <button class="type-btn active" onclick="filterType('all', this)">🏪 Sab Types</button>
-      <button class="type-btn" onclick="filterType('floor', this)">🏠 Floor Tiles</button>
-      <button class="type-btn" onclick="filterType('wall', this)">🧱 Wall Tiles</button>
-      <button class="type-btn" onclick="filterType('bathroom', this)">🚿 Bathroom</button>
-      <button class="type-btn" onclick="filterType('outdoor', this)">🌿 Outdoor</button>
-    </div>
-
-    <!-- BRAND FILTER -->
-    <div class="brand-bar">
-      <button class="brand-btn active" onclick="filterBrand('all', this)">🏪 Sab Brands</button>
-      <button class="brand-btn" onclick="filterBrand('kajaria', this)">Kajaria</button>
-      <button class="brand-btn" onclick="filterBrand('somany', this)">Somany</button>
-      <button class="brand-btn" onclick="filterBrand('asian', this)">Asian Granito</button>
-      <button class="brand-btn" onclick="filterBrand('orient', this)">Orient Bell</button>
+    <div class="brand-bar" id="brandBar">
+      <button class="brand-btn active" onclick="filterBrand('all',this)">🏪 Sab Brands</button>
     </div>
 
     <div class="prod-grid" id="tilesGrid">
-
-      <div class="prod-card" data-brand="kajaria" data-type="floor">
-        <div class="prod-img">🪟<span class="badge-best">BESTSELLER</span></div>
-        <div class="prod-body">
-          <div class="prod-brand">Kajaria</div>
-          <div class="prod-name">Vitrified Floor Tiles</div>
-          <div class="prod-specs">600×600 mm • Glossy Finish</div>
-          <div class="prod-rating"><span class="stars">★★★★★</span> 4.7 (234)</div>
-          <div class="prod-price"><span class="price-now">₹45</span><span class="price-unit">/sqft</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('Kajaria Vitrified Tiles 600x600', 45)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe Kajaria Vitrified Tiles chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="kajaria" data-type="floor">
-        <div class="prod-img">🪟<span class="badge-best">NEW</span></div>
-        <div class="prod-body">
-          <div class="prod-brand">Kajaria</div>
-          <div class="prod-name">Eternity Marble Look</div>
-          <div class="prod-specs">800×800 mm • Matt Finish</div>
-          <div class="prod-rating"><span class="stars">★★★★★</span> 4.8 (156)</div>
-          <div class="prod-price"><span class="price-now">₹72</span><span class="price-unit">/sqft</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('Kajaria Eternity 800x800', 72)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe Kajaria Eternity Marble Tiles chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="somany" data-type="wall">
-        <div class="prod-img">🪟</div>
-        <div class="prod-body">
-          <div class="prod-brand">Somany</div>
-          <div class="prod-name">Wall Tiles Matt Finish</div>
-          <div class="prod-specs">300×600 mm • Bathroom/Kitchen</div>
-          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.5 (189)</div>
-          <div class="prod-price"><span class="price-now">₹38</span><span class="price-unit">/sqft</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('Somany Wall Tiles Matt', 38)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe Somany Wall Tiles chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="somany" data-type="bathroom">
-        <div class="prod-img">🚿<span class="badge-sale">-12%</span></div>
-        <div class="prod-body">
-          <div class="prod-brand">Somany</div>
-          <div class="prod-name">Bathroom Floor Tiles</div>
-          <div class="prod-specs">300×300 mm • Anti Skid</div>
-          <div class="prod-rating"><span class="stars">★★★★★</span> 4.6 (275)</div>
-          <div class="prod-price"><span class="price-now">₹28</span><span class="price-old">₹32</span><span class="price-unit">/sqft</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('Somany Bathroom Anti Skid Tiles', 28)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe Somany Bathroom Tiles chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="asian" data-type="floor">
-        <div class="prod-img">🪟<span class="badge-best">VALUE</span></div>
-        <div class="prod-body">
-          <div class="prod-brand">Asian Granito</div>
-          <div class="prod-name">Double Charge Tiles</div>
-          <div class="prod-specs">600×600 mm • High Gloss</div>
-          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.4 (198)</div>
-          <div class="prod-price"><span class="price-now">₹35</span><span class="price-unit">/sqft</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('Asian Granito Double Charge', 35)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe Asian Granito Tiles chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="orient" data-type="outdoor">
-        <div class="prod-img">🌿</div>
-        <div class="prod-body">
-          <div class="prod-brand">Orient Bell</div>
-          <div class="prod-name">Outdoor Parking Tiles</div>
-          <div class="prod-specs">600×600 mm • Heavy Duty</div>
-          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.5 (143)</div>
-          <div class="prod-price"><span class="price-now">₹42</span><span class="price-unit">/sqft</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('Orient Bell Parking Tiles', 42)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe Orient Bell Outdoor Tiles chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="kajaria" data-type="wall">
-        <div class="prod-img">🪟</div>
-        <div class="prod-body">
-          <div class="prod-brand">Kajaria</div>
-          <div class="prod-name">Kitchen Wall Tiles</div>
-          <div class="prod-specs">250×375 mm • Glossy White</div>
-          <div class="prod-rating"><span class="stars">★★★★★</span> 4.7 (167)</div>
-          <div class="prod-price"><span class="price-now">₹32</span><span class="price-unit">/sqft</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('Kajaria Kitchen Wall Tiles', 32)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe Kajaria Kitchen Tiles chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="somany" data-type="floor">
-        <div class="prod-img">🪟<span class="badge-sale">-10%</span></div>
-        <div class="prod-body">
-          <div class="prod-brand">Somany</div>
-          <div class="prod-name">Hardrock Floor Tiles</div>
-          <div class="prod-specs">600×600 mm • Satin Finish</div>
-          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.5 (210)</div>
-          <div class="prod-price"><span class="price-now">₹36</span><span class="price-old">₹40</span><span class="price-unit">/sqft</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('Somany Hardrock Floor Tiles', 36)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe Somany Hardrock Tiles chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
+      <div style="text-align:center;padding:40px;color:var(--gray);grid-column:1/-1">⏳ Products load ho rahe hain...</div>
     </div>
 
     <div class="bulk-cta">
       <div>
         <h3>🎨 Free Sample Chahiye?</h3>
-        <p>Order karne se pehle free sample mangwa lo! WhatsApp karo.</p>
+        <p>Order se pehle free sample mangao! WhatsApp karo.</p>
       </div>
-      <a href="https://wa.me/919654171005?text=Namaste! Mujhe tiles ka free sample chahiye." target="_blank">💬 Free Sample Maango</a>
+      <a href="https://wa.me/919654171005?text=Mujhe tiles ka free sample chahiye." target="_blank">💬 Free Sample Maango</a>
     </div>
-
   </div>
 
   <div class="wa-float">
@@ -229,28 +90,87 @@
 
   <script src="../script.js"></script>
   <script>
-    let activeBrand = 'all';
-    let activeType = 'all';
+    const { createClient } = supabase;
+    const sb = createClient(
+      'https://ddgwdesqicrneikxrcnj.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZ3dkZXNxaWNybmVpa3hyY25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3Mzc1MTksImV4cCI6MjA4OTMxMzUxOX0.AFH7Sfat5XnYFYocdbjZlYhL5iLG1dO6wXm_FHycAqo'
+    );
 
-    function filterBrand(brand, btn) {
-      activeBrand = brand;
-      document.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      applyFilter();
+    const nxUser=JSON.parse(localStorage.getItem('nx_user'));
+    if(nxUser){
+      const lb=document.getElementById('loginNavBtn');
+      const ub=document.getElementById('userBadge');
+      const un=document.getElementById('userName');
+      if(lb)lb.style.display='none';
+      if(ub)ub.style.display='inline-flex';
+      if(un)un.textContent=nxUser.name.split(' ')[0];
     }
-    function filterType(type, btn) {
-      activeType = type;
-      document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      applyFilter();
-    }
-    function applyFilter() {
-      document.querySelectorAll('#tilesGrid .prod-card').forEach(card => {
-        const brandOk = activeBrand === 'all' || card.dataset.brand === activeBrand;
-        const typeOk = activeType === 'all' || card.dataset.type === activeType;
-        card.style.display = (brandOk && typeOk) ? 'block' : 'none';
+    function logoutUser(){localStorage.removeItem('nx_user');window.location.reload();}
+
+    let allProds=[];
+
+    async function loadTiles(){
+      const{data}=await sb.from('products').select('*').eq('category','tiles').eq('status','active').order('created_at',{ascending:false});
+      allProds=data||[];
+      const brands=[...new Set(allProds.map(p=>p.brand_name))];
+      const bar=document.getElementById('brandBar');
+      brands.forEach(b=>{
+        const btn=document.createElement('button');
+        btn.className='brand-btn';
+        btn.textContent=b;
+        btn.onclick=()=>filterBrand(b,btn);
+        bar.appendChild(btn);
       });
+      renderProds(allProds);
     }
+
+    function renderProds(prods){
+      const grid=document.getElementById('tilesGrid');
+      if(!prods||prods.length===0){
+        grid.innerHTML=`<div style="text-align:center;padding:50px;grid-column:1/-1">
+          <div style="font-size:50px;margin-bottom:12px">🪟</div>
+          <h3 style="font-family:'Baloo 2';margin-bottom:8px">Abhi Koi Product Nahi</h3>
+          <p style="color:var(--gray);margin-bottom:16px">Jald hi products add honge!</p>
+          <a href="https://wa.me/919654171005?text=Mujhe tiles chahiye" target="_blank" class="btn-primary" style="text-decoration:none">💬 WhatsApp Order</a>
+        </div>`;
+        return;
+      }
+      grid.innerHTML=prods.map(p=>{
+        const orig=p.discount>0?Math.round(p.price*100/(100-p.discount)):null;
+        const hasPhoto=p.photo_url&&p.photo_url.length>100;
+        return`<div class="prod-card">
+          <div class="prod-img" style="${hasPhoto?'padding:0':''}">
+            ${hasPhoto?`<img src="${p.photo_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='🪟'">`:'🪟'}
+            ${p.discount>0?`<span class="badge-sale">-${p.discount}%</span>`:''}
+            <span class="badge-best">${p.delivery_time||'Fast'}</span>
+          </div>
+          <div class="prod-body">
+            <div class="prod-brand">${p.brand_name}</div>
+            <div class="prod-name">${p.product_name}</div>
+            <div class="prod-specs">${p.specs||''}</div>
+            ${p.offer_text?`<div style="background:#E74C3C;color:white;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;display:inline-block;margin-top:5px">🔥 ${p.offer_text}</div>`:''}
+            ${p.min_order?`<div style="font-size:11px;color:var(--gray);margin-top:3px">📦 Min: ${p.min_order}</div>`:''}
+            <div class="prod-price">
+              <span class="price-now">₹${parseFloat(p.price).toLocaleString('en-IN')}</span>
+              ${orig?`<span class="price-old">₹${orig.toLocaleString('en-IN')}</span>`:''}
+              <span class="price-unit">${p.unit||''}</span>
+            </div>
+            <div class="prod-actions">
+              <button class="btn-cart" onclick="addToCart('${p.product_name.replace(/'/g,"\\'")}',${p.price})">🛒 Cart</button>
+              <a href="https://wa.me/919654171005?text=Mujhe ${encodeURIComponent(p.product_name)} chahiye" target="_blank" class="btn-wa">💬</a>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function filterBrand(brand,btn){
+      document.querySelectorAll('.brand-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProds(brand==='all'?allProds:allProds.filter(p=>p.brand_name===brand));
+    }
+
+    loadTiles();
   </script>
 </body>
 </html>

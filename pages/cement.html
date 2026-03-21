@@ -1,32 +1,36 @@
-<meta charset="UTF-8"/>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cement – NirmanX</title>
   <link rel="stylesheet" href="../style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    .page-hero { background: linear-gradient(135deg, #1A1208, #2D2010); padding: 44px 24px; text-align: center; }
-    .page-hero h1 { font-family: 'Baloo 2'; font-size: 38px; font-weight: 800; color: white; }
-    .page-hero h1 span { color: var(--orange); }
-    .page-hero p { color: #C4B5A5; margin-top: 8px; font-size: 15px; }
-    .page-hero .hero-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
-    .hero-tag { background: rgba(244,111,26,.2); border: 1px solid rgba(244,111,26,.4); color: #FFA05A; font-size: 13px; font-weight: 600; padding: 5px 14px; border-radius: 20px; }
-    .prod-page { max-width: 1200px; margin: 44px auto; padding: 0 24px; }
-    .brand-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
-    .brand-btn { background: white; border: 2px solid var(--border); color: var(--dark); font-family: 'Hind'; font-size: 14px; font-weight: 600; padding: 9px 20px; border-radius: 25px; cursor: pointer; transition: all .2s; }
-    .brand-btn.active, .brand-btn:hover { background: var(--orange); border-color: var(--orange); color: white; }
-    .info-box { background: var(--orange-light); border: 1.5px solid var(--border); border-radius: 16px; padding: 20px 24px; margin-bottom: 30px; display: flex; gap: 20px; flex-wrap: wrap; }
-    .info-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--dark); }
-    .info-item span { font-size: 22px; }
-    .bulk-cta { background: linear-gradient(135deg, var(--orange), var(--orange-dark)); border-radius: 18px; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 36px; }
-    .bulk-cta h3 { font-family: 'Baloo 2'; font-size: 22px; font-weight: 800; color: white; }
-    .bulk-cta p { color: rgba(255,255,255,.85); font-size: 14px; margin-top: 4px; }
-    .bulk-cta a { background: white; color: var(--orange); font-family: 'Baloo 2'; font-size: 15px; font-weight: 800; padding: 12px 26px; border-radius: 25px; text-decoration: none; white-space: nowrap; transition: all .2s; display: inline-flex; align-items: center; gap: 8px; }
-    .bulk-cta a:hover { transform: scale(1.03); }
+    .page-hero{background:linear-gradient(135deg,#1A1208,#2D2010);padding:44px 24px;text-align:center}
+    .page-hero h1{font-family:'Baloo 2';font-size:38px;font-weight:800;color:white}
+    .page-hero h1 span{color:var(--orange)}
+    .page-hero p{color:#C4B5A5;margin-top:8px}
+    .hero-tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+    .hero-tag{background:rgba(244,111,26,.2);border:1px solid rgba(244,111,26,.4);color:#FFA05A;font-size:13px;font-weight:600;padding:5px 14px;border-radius:20px}
+    .prod-page{max-width:1200px;margin:40px auto;padding:0 24px}
+    .brand-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+    .brand-btn{background:white;border:2px solid var(--border);color:var(--dark);font-family:'Hind';font-size:14px;font-weight:600;padding:8px 18px;border-radius:25px;cursor:pointer;transition:all .2s}
+    .brand-btn.active,.brand-btn:hover{background:var(--orange);border-color:var(--orange);color:white}
+    .info-box{background:var(--orange-light);border:1.5px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:24px;display:flex;gap:20px;flex-wrap:wrap}
+    .info-item{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+    .bulk-cta{background:linear-gradient(135deg,var(--orange),var(--orange-dark));border-radius:18px;padding:22px 26px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:32px}
+    .bulk-cta h3{font-family:'Baloo 2';font-size:20px;font-weight:800;color:white}
+    .bulk-cta p{color:rgba(255,255,255,.85);font-size:14px;margin-top:4px}
+    .bulk-cta a{background:white;color:var(--orange);font-family:'Baloo 2';font-size:15px;font-weight:800;padding:12px 24px;border-radius:25px;text-decoration:none;white-space:nowrap}
+    .offer-badge{background:linear-gradient(135deg,#E74C3C,#C0392B);color:white;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;display:inline-block;margin-top:5px}
+    .min-order-txt{font-size:11px;color:var(--gray);margin-top:3px}
   </style>
 </head>
 <body>
 
-  <div class="ticker-wrap"><div class="ticker"><span>🏗️ Cement pe 10% Off — Aaj ka offer!</span><span>UltraTech, ACC, Ambuja — Sabhi Brands Available</span><span>Bulk Order 50+ bags par extra 5% discount</span><span>Same Day Delivery Delhi NCR</span><span>🏗️ Cement pe 10% Off — Aaj ka offer!</span><span>UltraTech, ACC, Ambuja — Sabhi Brands Available</span><span>Bulk Order 50+ bags par extra 5% discount</span><span>Same Day Delivery Delhi NCR</span></div></div>
+  <div class="ticker-wrap"><div class="ticker"><span>🏗️ Cement pe 10% Off — Aaj ka offer!</span><span>UltraTech, ACC, Ambuja — Sabhi Brands</span><span>Bulk 50+ bags par extra discount</span><span>Same Day Delivery Delhi NCR</span><span>🏗️ Cement pe 10% Off!</span></div></div>
 
   <nav>
     <div class="nav-inner">
@@ -36,7 +40,8 @@
         <a href="products.html">📦 Products</a>
         <a href="track.html">🔄 Track Order</a>
         <a href="contact.html">📞 Contact</a>
-        <a href="login.html">👤 Login</a>
+        <a href="login.html" id="loginNavBtn">👤 Login</a>
+        <span id="userBadge" style="display:none;background:var(--orange);color:white;font-size:13px;font-weight:700;padding:6px 14px;border-radius:20px;cursor:pointer;" onclick="logoutUser()">👤 <span id="userName"></span> ✕</span>
         <a href="cart.html" class="nav-cta">🛒 Cart</a>
       </div>
       <button class="hamburger" onclick="toggleNav()">☰</button>
@@ -45,186 +50,136 @@
 
   <div class="page-hero">
     <h1>🏗️ <span>Cement</span> — Best Prices</h1>
-    <p>UltraTech, ACC, Ambuja aur sabhi top brands — genuine aur fast delivery</p>
+    <p>Top brands — genuine aur fast delivery</p>
     <div class="hero-tags">
       <span class="hero-tag">✅ 100% Genuine</span>
       <span class="hero-tag">🚚 Same Day Delivery</span>
-      <span class="hero-tag">💰 Best Price Guarantee</span>
-      <span class="hero-tag">📦 Bulk Orders Welcome</span>
+      <span class="hero-tag">💰 Best Price</span>
+      <span class="hero-tag">📦 Bulk Welcome</span>
     </div>
   </div>
 
   <div class="prod-page">
-
-    <!-- INFO BAR -->
     <div class="info-box">
-      <div class="info-item"><span>🚚</span> Same Day Delivery available</div>
-      <div class="info-item"><span>💰</span> Minimum order: 10 bags</div>
-      <div class="info-item"><span>📦</span> Bulk 50+ bags → Extra 5% off</div>
-      <div class="info-item"><span>✅</span> ISI Certified products only</div>
+      <div class="info-item">🚚 Same Day Delivery available</div>
+      <div class="info-item">💰 Min order: 10 bags</div>
+      <div class="info-item">📦 50+ bags → Extra 5% off</div>
+      <div class="info-item">✅ ISI Certified only</div>
     </div>
 
-    <!-- BRAND FILTER -->
-    <div class="brand-bar">
-      <button class="brand-btn active" onclick="filterBrand('all', this)">🏪 Sab Brands</button>
-      <button class="brand-btn" onclick="filterBrand('ultratech', this)">UltraTech</button>
-      <button class="brand-btn" onclick="filterBrand('acc', this)">ACC</button>
-      <button class="brand-btn" onclick="filterBrand('ambuja', this)">Ambuja</button>
-      <button class="brand-btn" onclick="filterBrand('shree', this)">Shree Cement</button>
-      <button class="brand-btn" onclick="filterBrand('jk', this)">JK Cement</button>
+    <div class="brand-bar" id="brandBar">
+      <button class="brand-btn active" onclick="filterBrand('all',this)">🏪 Sab Brands</button>
     </div>
 
-    <!-- PRODUCT GRID -->
     <div class="prod-grid" id="cementGrid">
-
-      <div class="prod-card" data-brand="ultratech">
-        <div class="prod-img">🏗️<span class="badge-best">BESTSELLER</span><span class="badge-sale">-10%</span></div>
-        <div class="prod-body">
-          <div class="prod-brand">UltraTech</div>
-          <div class="prod-name">PPC Cement Premium</div>
-          <div class="prod-specs">50 Kg • OPC 53 Grade • ISI Certified</div>
-          <div class="prod-rating"><span class="stars">★★★★★</span> 4.9 (1.2k reviews)</div>
-          <div class="prod-price"><span class="price-now">₹380</span><span class="price-old">₹420</span><span class="price-unit">/bag</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('UltraTech PPC Cement', 380)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Namaste! Mujhe UltraTech PPC Cement chahiye. Price aur availability batayein." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="ultratech">
-        <div class="prod-img">🏗️<span class="badge-best">TOP</span></div>
-        <div class="prod-body">
-          <div class="prod-brand">UltraTech</div>
-          <div class="prod-name">OPC 53 Grade Cement</div>
-          <div class="prod-specs">50 Kg • High Strength</div>
-          <div class="prod-rating"><span class="stars">★★★★★</span> 4.8 (890)</div>
-          <div class="prod-price"><span class="price-now">₹390</span><span class="price-unit">/bag</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('UltraTech OPC 53', 390)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe UltraTech OPC 53 Cement chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="acc">
-        <div class="prod-img">🏗️<span class="badge-sale">-8%</span></div>
-        <div class="prod-body">
-          <div class="prod-brand">ACC</div>
-          <div class="prod-name">Gold Cement PPC</div>
-          <div class="prod-specs">50 Kg • Premium Quality</div>
-          <div class="prod-rating"><span class="stars">★★★★★</span> 4.8 (980)</div>
-          <div class="prod-price"><span class="price-now">₹370</span><span class="price-old">₹400</span><span class="price-unit">/bag</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('ACC Gold Cement', 370)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe ACC Gold Cement chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="acc">
-        <div class="prod-img">🏗️</div>
-        <div class="prod-body">
-          <div class="prod-brand">ACC</div>
-          <div class="prod-name">Suraksha Plus Cement</div>
-          <div class="prod-specs">50 Kg • OPC 43 Grade</div>
-          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.6 (640)</div>
-          <div class="prod-price"><span class="price-now">₹355</span><span class="price-unit">/bag</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('ACC Suraksha Plus', 355)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe ACC Suraksha Plus Cement chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="ambuja">
-        <div class="prod-img">🏗️<span class="badge-best">POPULAR</span></div>
-        <div class="prod-body">
-          <div class="prod-brand">Ambuja</div>
-          <div class="prod-name">Plus Cement PPC</div>
-          <div class="prod-specs">50 Kg • OPC 43 Grade</div>
-          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.6 (750)</div>
-          <div class="prod-price"><span class="price-now">₹360</span><span class="price-unit">/bag</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('Ambuja Plus Cement', 360)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe Ambuja Cement chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="shree">
-        <div class="prod-img">🏗️</div>
-        <div class="prod-body">
-          <div class="prod-brand">Shree Cement</div>
-          <div class="prod-name">Bangur Cement OPC</div>
-          <div class="prod-specs">50 Kg • OPC 53 Grade</div>
-          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.5 (480)</div>
-          <div class="prod-price"><span class="price-now">₹350</span><span class="price-unit">/bag</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('Shree Bangur Cement', 350)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe Shree Bangur Cement chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="jk">
-        <div class="prod-img">🏗️<span class="badge-sale">-6%</span></div>
-        <div class="prod-body">
-          <div class="prod-brand">JK Cement</div>
-          <div class="prod-name">JK Super Cement OPC</div>
-          <div class="prod-specs">50 Kg • High Performance</div>
-          <div class="prod-rating"><span class="stars">★★★★☆</span> 4.5 (390)</div>
-          <div class="prod-price"><span class="price-now">₹345</span><span class="price-old">₹368</span><span class="price-unit">/bag</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('JK Super Cement', 345)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe JK Super Cement chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="prod-card" data-brand="ultratech">
-        <div class="prod-img">🏗️</div>
-        <div class="prod-body">
-          <div class="prod-brand">UltraTech</div>
-          <div class="prod-name">Birla White Cement</div>
-          <div class="prod-specs">50 Kg • White Finish</div>
-          <div class="prod-rating"><span class="stars">★★★★★</span> 4.7 (320)</div>
-          <div class="prod-price"><span class="price-now">₹680</span><span class="price-unit">/bag</span></div>
-          <div class="prod-actions">
-            <button class="btn-cart" onclick="addToCart('Birla White Cement', 680)">🛒 Cart</button>
-            <a href="https://wa.me/919654171005?text=Mujhe Birla White Cement chahiye." target="_blank" class="btn-wa">💬</a>
-          </div>
-        </div>
-      </div>
-
+      <div style="text-align:center;padding:40px;color:var(--gray);grid-column:1/-1">⏳ Products load ho rahe hain...</div>
     </div>
 
-    <!-- BULK ORDER CTA -->
     <div class="bulk-cta">
       <div>
         <h3>📦 Bulk Order Chahiye? (50+ Bags)</h3>
-        <p>Extra 5-15% discount milega! Seedha WhatsApp par quote maango.</p>
+        <p>Extra discount milega! Seedha WhatsApp par quote maango.</p>
       </div>
-      <a href="https://wa.me/919654171005?text=Namaste! Mujhe cement ka bulk order karna hai. Please quote dijiye." target="_blank">💬 Bulk Quote Maango</a>
+      <a href="https://wa.me/919654171005?text=Namaste! Mujhe cement ka bulk order karna hai." target="_blank">💬 Bulk Quote Maango</a>
     </div>
-
   </div>
 
   <div class="wa-float">
-    <div class="wa-bubble" id="waBubble">💬 <strong>Cement order karo!</strong><br><small>Best price guaranteed</small></div>
-    <a href="https://wa.me/919654171005?text=Namaste! Mujhe cement chahiye." target="_blank" class="wa-btn" id="waBtn">💬</a>
+    <div class="wa-bubble" id="waBubble">💬 <strong>Cement order karo!</strong></div>
+    <a href="https://wa.me/919654171005?text=Mujhe cement chahiye." target="_blank" class="wa-btn" id="waBtn">💬</a>
   </div>
-  <div class="call-float"><a href="tel:+919654171005" class="call-btn">📞 Call for Bulk Order</a></div>
+  <div class="call-float"><a href="tel:+919654171005" class="call-btn">📞 Bulk Order Call</a></div>
 
   <script src="../script.js"></script>
   <script>
-    function filterBrand(brand, btn) {
-      document.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelectorAll('#cementGrid .prod-card').forEach(card => {
-        card.style.display = (brand === 'all' || card.dataset.brand === brand) ? 'block' : 'none';
-      });
+    const { createClient } = supabase;
+    const sb = createClient(
+      'https://ddgwdesqicrneikxrcnj.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZ3dkZXNxaWNybmVpa3hyY25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3Mzc1MTksImV4cCI6MjA4OTMxMzUxOX0.AFH7Sfat5XnYFYocdbjZlYhL5iLG1dO6wXm_FHycAqo'
+    );
+
+    const nxUser = JSON.parse(localStorage.getItem('nx_user'));
+    if(nxUser){
+      const lb=document.getElementById('loginNavBtn');
+      const ub=document.getElementById('userBadge');
+      const un=document.getElementById('userName');
+      if(lb) lb.style.display='none';
+      if(ub) ub.style.display='inline-flex';
+      if(un) un.textContent=nxUser.name.split(' ')[0];
     }
+    function logoutUser(){ localStorage.removeItem('nx_user'); window.location.reload(); }
+
+    let allProds = [];
+    let activeBrand = 'all';
+
+    async function loadCement(){
+      const {data} = await sb.from('products').select('*').eq('category','cement').eq('status','active').order('created_at',{ascending:false});
+      allProds = data || [];
+
+      // Dynamic brand buttons
+      const brands = [...new Set(allProds.map(p=>p.brand_name))];
+      const bar = document.getElementById('brandBar');
+      brands.forEach(b => {
+        const btn = document.createElement('button');
+        btn.className = 'brand-btn';
+        btn.textContent = b;
+        btn.onclick = () => filterBrand(b, btn);
+        bar.appendChild(btn);
+      });
+
+      renderProds(allProds);
+    }
+
+    function renderProds(prods){
+      const grid = document.getElementById('cementGrid');
+      if(!prods || prods.length===0){
+        grid.innerHTML = `<div style="text-align:center;padding:50px;grid-column:1/-1">
+          <div style="font-size:50px;margin-bottom:12px">🏗️</div>
+          <h3 style="font-family:'Baloo 2';margin-bottom:8px">Abhi Koi Product Nahi</h3>
+          <p style="color:var(--gray);margin-bottom:16px">Sellers jald hi cement add karenge!</p>
+          <a href="https://wa.me/919654171005?text=Mujhe cement chahiye" target="_blank" class="btn-primary" style="text-decoration:none">💬 WhatsApp Order</a>
+        </div>`;
+        return;
+      }
+
+      grid.innerHTML = prods.map(p => {
+        const orig = p.discount>0 ? Math.round(p.price*100/(100-p.discount)) : null;
+        const hasPhoto = p.photo_url && p.photo_url.length > 100;
+        return `
+          <div class="prod-card">
+            <div class="prod-img" style="${hasPhoto?'padding:0':''}">
+              ${hasPhoto?`<img src="${p.photo_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='🏗️'">` : '🏗️'}
+              ${p.discount>0?`<span class="badge-sale">-${p.discount}%</span>`:''}
+              <span class="badge-best">${p.delivery_time||'Fast'}</span>
+            </div>
+            <div class="prod-body">
+              <div class="prod-brand">${p.brand_name}</div>
+              <div class="prod-name">${p.product_name}</div>
+              <div class="prod-specs">${p.specs||''}</div>
+              ${p.offer_text?`<div class="offer-badge">🔥 ${p.offer_text}</div>`:''}
+              ${p.min_order?`<div class="min-order-txt">📦 Min: ${p.min_order}</div>`:''}
+              <div class="prod-price">
+                <span class="price-now">₹${parseFloat(p.price).toLocaleString('en-IN')}</span>
+                ${orig?`<span class="price-old">₹${orig.toLocaleString('en-IN')}</span>`:''}
+                <span class="price-unit">${p.unit||''}</span>
+              </div>
+              <div class="prod-actions">
+                <button class="btn-cart" onclick="addToCart('${p.product_name.replace(/'/g,"\\'")}',${p.price})">🛒 Cart</button>
+                <a href="https://wa.me/919654171005?text=Mujhe ${encodeURIComponent(p.product_name)} chahiye" target="_blank" class="btn-wa">💬</a>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function filterBrand(brand, btn){
+      activeBrand = brand;
+      document.querySelectorAll('.brand-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProds(brand==='all' ? allProds : allProds.filter(p=>p.brand_name===brand));
+    }
+
+    loadCement();
   </script>
 </body>
 </html>
