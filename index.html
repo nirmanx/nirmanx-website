@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NirmanX – India's Construction Marketplace</title>
+  <title>BrickaTon – India's Construction Marketplace</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -30,7 +30,7 @@
   <!-- NAVBAR -->
   <nav>
     <div class="nav-inner">
-      <a href="index.html" class="logo">Nirman<span>X</span></a>
+      <a href="index.html" class="logo">Bricka<span>Ton</span></a>
       <div class="nav-links" id="navLinks">
         <a href="index.html">🏠 Home</a>
         <a href="pages/products.html">📦 Products</a>
@@ -305,9 +305,9 @@
     </div>
   </section>
 
-  <!-- WHY NIRMANX -->
+  <!-- WHY BRICKATON -->
   <section class="section light-bg">
-    <h2 class="sec-title">Kyun Chunein <span>NirmanX?</span></h2>
+    <h2 class="sec-title">Kyun Chunein <span>BrickaTon?</span></h2>
     <p class="sec-sub">Hamaari service aapko trust aur convenience deti hai</p>
     <div class="why-grid">
       <div class="why-card"><div class="why-icon">✅</div><h3>100% Genuine Material</h3><p>Sabhi products verified brands se — koi duplicate nahi. Quality guarantee ke saath.</p></div>
@@ -342,7 +342,7 @@
           <div><div class="rev-name">Rajesh Sharma</div><div class="rev-loc">📍 Noida, Contractor</div></div>
         </div>
         <div class="rev-stars">★★★★★</div>
-        <p class="rev-text">"Bahut acha service hai. UltraTech ke bags same day mil gaye. Price bhi market se sasta tha. Ab toh hamesha NirmanX se hi order karta hoon!"</p>
+        <p class="rev-text">"Bahut acha service hai. UltraTech ke bags same day mil gaye. Price bhi market se sasta tha. Ab toh hamesha BrickaTon se hi order karta hoon!"</p>
         <span class="rev-tag">Cement Order</span>
       </div>
       <div class="review-card">
@@ -368,7 +368,7 @@
 
   <!-- SELLER CTA -->
   <section class="seller-cta">
-    <h2>🏭 Seller Hain? NirmanX par Becho!</h2>
+    <h2>🏭 Seller Hain? BrickaTon par Becho!</h2>
     <p>Manufacturer, Dealer ya Supplier hain? Customers tak pahuncho — bilkul free mein register karo.</p>
     <a href="pages/seller.html" class="btn-white">🚀 Abhi Seller Register Karo →</a>
   </section>
@@ -377,7 +377,7 @@
   <footer>
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="index.html" class="logo footer-logo">Nirman<span>X</span></a>
+        <a href="index.html" class="logo footer-logo">Bricka<span>Ton</span></a>
         <p>India ka trusted online construction material marketplace. Cement se lekar tiles tak — sab kuch ghar baithe order karo at best prices.</p>
         <div class="footer-socials">
           <a href="#" class="social-btn">📘</a>
@@ -398,7 +398,7 @@
       <div>
         <h4>Company</h4>
         <ul>
-          <li><a href="#">About NirmanX</a></li>
+          <li><a href="#">About BrickaTon</a></li>
           <li><a href="pages/seller.html">Become a Seller</a></li>
           <li><a href="pages/contact.html">Contact Us</a></li>
         </ul>
@@ -414,7 +414,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 NirmanX. All Rights Reserved. | Made with ❤️ in India 🇮🇳</p>
+      <p>© 2026 BrickaTon. All Rights Reserved. | Made with ❤️ in India 🇮🇳</p>
       <div class="footer-badges">
         <span class="f-badge">🔒 Secure Payments</span>
         <span class="f-badge">✅ GST Verified</span>
@@ -439,17 +439,16 @@
 
   <script src="script.js"></script>
   <script>
-    // Customer login badge
     const nxUser = JSON.parse(localStorage.getItem('nx_user'));
-    if(nxUser) {
-      const loginBtn = document.getElementById('loginNavBtn');
-      const badge = document.getElementById('userBadge');
-      const nameEl = document.getElementById('userName');
-      if(loginBtn) loginBtn.style.display = 'none';
-      if(badge) badge.style.display = 'inline-flex';
-      if(nameEl) nameEl.textContent = nxUser.name.split(' ')[0];
+    if(nxUser){
+      const lb = document.getElementById('loginNavBtn');
+      const ub = document.getElementById('userBadge');
+      const un = document.getElementById('userName');
+      if(lb) lb.style.display = 'none';
+      if(ub) ub.style.display = 'inline-flex';
+      if(un) un.textContent = nxUser.name.split(' ')[0];
     }
-    function logoutUser() {
+    function logoutUser(){
       localStorage.removeItem('nx_user');
       window.location.reload();
     }
