@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact – NirmanX</title>
+  <title>Contact – BrickaTon</title>
   <link rel="stylesheet" href="../style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     .page-hero{background:linear-gradient(135deg,#1A1208,#2D2010);padding:44px 24px;text-align:center}
     .page-hero h1{font-family:'Baloo 2';font-size:36px;font-weight:800;color:white}
@@ -20,7 +19,6 @@
     .c-icon{width:48px;height:48px;border-radius:12px;background:var(--orange-light);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
     .contact-card h4{font-family:'Baloo 2';font-size:15px;font-weight:700;margin-bottom:3px}
     .contact-card p{font-size:14px;color:var(--gray)}
-    .contact-card a{color:var(--orange);text-decoration:none;font-weight:600}
     .contact-form{background:white;border:1.5px solid var(--border);border-radius:20px;padding:28px}
     .contact-form h2{font-family:'Baloo 2';font-size:22px;font-weight:800;margin-bottom:20px}
     .contact-form h2 span{color:var(--orange)}
@@ -38,17 +36,12 @@
   </style>
 </head>
 <body>
-
-  <div class="ticker-wrap"><div class="ticker"><span>📞 Call: +91 96541 71005</span><span>💬 WhatsApp 24/7 Available</span><span>📧 support@nirmanx.in</span><span>📞 Call: +91 96541 71005</span><span>💬 WhatsApp 24/7 Available</span></div></div>
-
+  <div class="ticker-wrap"><div class="ticker"><span>📞 Call: +91 96541 71005</span><span>💬 WhatsApp 24/7</span><span>📧 support@brickaton.in</span><span>📞 Call: +91 96541 71005</span><span>💬 WhatsApp 24/7</span></div></div>
   <nav>
     <div class="nav-inner">
-      <a href="../index.html" class="logo">Nirman<span>X</span></a>
+      <a href="../index.html" class="logo">Bricka<span>Ton</span></a>
       <div class="nav-links" id="navLinks">
-        <a href="../index.html">🏠 Home</a>
-        <a href="products.html">📦 Products</a>
-        <a href="track.html">🔄 Track Order</a>
-        <a href="contact.html">📞 Contact</a>
+        <a href="../index.html">🏠 Home</a><a href="products.html">📦 Products</a><a href="track.html">🔄 Track</a><a href="contact.html">📞 Contact</a>
         <a href="login.html" id="loginNavBtn">👤 Login</a>
         <span id="userBadge" style="display:none;background:var(--orange);color:white;font-size:13px;font-weight:700;padding:6px 14px;border-radius:20px;cursor:pointer;" onclick="logoutUser()">👤 <span id="userName"></span> ✕</span>
         <a href="cart.html" class="nav-cta">🛒 Cart</a>
@@ -56,87 +49,41 @@
       <button class="hamburger" onclick="toggleNav()">☰</button>
     </div>
   </nav>
-
-  <div class="page-hero">
-    <h1>Hamaare Saath <span>Sampark Karo</span></h1>
-    <p>Koi bhi sawaal ho — hum hamesha available hain!</p>
-  </div>
-
+  <div class="page-hero"><h1>Hamaare Saath <span>Sampark Karo</span></h1><p>Koi bhi sawaal ho — hum hamesha available hain!</p></div>
   <div class="contact-page">
     <div class="contact-info">
       <h2>Humse <span>Baat Karo</span></h2>
-      <a href="tel:+919654171005" class="contact-card">
-        <div class="c-icon">📞</div>
-        <div><h4>Phone / Call</h4><p>+91 96541 71005</p></div>
-      </a>
-      <a href="https://wa.me/919654171005" target="_blank" class="contact-card">
-        <div class="c-icon">💬</div>
-        <div><h4>WhatsApp</h4><p>+91 96541 71005 (24/7)</p></div>
-      </a>
-      <a href="mailto:support@nirmanx.in" class="contact-card">
-        <div class="c-icon">📧</div>
-        <div><h4>Email</h4><p>support@nirmanx.in</p></div>
-      </a>
-      <div class="contact-card">
-        <div class="c-icon">🕐</div>
-        <div><h4>Working Hours</h4><p>Mon–Sat: 8AM – 8PM<br>Sunday: 9AM – 5PM</p></div>
-      </div>
-      <div class="contact-card">
-        <div class="c-icon">📍</div>
-        <div><h4>Service Areas</h4><p>Delhi • Noida • Greater Noida<br>Gurugram • Ghaziabad</p></div>
-      </div>
-      <div class="wa-contact">
-        <p>⚡ Sabse Fast Response WhatsApp par!</p>
-        <a href="https://wa.me/919654171005?text=Namaste! Mujhe NirmanX se help chahiye." target="_blank">💬 WhatsApp Karo Abhi</a>
-      </div>
+      <a href="tel:+919654171005" class="contact-card"><div class="c-icon">📞</div><div><h4>Phone / Call</h4><p>+91 96541 71005</p></div></a>
+      <a href="https://wa.me/919654171005" target="_blank" class="contact-card"><div class="c-icon">💬</div><div><h4>WhatsApp</h4><p>+91 96541 71005 (24/7)</p></div></a>
+      <a href="mailto:support@brickaton.in" class="contact-card"><div class="c-icon">📧</div><div><h4>Email</h4><p>support@brickaton.in</p></div></a>
+      <div class="contact-card"><div class="c-icon">🕐</div><div><h4>Working Hours</h4><p>Mon–Sat: 8AM–8PM | Sun: 9AM–5PM</p></div></div>
+      <div class="contact-card"><div class="c-icon">📍</div><div><h4>Service Areas</h4><p>Delhi • Noida • Greater Noida • Gurugram • Ghaziabad</p></div></div>
+      <div class="wa-contact"><p>⚡ Sabse Fast Response WhatsApp par!</p><a href="https://wa.me/919654171005?text=Namaste! BrickaTon se help chahiye." target="_blank">💬 WhatsApp Karo Abhi</a></div>
     </div>
-
     <div class="contact-form">
       <h2>Message <span>Bhejo</span></h2>
       <div class="form-field"><label>👤 Aapka Naam *</label><input type="text" id="cName" placeholder="Poora naam"/></div>
       <div class="form-field"><label>📱 Phone Number *</label><input type="tel" id="cPhone" placeholder="+91 XXXXX XXXXX"/></div>
-      <div class="form-field"><label>📍 Aapka Shehar</label>
-        <select id="cCity">
-          <option>Delhi</option><option>Noida</option><option>Greater Noida</option><option>Gurugram</option><option>Ghaziabad</option>
-        </select>
-      </div>
-      <div class="form-field"><label>🏗️ Kis Material ki Zaroorat?</label>
-        <select id="cMaterial">
-          <option>Cement</option><option>Steel / TMT Sariya</option><option>Bricks / Eent</option><option>Tiles / Farshi</option><option>Sand / Baalu</option><option>Paint</option><option>Kuch Aur</option>
-        </select>
-      </div>
-      <div class="form-field"><label>💬 Aapka Message</label><textarea id="cMsg" placeholder="Aapki zaroorat ya sawaal yahan likhein..."></textarea></div>
+      <div class="form-field"><label>📍 Shehar</label><select id="cCity"><option>Delhi</option><option>Noida</option><option>Greater Noida</option><option>Gurugram</option><option>Ghaziabad</option></select></div>
+      <div class="form-field"><label>🏗️ Material</label><select id="cMat"><option>Cement</option><option>Steel</option><option>Bricks</option><option>Tiles</option><option>Sand</option><option>Paint</option><option>Other</option></select></div>
+      <div class="form-field"><label>💬 Message</label><textarea id="cMsg" placeholder="Aapki zaroorat likhein..."></textarea></div>
       <button class="btn-submit" onclick="submitContact()">📨 Message Bhejo</button>
     </div>
   </div>
-
-  <div class="wa-float">
-    <div class="wa-bubble" id="waBubble">💬 <strong>Help chahiye?</strong></div>
-    <a href="https://wa.me/919654171005" target="_blank" class="wa-btn" id="waBtn">💬</a>
-  </div>
-
+  <div class="wa-float"><div class="wa-bubble" id="waBubble">💬 <strong>Help chahiye?</strong></div><a href="https://wa.me/919654171005" target="_blank" class="wa-btn" id="waBtn">💬</a></div>
   <script src="../script.js"></script>
   <script>
-    const nxUser = JSON.parse(localStorage.getItem('nx_user'));
-    if(nxUser){
-      const lb=document.getElementById('loginNavBtn');
-      const ub=document.getElementById('userBadge');
-      const un=document.getElementById('userName');
-      if(lb) lb.style.display='none';
-      if(ub) ub.style.display='inline-flex';
-      if(un) un.textContent=nxUser.name.split(' ')[0];
-    }
-    function logoutUser(){ localStorage.removeItem('nx_user'); window.location.reload(); }
-
+    const nxUser=JSON.parse(localStorage.getItem('nx_user'));
+    if(nxUser){const lb=document.getElementById('loginNavBtn');const ub=document.getElementById('userBadge');const un=document.getElementById('userName');if(lb)lb.style.display='none';if(ub)ub.style.display='inline-flex';if(un)un.textContent=nxUser.name.split(' ')[0];}
+    function logoutUser(){localStorage.removeItem('nx_user');window.location.reload();}
     function submitContact(){
-      const name = document.getElementById('cName').value.trim();
-      const phone = document.getElementById('cPhone').value.trim();
-      if(!name || !phone){ showToast('⚠️ Naam aur phone zaroori hai!'); return; }
-      const msg = document.getElementById('cMsg').value.trim();
-      const material = document.getElementById('cMaterial').value;
-      const waText = encodeURIComponent(`Namaste! Main ${name} bol raha hoon.\nPhone: ${phone}\nMaterial: ${material}\nMessage: ${msg || 'Query hai'}`);
-      window.open('https://wa.me/919654171005?text=' + waText, '_blank');
-      showToast('✅ Message WhatsApp par bheja ja raha hai!');
+      const n=document.getElementById('cName').value.trim();
+      const p=document.getElementById('cPhone').value.trim();
+      if(!n||!p){showToast('⚠️ Naam aur phone zaroori!');return;}
+      const m=document.getElementById('cMsg').value.trim();
+      const mat=document.getElementById('cMat').value;
+      window.open('https://wa.me/919654171005?text='+encodeURIComponent(`Namaste! Main ${n} bol raha hoon.\nPhone: ${p}\nMaterial: ${mat}\nMessage: ${m||'Query hai'}`),'_blank');
+      showToast('✅ WhatsApp par message ja raha hai!');
     }
   </script>
 </body>
