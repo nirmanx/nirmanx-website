@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Track Order – BrickaTon</title>
+  <title>Track Order – GroutGrove</title>
   <link rel="stylesheet" href="../style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -21,7 +21,7 @@
     .btn-track{width:100%;background:var(--orange);color:white;border:none;border-radius:12px;padding:14px;font-family:'Baloo 2';font-size:17px;font-weight:700;cursor:pointer;transition:all .2s}
     .btn-track:hover{background:var(--orange-dark)}
     .track-result{display:none;margin-top:24px}
-    .track-result.show{display:block;animation:fadeUp .4s ease}
+    .track-result.show{display:block}
     .order-info{background:var(--orange-light);border:1.5px solid var(--border);border-radius:14px;padding:18px;margin-bottom:20px}
     .order-info h4{font-family:'Baloo 2';font-size:18px;font-weight:800;color:var(--orange);margin-bottom:10px}
     .order-detail{display:flex;justify-content:space-between;font-size:14px;padding:7px 0;border-bottom:1px solid var(--border)}
@@ -41,14 +41,13 @@
     .wa-help{background:linear-gradient(135deg,#25D366,#128C7E);border-radius:14px;padding:16px;text-align:center;margin-top:20px}
     .wa-help p{color:white;font-size:14px;margin-bottom:10px;font-weight:600}
     .wa-help a{background:white;color:#25D366;font-family:'Baloo 2';font-size:14px;font-weight:800;padding:10px 22px;border-radius:25px;text-decoration:none}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
   </style>
 </head>
 <body>
-  <div class="ticker-wrap"><div class="ticker"><span>🚚 Real Time Order Tracking</span><span>Same Day Delivery Delhi NCR</span><span>Help: +91 96541 71005</span><span>🚚 Real Time Order Tracking</span><span>Same Day Delivery Delhi NCR</span></div></div>
+  <div class="ticker-wrap"><div class="ticker"><span>🚚 Real Time Order Tracking</span><span>Same Day Delivery Delhi NCR</span><span>Help: +91 96541 71005</span><span>🚚 Real Time Order Tracking</span></div></div>
   <nav>
     <div class="nav-inner">
-      <a href="../index.html" class="logo">Bricka<span>Ton</span></a>
+      <a href="../index.html" class="logo">Grout<span>Grove</span></a>
       <div class="nav-links" id="navLinks">
         <a href="../index.html">🏠 Home</a><a href="products.html">📦 Products</a><a href="track.html">🔄 Track</a><a href="contact.html">📞 Contact</a>
         <a href="login.html" id="loginNavBtn">👤 Login</a>
@@ -62,8 +61,8 @@
   <div class="track-page">
     <div class="track-box">
       <h2 style="font-family:'Baloo 2';font-size:22px;font-weight:800;margin-bottom:22px">Order <span style="color:var(--orange)">Search Karo</span></h2>
-      <div class="form-field"><label>📋 Order ID</label><input type="text" id="orderId" placeholder="Jaise: BT-123456"/></div>
-      <div class="form-field"><label>📱 Registered Phone</label><input type="tel" id="orderPhone" placeholder="+91 XXXXX XXXXX"/></div>
+      <div class="form-field"><label>📋 Order ID</label><input type="text" id="orderId" placeholder="Jaise: GG-123456"/></div>
+      <div class="form-field"><label>📱 Phone Number</label><input type="tel" id="orderPhone" placeholder="+91 XXXXX XXXXX"/></div>
       <button class="btn-track" onclick="trackOrder()">🔍 Track Karo</button>
       <div class="track-result" id="trackResult">
         <div class="order-info">
@@ -85,11 +84,11 @@
           <div class="step-line pending"></div>
           <div class="step"><div class="step-dot pending">🏠</div><div class="step-content"><h5>Delivered</h5><p>Expected: Aaj ke andar</p></div></div>
         </div>
-        <div class="wa-help"><p>📞 Help chahiye?</p><a href="https://wa.me/919654171005?text=Mera BrickaTon order track karna hai" target="_blank">💬 WhatsApp Support</a></div>
+        <div class="wa-help"><p>📞 Help chahiye?</p><a href="https://wa.me/919654171005?text=Mera GroutGrove order track karna hai" target="_blank">💬 WhatsApp Support</a></div>
       </div>
     </div>
   </div>
-  <div class="wa-float"><div class="wa-bubble" id="waBubble">💬 <strong>Order help chahiye?</strong></div><a href="https://wa.me/919654171005" target="_blank" class="wa-btn" id="waBtn">💬</a></div>
+  <div class="wa-float"><div class="wa-bubble" id="waBubble">💬 <strong>Help chahiye?</strong></div><a href="https://wa.me/919654171005" target="_blank" class="wa-btn" id="waBtn">💬</a></div>
   <script src="../script.js"></script>
   <script>
     const{createClient}=supabase;
@@ -101,11 +100,10 @@
       const id=document.getElementById('orderId').value.trim();
       const ph=document.getElementById('orderPhone').value.trim();
       if(!id||!ph){showToast('⚠️ Order ID aur Phone daalein!');return;}
-      const btn=document.querySelector('.btn-track');
-      btn.textContent='⏳ Track ho raha hai...';btn.disabled=true;
+      const btn=document.querySelector('.btn-track');btn.textContent='⏳ Track ho raha hai...';btn.disabled=true;
       const{data,error}=await sb.from('orders').select('*').eq('order_id',id).eq('customer_phone',ph);
       btn.textContent='🔍 Track Karo';btn.disabled=false;
-      if(error||!data||data.length===0){showToast('❌ Order nahi mila!');return;}
+      if(error||!data||data.length===0){showToast('❌ Order nahi mila! ID aur phone check karo.');return;}
       const o=data[0];
       document.getElementById('r-id').textContent=o.order_id;
       document.getElementById('r-name').textContent=o.customer_name;

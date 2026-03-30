@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Products – NirmanX</title>
+  <title>Products – GroutGrove</title>
   <link rel="stylesheet" href="../style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -19,168 +19,119 @@
     .prod-count{font-size:14px;color:var(--gray);margin-bottom:20px}
     .prod-count span{color:var(--orange);font-weight:700}
     .offer-badge{background:linear-gradient(135deg,#E74C3C,#C0392B);color:white;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;display:inline-block;margin-top:6px}
-    .delivery-badge{background:var(--orange-light);color:var(--orange);font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px}
     .min-order{font-size:11px;color:var(--gray);margin-top:4px}
     .no-prod{text-align:center;padding:60px 20px;grid-column:1/-1}
-    .no-prod .icon{font-size:60px;margin-bottom:16px}
-    .no-prod h3{font-family:'Baloo 2';font-size:22px;margin-bottom:8px}
     .loading{text-align:center;padding:60px;color:var(--gray);font-size:15px;grid-column:1/-1}
   </style>
 </head>
 <body>
+  <div class="ticker-wrap"><div class="ticker"><span>Free Delivery ₹5000+</span><span>Delhi NCR Same Day Delivery</span><span>Bulk: +91 96541 71005</span><span>100% Genuine Material</span><span>Free Delivery ₹5000+</span></div></div>
 
-<div class="ticker-wrap">
-  <div class="ticker">
-    <span>Free Delivery on orders above ₹5000</span>
-    <span>Delhi NCR — Same Day Delivery Available</span>
-    <span>Bulk Order? WhatsApp: +91 96541 71005</span>
-    <span>100% Genuine Material — Quality Guaranteed</span>
-    <span>Free Delivery on orders above ₹5000</span>
-    <span>Delhi NCR — Same Day Delivery Available</span>
-  </div>
-</div>
-
-<nav>
-  <div class="nav-inner">
-    <a href="../index.html" class="logo">Nirman<span>X</span></a>
-    <div class="nav-links" id="navLinks">
-      <a href="../index.html">🏠 Home</a>
-      <a href="products.html">📦 Products</a>
-      <a href="track.html">🔄 Track Order</a>
-      <a href="contact.html">📞 Contact</a>
-      <a href="login.html">👤 Login</a>
-      <a href="cart.html" class="nav-cta">🛒 Cart</a>
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="logo">Grout<span>Grove</span></a>
+      <div class="nav-links" id="navLinks">
+        <a href="../index.html">🏠 Home</a>
+        <a href="products.html">📦 Products</a>
+        <a href="track.html">🔄 Track Order</a>
+        <a href="contact.html">📞 Contact</a>
+        <a href="login.html" id="loginNavBtn">👤 Login</a>
+        <span id="userBadge" style="display:none;background:var(--orange);color:white;font-size:13px;font-weight:700;padding:6px 14px;border-radius:20px;cursor:pointer;" onclick="logoutUser()">👤 <span id="userName"></span> ✕</span>
+        <a href="cart.html" class="nav-cta">🛒 Cart</a>
+      </div>
+      <button class="hamburger" onclick="toggleNav()">☰</button>
     </div>
-    <button class="hamburger" onclick="toggleNav()">☰</button>
+  </nav>
+
+  <div class="page-hero">
+    <h1>Saare <span>Products</span></h1>
+    <p>Genuine brands — best prices — fast delivery</p>
   </div>
-</nav>
 
-<div class="page-hero">
-  <h1>Saare <span>Products</span></h1>
-  <p>Genuine brands — best prices — fast delivery</p>
-</div>
-
-<div class="filter-bar">
-  <button class="filter-btn active" onclick="filterCat('all',this)">🏪 Sab</button>
-  <button class="filter-btn" onclick="filterCat('cement',this)">🏗️ Cement</button>
-  <button class="filter-btn" onclick="filterCat('steel',this)">⚙️ Steel</button>
-  <button class="filter-btn" onclick="filterCat('bricks',this)">🧱 Bricks</button>
-  <button class="filter-btn" onclick="filterCat('tiles',this)">🪟 Tiles</button>
-  <button class="filter-btn" onclick="filterCat('sand',this)">🪣 Sand</button>
-  <button class="filter-btn" onclick="filterCat('paint',this)">🎨 Paint</button>
-  <button class="filter-btn" onclick="filterCat('hardware',this)">🔩 Hardware</button>
-  <button class="filter-btn" onclick="filterCat('plumbing',this)">🪛 Plumbing</button>
-</div>
-
-<div class="products-page">
-  <div class="prod-count" id="prodCount"></div>
-  <div class="prod-grid" id="productGrid">
-    <div class="loading">⏳ Products load ho rahe hain...</div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterCat('all',this)">🏪 Sab</button>
+    <button class="filter-btn" onclick="filterCat('cement',this)">🏗️ Cement</button>
+    <button class="filter-btn" onclick="filterCat('steel',this)">⚙️ Steel</button>
+    <button class="filter-btn" onclick="filterCat('bricks',this)">🧱 Bricks</button>
+    <button class="filter-btn" onclick="filterCat('tiles',this)">🪟 Tiles</button>
+    <button class="filter-btn" onclick="filterCat('sand',this)">🪣 Sand</button>
+    <button class="filter-btn" onclick="filterCat('paint',this)">🎨 Paint</button>
+    <button class="filter-btn" onclick="filterCat('hardware',this)">🔩 Hardware</button>
+    <button class="filter-btn" onclick="filterCat('plumbing',this)">🪛 Plumbing</button>
   </div>
-</div>
 
-<div class="wa-float">
-  <div class="wa-bubble" id="waBubble">💬 <strong>Order karo WhatsApp par!</strong><br><small>+91 96541 71005</small></div>
-  <a href="https://wa.me/919654171005?text=Namaste! Mujhe construction material chahiye." target="_blank" class="wa-btn" id="waBtn">💬</a>
-</div>
+  <div class="products-page">
+    <div class="prod-count" id="prodCount"></div>
+    <div class="prod-grid" id="productGrid">
+      <div class="loading">⏳ Products load ho rahe hain...</div>
+    </div>
+  </div>
 
-<script src="../script.js"></script>
-<script>
-  const { createClient } = supabase;
-  const sb = createClient(
-    'https://ddgwdesqicrneikxrcnj.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZ3dkZXNxaWNybmVpa3hyY25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3Mzc1MTksImV4cCI6MjA4OTMxMzUxOX0.AFH7Sfat5XnYFYocdbjZlYhL5iLG1dO6wXm_FHycAqo'
-  );
+  <div class="wa-float">
+    <div class="wa-bubble" id="waBubble">💬 <strong>Order karo WhatsApp par!</strong><br><small>+91 96541 71005</small></div>
+    <a href="https://wa.me/919654171005?text=Namaste! Mujhe construction material chahiye." target="_blank" class="wa-btn" id="waBtn">💬</a>
+  </div>
 
-  const catEmojis = {cement:'🏗️',steel:'⚙️',bricks:'🧱',tiles:'🪟',sand:'🪣',paint:'🎨',hardware:'🔩',plumbing:'🪛'};
-  let allProducts = [];
-  let activeFilter = 'all';
-
-  async function loadProducts() {
-    const grid = document.getElementById('productGrid');
-    const {data, error} = await sb
-      .from('products')
-      .select('*')
-      .eq('status','active')
-      .order('created_at',{ascending:false});
-
-    if(error){
-      grid.innerHTML = '<div class="no-prod"><div class="icon">❌</div><h3>Products load nahi hue</h3><p>Page refresh karo ya WhatsApp par order karo.</p></div>';
-      return;
+  <script src="../script.js"></script>
+  <script>
+    const{createClient}=supabase;
+    const sb=createClient('https://ddgwdesqicrneikxrcnj.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZ3dkZXNxaWNybmVpa3hyY25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3Mzc1MTksImV4cCI6MjA4OTMxMzUxOX0.AFH7Sfat5XnYFYocdbjZlYhL5iLG1dO6wXm_FHycAqo');
+    const nxUser=JSON.parse(localStorage.getItem('nx_user'));
+    if(nxUser){const lb=document.getElementById('loginNavBtn');const ub=document.getElementById('userBadge');const un=document.getElementById('userName');if(lb)lb.style.display='none';if(ub)ub.style.display='inline-flex';if(un)un.textContent=nxUser.name.split(' ')[0];}
+    function logoutUser(){localStorage.removeItem('nx_user');window.location.reload();}
+    const catEmojis={cement:'🏗️',steel:'⚙️',bricks:'🧱',tiles:'🪟',sand:'🪣',paint:'🎨',hardware:'🔩',plumbing:'🪛'};
+    let allProducts=[];
+    async function loadProducts(){
+      const grid=document.getElementById('productGrid');
+      const{data,error}=await sb.from('products').select('*').eq('status','active').order('created_at',{ascending:false});
+      if(error){grid.innerHTML='<div class="no-prod">❌ Products load nahi hue. Refresh karo.</div>';return;}
+      allProducts=data||[];
+      renderProducts(allProducts);
     }
-
-    allProducts = data || [];
-    renderProducts(allProducts);
-  }
-
-  function renderProducts(prods) {
-    const grid = document.getElementById('productGrid');
-    const count = document.getElementById('prodCount');
-
-    if(!prods || prods.length === 0){
-      count.innerHTML = '';
-      grid.innerHTML = `
-        <div class="no-prod">
-          <div class="icon">📦</div>
-          <h3>Is Category mein abhi koi product nahi</h3>
-          <p style="color:var(--gray);margin-bottom:20px">Jald hi products add honge! Abhi WhatsApp par order karo.</p>
-          <a href="https://wa.me/919654171005?text=Namaste! Mujhe material chahiye." target="_blank" class="btn-primary" style="text-decoration:none">💬 WhatsApp par Order Karo</a>
-          <br><br>
-          <a href="seller.html" class="btn-primary" style="text-decoration:none;background:var(--dark)">🏭 Seller Register Karo</a>
-        </div>`;
-      return;
-    }
-
-    count.innerHTML = `<span>${prods.length}</span> products mil gaye`;
-
-    grid.innerHTML = prods.map(p => {
-      const emoji = catEmojis[p.category] || '📦';
-      const hasPhoto = p.photo_url && p.photo_url.length > 100;
-      const originalPrice = p.discount > 0 ? Math.round(p.price * 100 / (100 - p.discount)) : null;
-
-      return `
-        <div class="prod-card">
-          <div class="prod-img" style="${hasPhoto ? 'padding:0;' : ''}">
-            ${hasPhoto
-              ? `<img src="${p.photo_url}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='${emoji}'">`
-              : emoji}
-            ${p.discount > 0 ? `<span class="badge-sale">-${p.discount}%</span>` : ''}
-            <span class="badge-best">${p.delivery_time || 'Fast'}</span>
+    function renderProducts(prods){
+      const grid=document.getElementById('productGrid');
+      const count=document.getElementById('prodCount');
+      if(!prods||prods.length===0){
+        count.innerHTML='';
+        grid.innerHTML=`<div class="no-prod"><div style="font-size:60px;margin-bottom:16px">📦</div><h3 style="font-family:'Baloo 2';font-size:22px;margin-bottom:8px">Is category mein abhi koi product nahi</h3><p style="color:var(--gray);margin-bottom:20px">Jald hi products add honge!</p><a href="https://wa.me/919654171005?text=Mujhe material chahiye" target="_blank" class="btn-primary" style="text-decoration:none">💬 WhatsApp Order</a><br><br><a href="seller.html" class="btn-primary" style="text-decoration:none;background:var(--dark)">🏭 Seller Bano</a></div>`;
+        return;
+      }
+      count.innerHTML=`<span>${prods.length}</span> products mil gaye`;
+      grid.innerHTML=prods.map(p=>{
+        const emoji=catEmojis[p.category]||'📦';
+        const hasPhoto=p.photo_url&&p.photo_url.length>100;
+        const orig=p.discount>0?Math.round(p.price*100/(100-p.discount)):null;
+        return`<div class="prod-card">
+          <div class="prod-img" style="${hasPhoto?'padding:0':''}">
+            ${hasPhoto?`<img src="${p.photo_url}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='${emoji}'">`:`${emoji}`}
+            ${p.discount>0?`<span class="badge-sale">-${p.discount}%</span>`:''}
+            <span class="badge-best">${p.delivery_time||'Fast'}</span>
           </div>
           <div class="prod-body">
             <div class="prod-brand">${p.brand_name}</div>
             <div class="prod-name">${p.product_name}</div>
-            <div class="prod-specs">${p.specs || ''}</div>
-            ${p.offer_text ? `<div class="offer-badge">🔥 ${p.offer_text}</div>` : ''}
-            <div class="prod-rating">
-              <span class="delivery-badge">🚚 ${p.delivery_time || 'Fast Delivery'}</span>
-            </div>
-            ${p.min_order ? `<div class="min-order">📦 Min Order: ${p.min_order}</div>` : ''}
+            <div class="prod-specs">${p.specs||''}</div>
+            ${p.offer_text?`<div class="offer-badge">🔥 ${p.offer_text}</div>`:''}
+            ${p.min_order?`<div class="min-order">📦 Min: ${p.min_order}</div>`:''}
             <div class="prod-price">
               <span class="price-now">₹${parseFloat(p.price).toLocaleString('en-IN')}</span>
-              ${originalPrice ? `<span class="price-old">₹${originalPrice.toLocaleString('en-IN')}</span>` : ''}
-              <span class="price-unit">${p.unit || ''}</span>
+              ${orig?`<span class="price-old">₹${orig.toLocaleString('en-IN')}</span>`:''}
+              <span class="price-unit">${p.unit||''}</span>
             </div>
             <div class="prod-actions">
-              <button class="btn-cart" onclick="addToCart('${p.product_name.replace(/'/g,"\\'")}', ${p.price})">
-                🛒 Cart mein Daalo
-              </button>
-              <a href="https://wa.me/919654171005?text=Namaste! Mujhe ye chahiye: ${encodeURIComponent(p.product_name)} — ₹${p.price} ${p.unit}" target="_blank" class="btn-wa">💬</a>
+              <button class="btn-cart" onclick="addToCart('${p.product_name.replace(/'/g,"\\'")}',${p.price})">🛒 Cart</button>
+              <a href="https://wa.me/919654171005?text=Mujhe ${encodeURIComponent(p.product_name)} chahiye" target="_blank" class="btn-wa">💬</a>
             </div>
           </div>
         </div>`;
-    }).join('');
-  }
-
-  function filterCat(cat, btn) {
-    activeFilter = cat;
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const filtered = cat === 'all' ? allProducts : allProducts.filter(p => p.category === cat);
-    renderProducts(filtered);
-  }
-
-  loadProducts();
-</script>
+      }).join('');
+    }
+    function filterCat(cat,btn){
+      document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts(cat==='all'?allProducts:allProducts.filter(p=>p.category===cat));
+    }
+    loadProducts();
+  </script>
 </body>
 </html>

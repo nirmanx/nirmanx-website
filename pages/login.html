@@ -1,9 +1,9 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login – BrickaTon</title>
+  <title>Login – GroutGrove</title>
   <link rel="stylesheet" href="../style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -29,7 +29,7 @@
     .welcome-card{background:white;border-radius:24px;padding:44px 36px;text-align:center;max-width:400px;width:90%;animation:popIn .4s ease}
     @keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
     .w-emoji{font-size:64px;margin-bottom:16px}
-    .w-title{font-family:'Baloo 2';font-size:30px;font-weight:800;color:var(--black);margin-bottom:8px}
+    .w-title{font-family:'Baloo 2';font-size:28px;font-weight:800;color:var(--black);margin-bottom:8px}
     .w-title span{color:var(--orange)}
     .w-name{font-family:'Baloo 2';font-size:20px;font-weight:700;color:var(--orange);margin-bottom:10px}
     .w-msg{color:var(--gray);font-size:14px;line-height:1.7;margin-bottom:22px}
@@ -37,49 +37,42 @@
   </style>
 </head>
 <body>
-
   <div class="welcome-overlay" id="welcomeOverlay">
     <div class="welcome-card">
       <div class="w-emoji">🏗️</div>
-      <div class="w-title">Welcome to <span>BrickaTon!</span></div>
+      <div class="w-title">Welcome to <span>GroutGrove!</span></div>
       <div class="w-name" id="wName"></div>
-      <div class="w-msg" id="wMsg">Aap successfully login ho gaye hain!<br>India ka trusted construction marketplace.</div>
-      <button class="w-btn" onclick="goHome()">🛒 Shopping Shuru Karo!</button>
+      <div class="w-msg" id="wMsg">Aap successfully login ho gaye!<br>India ka trusted construction marketplace.</div>
+      <button class="w-btn" onclick="window.location.href='../index.html'">🛒 Shopping Shuru Karo!</button>
     </div>
   </div>
 
   <div class="auth-page">
     <div class="auth-box">
-      <div class="auth-logo">Bricka<span>Ton</span></div>
+      <div class="auth-logo">Grout<span>Grove</span></div>
       <div class="auth-sub">India's Construction Marketplace</div>
       <div class="auth-tabs">
         <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">👤 Login</button>
         <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')">✏️ Sign Up</button>
       </div>
       <div class="error-msg" id="errorMsg"></div>
-
       <div id="loginForm">
         <div class="form-field"><label>📱 Phone Number</label><input type="tel" id="loginPhone" placeholder="+91 XXXXX XXXXX" maxlength="13"/></div>
         <div class="form-field"><label>🔒 Password</label><input type="password" id="loginPass" placeholder="Apna password daalein"/></div>
         <button class="btn-auth" id="loginBtn" onclick="doLogin()">🔓 Login Karo</button>
-        <p style="text-align:center;margin-top:14px;font-size:13px;color:var(--gray)">Account nahi hai? <a href="#" onclick="switchTab('signup')" style="color:var(--orange);font-weight:600">Sign Up Karo →</a></p>
+        <p style="text-align:center;margin-top:14px;font-size:13px;color:var(--gray)">Account nahi hai? <a href="#" onclick="switchTab('signup')" style="color:var(--orange);font-weight:600">Sign Up →</a></p>
       </div>
-
       <div id="signupForm" style="display:none">
         <div class="form-field"><label>👤 Poora Naam *</label><input type="text" id="signupName" placeholder="Aapka poora naam"/></div>
         <div class="form-field"><label>📱 Phone Number *</label><input type="tel" id="signupPhone" placeholder="+91 XXXXX XXXXX" maxlength="13"/></div>
-        <div class="form-field"><label>📍 Aapka Shehar *</label>
-          <select id="signupCity">
-            <option value="">Shehar chuno</option>
-            <option>Delhi</option><option>Noida</option><option>Greater Noida</option><option>Gurugram</option><option>Ghaziabad</option><option>Other</option>
-          </select>
+        <div class="form-field"><label>📍 Shehar *</label>
+          <select id="signupCity"><option value="">Shehar chuno</option><option>Delhi</option><option>Noida</option><option>Greater Noida</option><option>Gurugram</option><option>Ghaziabad</option><option>Other</option></select>
         </div>
         <div class="form-field"><label>🔒 Password * (min 6 char)</label><input type="password" id="signupPass" placeholder="Strong password banayein"/></div>
-        <div class="form-field"><label>🔒 Password Confirm *</label><input type="password" id="signupPass2" placeholder="Password dobara daalein"/></div>
+        <div class="form-field"><label>🔒 Confirm Password *</label><input type="password" id="signupPass2" placeholder="Password dobara daalein"/></div>
         <button class="btn-auth" id="signupBtn" onclick="doSignup()">✅ Account Banao — Free!</button>
-        <p style="text-align:center;margin-top:14px;font-size:13px;color:var(--gray)">Pehle se account hai? <a href="#" onclick="switchTab('login')" style="color:var(--orange);font-weight:600">Login Karo →</a></p>
+        <p style="text-align:center;margin-top:14px;font-size:13px;color:var(--gray)">Account hai? <a href="#" onclick="switchTab('login')" style="color:var(--orange);font-weight:600">Login Karo →</a></p>
       </div>
-
       <p style="text-align:center;margin-top:20px"><a href="../index.html" style="color:var(--orange);font-size:13px;font-weight:600;text-decoration:none">← Wapas Home</a></p>
     </div>
   </div>
@@ -90,21 +83,19 @@
     const sb=createClient('https://ddgwdesqicrneikxrcnj.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZ3dkZXNxaWNybmVpa3hyY25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3Mzc1MTksImV4cCI6MjA4OTMxMzUxOX0.AFH7Sfat5XnYFYocdbjZlYhL5iLG1dO6wXm_FHycAqo');
     function switchTab(t){document.getElementById('loginForm').style.display=t==='login'?'block':'none';document.getElementById('signupForm').style.display=t==='signup'?'block':'none';document.getElementById('tab-login').classList.toggle('active',t==='login');document.getElementById('tab-signup').classList.toggle('active',t==='signup');document.getElementById('errorMsg').style.display='none';}
     function showError(m){const el=document.getElementById('errorMsg');el.textContent=m;el.style.display='block';}
-    function showWelcome(name,isNew){document.getElementById('wName').textContent='Namaste, '+name+'! 👋';document.getElementById('wMsg').innerHTML=isNew?'Aapka account successfully ban gaya!<br>Ab aap construction material order kar sakte hain.':'Aap successfully login ho gaye hain!<br>BrickaTon par aapka swagat hai!';document.getElementById('welcomeOverlay').classList.add('show');}
-    function goHome(){window.location.href='../index.html';}
     async function doLogin(){
       const p=document.getElementById('loginPhone').value.trim();
       const pw=document.getElementById('loginPass').value;
       if(!p){showError('⚠️ Phone daalein!');return;}
       if(!pw){showError('⚠️ Password daalein!');return;}
-      const btn=document.getElementById('loginBtn');
-      btn.textContent='⏳ Login ho raha hai...';btn.disabled=true;
+      const btn=document.getElementById('loginBtn');btn.textContent='⏳ Login ho raha hai...';btn.disabled=true;
       document.getElementById('errorMsg').style.display='none';
       const{data,error}=await sb.from('customers').select('*').eq('phone',p).eq('password',pw);
       if(error||!data||data.length===0){showError('❌ Phone ya password galat hai!');btn.textContent='🔓 Login Karo';btn.disabled=false;return;}
       const u=data[0];
       localStorage.setItem('nx_user',JSON.stringify({name:u.full_name,phone:u.phone,city:u.city,id:u.id}));
-      showWelcome(u.full_name,false);
+      document.getElementById('wName').textContent='Namaste, '+u.full_name.split(' ')[0]+'! 👋';
+      document.getElementById('welcomeOverlay').classList.add('show');
     }
     async function doSignup(){
       const n=document.getElementById('signupName').value.trim();
@@ -115,17 +106,18 @@
       if(!n){showError('⚠️ Naam daalein!');return;}
       if(!p||p.replace(/\D/g,'').length<10){showError('⚠️ Valid phone daalein!');return;}
       if(!c){showError('⚠️ Shehar chuno!');return;}
-      if(!pw||pw.length<6){showError('⚠️ Password min 6 char!');return;}
+      if(!pw||pw.length<6){showError('⚠️ Min 6 character password!');return;}
       if(pw!==pw2){showError('❌ Passwords match nahi!');return;}
-      const btn=document.getElementById('signupBtn');
-      btn.textContent='⏳ Ban raha hai...';btn.disabled=true;
+      const btn=document.getElementById('signupBtn');btn.textContent='⏳ Ban raha hai...';btn.disabled=true;
       document.getElementById('errorMsg').style.display='none';
       const{data:ex}=await sb.from('customers').select('phone').eq('phone',p);
-      if(ex&&ex.length>0){showError('❌ Phone pehle se registered hai!');btn.textContent='✅ Account Banao';btn.disabled=false;return;}
+      if(ex&&ex.length>0){showError('❌ Phone pehle se registered!');btn.textContent='✅ Account Banao';btn.disabled=false;return;}
       const{data,error}=await sb.from('customers').insert([{full_name:n,phone:p,password:pw,city:c}]).select();
       if(error){showError('❌ Error: '+error.message);btn.textContent='✅ Account Banao';btn.disabled=false;return;}
       localStorage.setItem('nx_user',JSON.stringify({name:n,phone:p,city:c,id:data[0].id}));
-      showWelcome(n,true);
+      document.getElementById('wName').textContent='Namaste, '+n.split(' ')[0]+'! 👋';
+      document.getElementById('wMsg').innerHTML='Aapka account ban gaya!<br>Ab construction material order karo.';
+      document.getElementById('welcomeOverlay').classList.add('show');
     }
   </script>
 </body>

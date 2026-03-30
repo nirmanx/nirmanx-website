@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Seller Dashboard – NirmanX</title>
+  <title>Seller Dashboard – GroutGrove</title>
   <link rel="stylesheet" href="../style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     body{background:#F0EDE8}
     .dash-layout{display:flex;min-height:100vh}
-    .sidebar{width:240px;background:var(--black);color:white;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:50}
+    .sidebar{width:240px;background:#1A1208;color:white;padding:24px 0;position:fixed;height:100vh;overflow-y:auto;z-index:50}
     .sb-logo{font-family:'Baloo 2';font-size:22px;font-weight:800;color:var(--orange);padding:0 20px 18px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:14px}
     .sb-logo span{color:white}
     .sb-logo p{font-size:11px;color:#C4B5A5;font-family:'Hind';margin-top:3px}
@@ -22,9 +22,9 @@
     .nav-item .ni{font-size:17px;width:20px;text-align:center}
     .dash-main{margin-left:240px;flex:1;padding:26px}
     .dash-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
-    .dash-topbar h1{font-family:'Baloo 2';font-size:24px;font-weight:800;color:var(--black)}
+    .dash-topbar h1{font-family:'Baloo 2';font-size:24px;font-weight:800;color:#1A1208}
     .dash-topbar h1 span{color:var(--orange)}
-    .tb-btn{background:var(--orange);color:white;border:none;border-radius:25px;padding:9px 20px;font-family:'Baloo 2';font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;text-decoration:none}
+    .tb-btn{background:var(--orange);color:white;border:none;border-radius:25px;padding:9px 20px;font-family:'Baloo 2';font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:7px;text-decoration:none}
     .tb-btn:hover{background:var(--orange-dark)}
     .tb-btn.outline{background:white;color:var(--orange);border:2px solid var(--orange)}
     .stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px;margin-bottom:24px}
@@ -34,16 +34,16 @@
     .s-card.blue{border-left-color:#2D7DD2}
     .s-card.purple{border-left-color:#8E44AD}
     .s-icon{font-size:26px;margin-bottom:8px}
-    .s-num{font-family:'Baloo 2';font-size:28px;font-weight:800;color:var(--black);line-height:1}
-    .s-lbl{font-size:12px;color:var(--gray);margin-top:4px}
+    .s-num{font-family:'Baloo 2';font-size:28px;font-weight:800;color:#1A1208;line-height:1}
+    .s-lbl{font-size:12px;color:#6B6259;margin-top:4px}
     .admin-card{background:white;border-radius:18px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:20px}
     .admin-card h3{font-family:'Baloo 2';font-size:18px;font-weight:800;margin-bottom:18px}
     .admin-card h3 span{color:var(--orange)}
     .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
     .form-field{margin-bottom:0}
     .form-field.full{grid-column:1/-1}
-    .form-field label{display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px}
-    .form-field input,.form-field select,.form-field textarea{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:11px 13px;font-family:'Hind';font-size:14px;outline:none;transition:border .2s;background:var(--light);color:var(--black)}
+    .form-field label{display:block;font-size:13px;font-weight:600;color:#2D2010;margin-bottom:6px}
+    .form-field input,.form-field select,.form-field textarea{width:100%;border:1.5px solid #EAD9C8;border-radius:10px;padding:11px 13px;font-family:'Hind';font-size:14px;outline:none;transition:border .2s;background:#FDF8F3;color:#1A1208}
     .form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--orange);background:white}
     .form-field textarea{height:80px;resize:vertical}
     .privacy-notice{background:linear-gradient(135deg,#1A1208,#2D2010);border-radius:14px;padding:18px 20px;margin-bottom:20px;display:flex;gap:14px;align-items:flex-start}
@@ -52,394 +52,209 @@
     .pn-text{font-size:13px;color:#C4B5A5;line-height:1.7}
     .pn-text strong{color:white}
     .prod-table{width:100%;border-collapse:collapse;font-size:13px}
-    .prod-table th{background:var(--light);color:var(--gray);padding:10px 12px;text-align:left;font-size:12px;font-weight:700;text-transform:uppercase}
-    .prod-table td{padding:12px;border-bottom:1px solid var(--border);color:var(--dark);vertical-align:middle}
+    .prod-table th{background:#FDF8F3;color:#6B6259;padding:10px 12px;text-align:left;font-size:12px;font-weight:700;text-transform:uppercase}
+    .prod-table td{padding:12px;border-bottom:1px solid #EAD9C8;color:#2D2010;vertical-align:middle}
     .prod-table tr:last-child td{border-bottom:none}
-    .prod-table tr:hover td{background:var(--light)}
+    .prod-table tr:hover td{background:#FDF8F3}
     .pill{display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
     .pill.active{background:#D1FAE5;color:#065F46}
     .pill.pending{background:#FEF3C7;color:#92400E}
     .act-btn{border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Hind'}
     .act-del{background:#FEE2E2;color:#DC2626}
     .act-del:hover{background:#DC2626;color:white}
-    .success-toast{display:none;background:#D1FAE5;border:2px solid #27AE60;border-radius:14px;padding:16px;text-align:center;margin-top:16px;font-family:'Baloo 2';font-size:16px;color:#065F46}
+    .order-row{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid #EAD9C8;flex-wrap:wrap}
+    .order-row:last-child{border-bottom:none}
+    .order-icon{width:48px;height:48px;background:#FFF3E8;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+    .order-id{font-family:'Baloo 2';font-weight:700;color:var(--orange);font-size:14px}
+    .order-prod{font-size:13px;font-weight:600;color:#2D2010;margin-top:2px}
+    .order-date{font-size:12px;color:#6B6259;margin-top:2px}
+    .order-amount{font-family:'Baloo 2';font-size:18px;font-weight:800;color:#1A1208}
+    .status-pill{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px}
+    .status-pill.delivered{background:#D1FAE5;color:#065F46}
+    .status-pill.pending{background:#FEF3C7;color:#92400E}
+    .earn-card{background:linear-gradient(135deg,var(--orange),var(--orange-dark));border-radius:20px;padding:26px;color:white;margin-bottom:20px}
+    .earn-card h3{font-family:'Baloo 2';font-size:20px;font-weight:800;margin-bottom:18px}
+    .earn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px}
+    .earn-item{background:rgba(255,255,255,.15);border-radius:12px;padding:16px}
+    .earn-item .e-num{font-family:'Baloo 2';font-size:24px;font-weight:800}
+    .earn-item .e-lbl{font-size:12px;opacity:.85;margin-top:4px}
     @media(max-width:900px){.sidebar{display:none}.dash-main{margin-left:0;padding:18px}.form-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
 <div class="dash-layout">
-
-  <!-- SIDEBAR -->
   <div class="sidebar">
-    <div class="sb-logo">Nirman<span>X</span><p>Seller Portal</p></div>
+    <div class="sb-logo">Grout<span>Grove</span><p>Seller Portal</p></div>
     <div class="sb-seller">
       <div class="sb-avatar" id="sbInitial">S</div>
-      <div>
-        <div style="font-size:13px;font-weight:700;color:white" id="sbName">Seller</div>
-        <div style="font-size:11px;color:#C4B5A5">⭐ Verified Seller</div>
-      </div>
+      <div><div style="font-size:13px;font-weight:700;color:white" id="sbName">Seller</div><div style="font-size:11px;color:#C4B5A5">⭐ Verified Seller</div></div>
     </div>
     <div class="nav-section">Menu</div>
     <a class="nav-item active" onclick="showSection('dashboard',this)"><span class="ni">📊</span> Dashboard</a>
     <a class="nav-item" onclick="showSection('addProduct',this)"><span class="ni">➕</span> Product Add Karo</a>
     <a class="nav-item" onclick="showSection('myProducts',this)"><span class="ni">📦</span> Mere Products</a>
+    <a class="nav-item" onclick="showSection('orders',this)"><span class="ni">🛒</span> Orders</a>
     <a class="nav-item" onclick="showSection('earnings',this)"><span class="ni">💰</span> Earnings</a>
     <div class="nav-section">Help</div>
-    <a class="nav-item" href="https://wa.me/919654171005" target="_blank"><span class="ni">💬</span> NirmanX Support</a>
+    <a class="nav-item" href="https://wa.me/919654171005?text=GroutGrove seller support chahiye" target="_blank"><span class="ni">💬</span> GroutGrove Support</a>
     <a class="nav-item" href="../index.html"><span class="ni">🏠</span> Website Dekho</a>
     <a class="nav-item" href="login.html" style="color:#E74C3C;margin-top:16px"><span class="ni">🚪</span> Logout</a>
   </div>
 
-  <!-- MAIN -->
   <div class="dash-main">
-
     <!-- DASHBOARD -->
     <div id="sec-dashboard">
       <div class="dash-topbar">
-        <div>
-          <h1>Seller <span>Dashboard</span></h1>
-          <p style="font-size:13px;color:var(--gray);margin-top:2px" id="dashDate"></p>
-        </div>
+        <div><h1>Seller <span>Dashboard</span></h1><p style="font-size:13px;color:#6B6259;margin-top:2px" id="dashDate"></p></div>
         <div style="display:flex;gap:10px">
           <button class="tb-btn" onclick="showSection('addProduct',null)">➕ Product Add Karo</button>
           <a href="https://wa.me/919654171005" target="_blank" class="tb-btn outline">💬 Support</a>
         </div>
       </div>
-
       <div class="privacy-notice">
         <div class="pn-icon">🔒</div>
         <div>
           <div class="pn-title">Aapki Privacy 100% Protected</div>
-          <div class="pn-text">Customer ko sirf <strong>product photo, naam, price aur specs</strong> dikhega. Aapka <strong>naam, phone, address completely hidden</strong> rahega. Customer sirf <strong>NirmanX ke through</strong> order karega! ✅</div>
+          <div class="pn-text">Customer ko sirf <strong>product, price aur specs</strong> dikhega. Aapka <strong>naam, phone, address completely hidden</strong> rahega. Customer sirf <strong>GroutGrove ke through</strong> order karega! ✅</div>
         </div>
       </div>
-
       <div class="stats-row">
         <div class="s-card"><div class="s-icon">📦</div><div class="s-num" id="statProds">0</div><div class="s-lbl">Active Products</div></div>
-        <div class="s-card green"><div class="s-icon">🛒</div><div class="s-num">0</div><div class="s-lbl">Total Orders</div></div>
-        <div class="s-card blue"><div class="s-icon">💰</div><div class="s-num">₹0</div><div class="s-lbl">Total Revenue</div></div>
+        <div class="s-card green"><div class="s-icon">🛒</div><div class="s-num" id="statOrders">0</div><div class="s-lbl">Total Orders</div></div>
+        <div class="s-card blue"><div class="s-icon">💰</div><div class="s-num" id="statRev">₹0</div><div class="s-lbl">Total Revenue</div></div>
         <div class="s-card purple"><div class="s-icon">⭐</div><div class="s-num">New</div><div class="s-lbl">Rating</div></div>
       </div>
-
       <div class="admin-card">
-        <h3>📋 Quick <span>Guide</span></h3>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px">
-          <div style="background:var(--light);border-radius:12px;padding:16px;text-align:center">
-            <div style="font-size:28px;margin-bottom:8px">➕</div>
-            <div style="font-family:'Baloo 2';font-weight:700;margin-bottom:4px">Product Add Karo</div>
-            <div style="font-size:13px;color:var(--gray)">Left menu se "Product Add Karo" click karo</div>
-          </div>
-          <div style="background:var(--light);border-radius:12px;padding:16px;text-align:center">
-            <div style="font-size:28px;margin-bottom:8px">👁️</div>
-            <div style="font-family:'Baloo 2';font-weight:700;margin-bottom:4px">Website Par Dikhe</div>
-            <div style="font-size:13px;color:var(--gray)">Add hone ke baad products website par live ho jayenge</div>
-          </div>
-          <div style="background:var(--light);border-radius:12px;padding:16px;text-align:center">
-            <div style="font-size:28px;margin-bottom:8px">💬</div>
-            <div style="font-family:'Baloo 2';font-weight:700;margin-bottom:4px">Orders Milenge</div>
-            <div style="font-size:13px;color:var(--gray)">Customer order karega to NirmanX aapko batayega</div>
-          </div>
-          <div style="background:var(--light);border-radius:12px;padding:16px;text-align:center">
-            <div style="font-size:28px;margin-bottom:8px">💰</div>
-            <div style="font-family:'Baloo 2';font-weight:700;margin-bottom:4px">Payment Milegi</div>
-            <div style="font-size:13px;color:var(--gray)">Har order ke 24-48 ghante mein payment</div>
-          </div>
+        <h3>🚀 Quick <span>Guide</span></h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px">
+          <div style="background:#FDF8F3;border-radius:12px;padding:16px;text-align:center"><div style="font-size:28px;margin-bottom:8px">➕</div><div style="font-family:'Baloo 2';font-weight:700;margin-bottom:4px">Product Add Karo</div><div style="font-size:13px;color:#6B6259">Left menu se click karo</div></div>
+          <div style="background:#FDF8F3;border-radius:12px;padding:16px;text-align:center"><div style="font-size:28px;margin-bottom:8px">👁️</div><div style="font-family:'Baloo 2';font-weight:700;margin-bottom:4px">Website Par Dikhe</div><div style="font-size:13px;color:#6B6259">Add hone ke baad live</div></div>
+          <div style="background:#FDF8F3;border-radius:12px;padding:16px;text-align:center"><div style="font-size:28px;margin-bottom:8px">💬</div><div style="font-family:'Baloo 2';font-weight:700;margin-bottom:4px">Orders Milenge</div><div style="font-size:13px;color:#6B6259">GroutGrove inform karega</div></div>
+          <div style="background:#FDF8F3;border-radius:12px;padding:16px;text-align:center"><div style="font-size:28px;margin-bottom:8px">💰</div><div style="font-family:'Baloo 2';font-weight:700;margin-bottom:4px">Payment Milegi</div><div style="font-size:13px;color:#6B6259">Har order ke 24-48 ghante mein</div></div>
         </div>
       </div>
     </div>
 
     <!-- ADD PRODUCT -->
     <div id="sec-addProduct" style="display:none">
-      <div class="dash-topbar">
-        <h1>➕ Naya Product <span>Add Karo</span></h1>
-      </div>
-
-      <div class="privacy-notice">
-        <div class="pn-icon">👁️</div>
-        <div>
-          <div class="pn-title">Customer Ko Kya Dikhega?</div>
-          <div class="pn-text">
-            ✅ <strong>Dikhega:</strong> Product naam, price, specs, category, brand, delivery time<br>
-            ❌ <strong>Nahi Dikhega:</strong> Aapka naam, phone, address, company name
-          </div>
-        </div>
-      </div>
-
+      <div class="dash-topbar"><h1>➕ Naya Product <span>Add Karo</span></h1></div>
+      <div class="privacy-notice"><div class="pn-icon">👁️</div><div><div class="pn-title">Customer Ko Kya Dikhega?</div><div class="pn-text">✅ <strong>Dikhega:</strong> Product naam, price, specs, brand, delivery time<br>❌ <strong>Nahi Dikhega:</strong> Aapka naam, phone, address</div></div></div>
       <div class="admin-card">
         <h3>Product <span>Details</span></h3>
         <div class="form-grid">
-          <div class="form-field">
-            <label>🏗️ Category *</label>
+          <div class="form-field"><label>🏗️ Category *</label>
             <select id="prodCat" onchange="updateSubcat()">
               <option value="">Category chuno</option>
-              <option value="cement">🏗️ Cement</option>
-              <option value="steel">⚙️ Steel / TMT Sariya</option>
-              <option value="bricks">🧱 Bricks / Eent</option>
-              <option value="tiles">🪟 Tiles / Farshi</option>
-              <option value="sand">🪣 Sand / Baalu</option>
-              <option value="paint">🎨 Paint</option>
-              <option value="hardware">🔩 Hardware</option>
-              <option value="plumbing">🪛 Plumbing</option>
+              <option value="cement">🏗️ Cement</option><option value="steel">⚙️ Steel</option><option value="bricks">🧱 Bricks</option><option value="tiles">🪟 Tiles</option><option value="sand">🪣 Sand</option><option value="paint">🎨 Paint</option><option value="hardware">🔩 Hardware</option><option value="plumbing">🪛 Plumbing</option>
             </select>
           </div>
-          <div class="form-field">
-            <label>📦 Product Type *</label>
-            <select id="prodSubcat"><option value="">Pehle category chuno</option></select>
-          </div>
-          <div class="form-field">
-            <label>🏷️ Brand Name *</label>
-            <input type="text" id="brandName" placeholder="Jaise: UltraTech, TATA"/>
-          </div>
-          <div class="form-field full">
-            <label>📝 Product Ka Naam *</label>
-            <input type="text" id="prodName" placeholder="Jaise: UltraTech PPC Cement 50kg"/>
-          </div>
-          <div class="form-field">
-            <label>💰 Price (₹) *</label>
-            <input type="number" id="prodPrice" placeholder="Jaise: 380"/>
-          </div>
-          <div class="form-field">
-            <label>📏 Unit *</label>
-            <select id="prodUnit">
-              <option>Per Bag</option>
-              <option>Per Kg</option>
-              <option>Per Piece</option>
-              <option>Per Sqft</option>
-              <option>Per CFT</option>
-              <option>Per Ton</option>
-              <option>Per Bucket</option>
-              <option>Per Litre</option>
-            </select>
-          </div>
-          <div class="form-field">
-            <label>🔖 Discount % (Optional)</label>
-            <input type="number" id="prodDiscount" placeholder="Jaise: 10"/>
-          </div>
-          <div class="form-field">
-            <label>📊 Stock Available</label>
-            <input type="text" id="prodStock" placeholder="Jaise: 500 bags"/>
-          </div>
-          <div class="form-field">
-            <label>🚚 Delivery Time *</label>
-            <select id="prodDelivery">
-              <option>Same Day</option>
-              <option>24 Ghante</option>
-              <option>2-3 Din</option>
-              <option>3-5 Din</option>
-            </select>
-          </div>
-          <div class="form-field">
-            <label>📋 Specs / Details</label>
-            <input type="text" id="prodSpecs" placeholder="Jaise: 50 Kg, OPC 53 Grade, ISI Certified"/>
-          </div>
-          <div class="form-field full">
-            <label>📝 Description (Optional)</label>
-            <textarea id="prodDesc" placeholder="Product ke baare mein aur batao — quality, uses, features..."></textarea>
-          </div>
-          <div class="form-field full">
-            <div style="background:#FEF3C7;border:1.5px solid #F59E0B;border-radius:12px;padding:14px">
-              <p style="font-size:13px;color:#92400E">⚠️ <strong>Zaroori:</strong> Description mein apna phone number, naam ya address mat likhna — product reject hoga!</p>
-            </div>
-          </div>
-          <div class="form-field full">
-            <button class="tb-btn" style="width:100%;justify-content:center;padding:14px;font-size:16px" onclick="submitProduct()">✅ Product Website Par Add Karo</button>
-          </div>
+          <div class="form-field"><label>📦 Product Type</label><select id="prodSubcat"><option value="">Pehle category chuno</option></select></div>
+          <div class="form-field"><label>🏷️ Brand Name *</label><input type="text" id="brandName" placeholder="Jaise: UltraTech"/></div>
+          <div class="form-field full"><label>📝 Product Naam *</label><input type="text" id="prodName" placeholder="Jaise: UltraTech PPC Cement 50kg"/></div>
+          <div class="form-field"><label>💰 Price (₹) *</label><input type="number" id="prodPrice" placeholder="380"/></div>
+          <div class="form-field"><label>📏 Unit *</label><select id="prodUnit"><option>Per Bag</option><option>Per Kg</option><option>Per Ton</option><option>Per Piece</option><option>Per Sqft</option><option>Per CFT</option></select></div>
+          <div class="form-field"><label>🔖 Discount %</label><input type="number" id="prodDiscount" placeholder="10"/></div>
+          <div class="form-field"><label>📊 Stock</label><input type="text" id="prodStock" placeholder="500 bags"/></div>
+          <div class="form-field"><label>🚚 Delivery Time *</label><select id="prodDelivery"><option>Same Day</option><option>24 Ghante</option><option>2-3 Din</option><option>3-5 Din</option></select></div>
+          <div class="form-field"><label>📦 Min Order</label><input type="text" id="prodMinOrder" placeholder="10 bags"/></div>
+          <div class="form-field full"><label>📋 Specs</label><input type="text" id="prodSpecs" placeholder="50 Kg, ISI Certified"/></div>
+          <div class="form-field full"><label>📝 Description</label><textarea id="prodDesc" placeholder="Product ke baare mein batao..."></textarea></div>
+          <div class="form-field full"><div style="background:#FEF3C7;border:1.5px solid #F59E0B;border-radius:12px;padding:14px"><p style="font-size:13px;color:#92400E">⚠️ <strong>Zaroori:</strong> Apna phone ya address mat likhna!</p></div></div>
+          <div class="form-field full"><button class="tb-btn" style="width:100%;justify-content:center;padding:14px;font-size:16px" onclick="submitProduct()">✅ Product GroutGrove Par Add Karo</button></div>
         </div>
-        <div class="success-toast" id="prodSuccess">🎉 Product successfully add ho gaya! Website par live ho gaya!</div>
+        <div id="prodSuccess" style="display:none;background:#D1FAE5;border:2px solid #27AE60;border-radius:14px;padding:16px;text-align:center;margin-top:16px;font-family:'Baloo 2';font-size:16px;color:#065F46">🎉 Product successfully add ho gaya! GroutGrove par live ho gaya!</div>
       </div>
     </div>
 
     <!-- MY PRODUCTS -->
     <div id="sec-myProducts" style="display:none">
-      <div class="dash-topbar">
-        <h1>Mere <span>Products</span></h1>
-        <button class="tb-btn" onclick="showSection('addProduct',null)">➕ Naya Product</button>
-      </div>
-      <div class="admin-card">
-        <div id="myProdsList">
-          <div style="text-align:center;padding:40px;color:var(--gray)">⏳ Products load ho rahe hain...</div>
-        </div>
-      </div>
+      <div class="dash-topbar"><h1>Mere <span>Products</span></h1><button class="tb-btn" onclick="showSection('addProduct',null)">➕ Naya Product</button></div>
+      <div class="admin-card"><div id="myProdsList"><div style="text-align:center;padding:40px;color:#6B6259">⏳ Products load ho rahe hain...</div></div></div>
+    </div>
+
+    <!-- ORDERS -->
+    <div id="sec-orders" style="display:none">
+      <div class="dash-topbar"><h1>Mere <span>Orders</span></h1></div>
+      <div class="admin-card"><div id="myOrdersList"><div style="text-align:center;padding:40px;color:#6B6259">⏳ Orders load ho rahe hain...</div></div></div>
     </div>
 
     <!-- EARNINGS -->
     <div id="sec-earnings" style="display:none">
       <div class="dash-topbar"><h1>Meri <span>Earnings</span></h1></div>
-      <div class="admin-card" style="text-align:center;padding:60px">
-        <div style="font-size:60px;margin-bottom:16px">💰</div>
-        <h3 style="font-family:'Baloo 2';font-size:24px;margin-bottom:8px">Earnings Track Ho Rahi Hai</h3>
-        <p style="color:var(--gray)">Jab orders aayenge, earnings yahan dikhegi. Abhi products add karo!</p>
-        <button class="tb-btn" style="margin-top:20px" onclick="showSection('addProduct',null)">➕ Product Add Karo</button>
+      <div class="earn-card">
+        <h3>💰 Total Earnings</h3>
+        <div class="earn-grid">
+          <div class="earn-item"><div class="e-num" id="earnTotal">₹0</div><div class="e-lbl">Gross Revenue</div></div>
+          <div class="earn-item"><div class="e-num" id="earnComm">₹0</div><div class="e-lbl">Commission (5%)</div></div>
+          <div class="earn-item"><div class="e-num" id="earnNet">₹0</div><div class="e-lbl">Net Earning</div></div>
+          <div class="earn-item"><div class="e-num" id="earnOrds">0</div><div class="e-lbl">Total Orders</div></div>
+        </div>
+        <p style="font-size:13px;opacity:.85;margin-top:14px">💳 Payment har 7 din mein bank account mein.</p>
+      </div>
+      <div class="admin-card" style="text-align:center;padding:40px">
+        <div style="font-size:50px;margin-bottom:12px">📊</div>
+        <h3 style="font-family:'Baloo 2';font-size:20px;margin-bottom:8px">Jab orders aayenge earnings yahan dikhegi!</h3>
+        <button class="tb-btn" onclick="showSection('addProduct',null)">➕ Product Add Karo</button>
       </div>
     </div>
-
   </div>
 </div>
 
 <script src="../script.js"></script>
 <script>
-  const { createClient } = supabase;
-  const sb = createClient(
-    'https://ddgwdesqicrneikxrcnj.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZ3dkZXNxaWNybmVpa3hyY25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3Mzc1MTksImV4cCI6MjA4OTMxMzUxOX0.AFH7Sfat5XnYFYocdbjZlYhL5iLG1dO6wXm_FHycAqo'
-  );
-
-  // Seller info
-  const seller = JSON.parse(localStorage.getItem('nx_seller')) || {name:'Seller', phone:'0000000000'};
-  document.getElementById('sbName').textContent = seller.name || 'Seller';
-  document.getElementById('sbInitial').textContent = (seller.name||'S')[0].toUpperCase();
-  document.getElementById('dashDate').textContent = new Date().toLocaleDateString('hi-IN', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
-
-  // Section switcher
-  function showSection(id, btn) {
-    ['dashboard','addProduct','myProducts','earnings'].forEach(s => {
-      const el = document.getElementById('sec-'+s);
-      if(el) el.style.display = s===id ? 'block' : 'none';
-    });
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    if(btn) btn.classList.add('active');
-    if(id==='myProducts') loadMyProducts();
+  const{createClient}=supabase;
+  const sb=createClient('https://ddgwdesqicrneikxrcnj.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZ3dkZXNxaWNybmVpa3hyY25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3Mzc1MTksImV4cCI6MjA4OTMxMzUxOX0.AFH7Sfat5XnYFYocdbjZlYhL5iLG1dO6wXm_FHycAqo');
+  const seller=JSON.parse(localStorage.getItem('nx_seller'))||{name:'Seller',phone:'0000000000'};
+  document.getElementById('sbName').textContent=seller.name||'Seller';
+  document.getElementById('sbInitial').textContent=(seller.name||'S')[0].toUpperCase();
+  document.getElementById('dashDate').textContent=new Date().toLocaleDateString('hi-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  function showSection(id,btn){
+    ['dashboard','addProduct','myProducts','orders','earnings'].forEach(s=>{const el=document.getElementById('sec-'+s);if(el)el.style.display=s===id?'block':'none';});
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    if(btn)btn.classList.add('active');
+    if(id==='myProducts')loadMyProducts();if(id==='orders')loadMyOrders();if(id==='earnings')loadEarnings();
     window.scrollTo(0,0);
   }
-
-  // Subcategory map
-  const subcats = {
-    cement:['PPC Cement','OPC 43 Grade','OPC 53 Grade','White Cement'],
-    steel:['TMT Fe-500D','TMT Fe-550D','Structural Steel','MS Plates'],
-    bricks:['Red Bricks First Class','Red Bricks Second Class','AAC Block','Fly Ash Brick','Concrete Block'],
-    tiles:['Floor Tiles Vitrified','Wall Tiles','Bathroom Tiles','Kitchen Tiles','Outdoor Tiles'],
-    sand:['River Sand Fine','M-Sand','Coarse Sand','Gitti Aggregate'],
-    paint:['Interior Emulsion','Exterior Paint','Primer','Putty'],
-    hardware:['Nails & Screws','Nuts & Bolts','Wire Mesh','Door Fittings'],
-    plumbing:['PVC Pipes','CPVC Pipes','Fittings','Taps & Fixtures']
-  };
-
-  function updateSubcat() {
-    const cat = document.getElementById('prodCat').value;
-    const sub = document.getElementById('prodSubcat');
-    sub.innerHTML = '<option value="">Type chuno</option>';
-    if(subcats[cat]) subcats[cat].forEach(s => {
-      const o = document.createElement('option');
-      o.value=s; o.textContent=s;
-      sub.appendChild(o);
-    });
+  const subcats={cement:['PPC Cement','OPC 43 Grade','OPC 53 Grade','White Cement'],steel:['TMT Fe-500D','TMT Fe-550D','Structural Steel','MS Plate'],bricks:['Red Brick First Class','Red Brick Second Class','AAC Block','Fly Ash Brick'],tiles:['Floor Tiles Vitrified','Wall Tiles','Bathroom Tiles','Kitchen Tiles'],sand:['River Sand','M-Sand','Coarse Sand','Gitti'],paint:['Interior Emulsion','Exterior Paint','Primer','Wall Putty'],hardware:['Nails & Screws','Wire Mesh','Door Hinges','Binding Wire'],plumbing:['PVC Pipe','CPVC Pipe','Fittings','Taps']};
+  function updateSubcat(){const cat=document.getElementById('prodCat').value;const sub=document.getElementById('prodSubcat');sub.innerHTML='<option value="">Type chuno</option>';if(subcats[cat])subcats[cat].forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;sub.appendChild(o);});}
+  async function submitProduct(){
+    const cat=document.getElementById('prodCat').value;const name=document.getElementById('prodName').value.trim();const brand=document.getElementById('brandName').value.trim();const price=document.getElementById('prodPrice').value;
+    if(!cat||!name||!brand||!price){showToast('⚠️ Category, Brand, Naam aur Price zaroori!');return;}
+    const btn=document.querySelector('#sec-addProduct .tb-btn');btn.textContent='⏳ Add ho raha hai...';btn.disabled=true;
+    const{error}=await sb.from('products').insert([{seller_phone:seller.phone,category:cat,brand_name:brand,product_name:name,price:parseFloat(price),unit:document.getElementById('prodUnit').value,discount:parseFloat(document.getElementById('prodDiscount').value||0),delivery_time:document.getElementById('prodDelivery').value,specs:document.getElementById('prodSpecs').value.trim(),description:document.getElementById('prodDesc').value.trim(),stock:document.getElementById('prodStock').value.trim(),min_order:document.getElementById('prodMinOrder').value.trim(),status:'active'}]);
+    if(error){showToast('❌ Error: '+error.message);btn.textContent='✅ Product Add Karo';btn.disabled=false;return;}
+    document.getElementById('prodSuccess').style.display='block';btn.textContent='✅ Product Add Karo';btn.disabled=false;
+    showToast('🎉 Product live ho gaya GroutGrove par!');loadStats();
   }
-
-  // Submit product
-  async function submitProduct() {
-    const cat = document.getElementById('prodCat').value;
-    const name = document.getElementById('prodName').value.trim();
-    const brand = document.getElementById('brandName').value.trim();
-    const price = document.getElementById('prodPrice').value;
-    const unit = document.getElementById('prodUnit').value;
-    const discount = document.getElementById('prodDiscount').value || 0;
-    const stock = document.getElementById('prodStock').value.trim();
-    const delivery = document.getElementById('prodDelivery').value;
-    const specs = document.getElementById('prodSpecs').value.trim();
-    const desc = document.getElementById('prodDesc').value.trim();
-    const subcat = document.getElementById('prodSubcat').value;
-
-    if(!cat||!name||!brand||!price){
-      showToast('⚠️ Category, Brand, Product naam aur Price zaroori hai!');
-      return;
-    }
-
-    const btn = document.querySelector('#sec-addProduct .tb-btn');
-    btn.textContent = '⏳ Add ho raha hai...';
-    btn.disabled = true;
-
-    const {error} = await sb.from('products').insert([{
-      seller_phone: seller.phone,
-      category: cat,
-      brand_name: brand,
-      product_name: name,
-      price: parseFloat(price),
-      discount: parseFloat(discount),
-      delivery_time: delivery,
-      specs: specs || subcat,
-      description: desc,
-      unit: unit,
-      stock: stock,
-      status: 'active'
-    }]);
-
-    if(error){
-      showToast('❌ Error: '+error.message);
-      btn.textContent='✅ Product Website Par Add Karo';
-      btn.disabled=false;
-      return;
-    }
-
-    document.getElementById('prodSuccess').style.display='block';
-    btn.textContent='✅ Product Website Par Add Karo';
-    btn.disabled=false;
-    showToast('🎉 Product live ho gaya website par!');
-
-    // Form reset
-    ['prodCat','prodName','brandName','prodPrice','prodDiscount','prodStock','prodSpecs','prodDesc'].forEach(id=>{
-      const el=document.getElementById(id);
-      if(el) el.value='';
-    });
-
-    // Stats update
-    loadStats();
+  async function loadStats(){
+    const{data:prods}=await sb.from('products').select('id').eq('seller_phone',seller.phone).eq('status','active');
+    if(prods)document.getElementById('statProds').textContent=prods.length;
+    const{data:orders}=await sb.from('orders').select('total');
+    if(orders){document.getElementById('statOrders').textContent=orders.length;const rev=orders.reduce((s,o)=>s+parseFloat(o.total||0),0);document.getElementById('statRev').textContent='₹'+rev.toLocaleString('en-IN');}
   }
-
-  // Load stats
-  async function loadStats() {
-    const {data} = await sb.from('products').select('id').eq('seller_phone', seller.phone).eq('status','active');
-    if(data) document.getElementById('statProds').textContent = data.length;
+  async function loadMyProducts(){
+    const{data,error}=await sb.from('products').select('*').eq('seller_phone',seller.phone).order('created_at',{ascending:false});
+    const container=document.getElementById('myProdsList');
+    const catEmojis={cement:'🏗️',steel:'⚙️',bricks:'🧱',tiles:'🪟',sand:'🪣',paint:'🎨',hardware:'🔩',plumbing:'🪛'};
+    if(error||!data||data.length===0){container.innerHTML=`<div style="text-align:center;padding:40px;color:#6B6259"><div style="font-size:50px;margin-bottom:12px">📦</div><h3 style="font-family:'Baloo 2';margin-bottom:8px">Abhi Koi Product Nahi</h3><button class="tb-btn" style="margin-top:16px" onclick="showSection('addProduct',null)">➕ Pehla Product Add Karo</button></div>`;return;}
+    container.innerHTML=`<table class="prod-table"><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Status</th><th>Action</th></tr></thead><tbody>${data.map(p=>`<tr><td><div style="font-weight:700">${catEmojis[p.category]||'📦'} ${p.product_name}</div><div style="font-size:12px;color:#6B6259">${p.brand_name}</div></td><td style="text-transform:capitalize">${p.category}</td><td><strong style="color:var(--orange);font-family:'Baloo 2'">₹${p.price}</strong><br><span style="font-size:11px;color:#6B6259">${p.unit}</span></td><td><span class="pill ${p.status==='active'?'active':'pending'}">${p.status==='active'?'✅ Live':'⏳ Review'}</span></td><td><button class="act-btn act-del" onclick="deleteProduct(${p.id})">🗑️</button></td></tr>`).join('')}</tbody></table>`;
   }
-
-  // Load my products
-  async function loadMyProducts() {
-    const {data, error} = await sb.from('products').select('*').eq('seller_phone', seller.phone).order('created_at', {ascending:false});
-    const container = document.getElementById('myProdsList');
-
-    if(error||!data||data.length===0){
-      container.innerHTML = `
-        <div style="text-align:center;padding:40px;color:var(--gray)">
-          <div style="font-size:50px;margin-bottom:12px">📦</div>
-          <h3 style="font-family:'Baloo 2';margin-bottom:8px">Abhi Koi Product Nahi</h3>
-          <p>Product add karo — website par live ho jayega!</p>
-          <button class="tb-btn" style="margin-top:16px" onclick="showSection('addProduct',null)">➕ Pehla Product Add Karo</button>
-        </div>`;
-      return;
-    }
-
-    const catEmojis = {cement:'🏗️',steel:'⚙️',bricks:'🧱',tiles:'🪟',sand:'🪣',paint:'🎨',hardware:'🔩',plumbing:'🪛'};
-
-    container.innerHTML = `
-      <table class="prod-table">
-        <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Discount</th><th>Delivery</th><th>Status</th><th>Action</th></tr></thead>
-        <tbody>
-          ${data.map(p=>`
-            <tr>
-              <td>
-                <div style="font-weight:700;font-size:14px">${catEmojis[p.category]||'📦'} ${p.product_name}</div>
-                <div style="font-size:12px;color:var(--gray)">${p.brand_name} • ${p.specs||''}</div>
-              </td>
-              <td style="text-transform:capitalize">${p.category}</td>
-              <td><strong style="color:var(--orange);font-family:'Baloo 2';font-size:15px">₹${p.price}</strong><br><span style="font-size:11px;color:var(--gray)">${p.unit}</span></td>
-              <td>${p.discount>0?p.discount+'% OFF':'—'}</td>
-              <td>${p.delivery_time}</td>
-              <td><span class="pill ${p.status==='active'?'active':'pending'}">${p.status==='active'?'✅ Live':'⏳ Review'}</span></td>
-              <td><button class="act-btn act-del" onclick="deleteProduct(${p.id})">🗑️ Delete</button></td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>`;
+  async function loadMyOrders(){
+    const{data,error}=await sb.from('orders').select('*').order('created_at',{ascending:false}).limit(20);
+    const container=document.getElementById('myOrdersList');
+    if(error||!data||data.length===0){container.innerHTML=`<div style="text-align:center;padding:40px;color:#6B6259"><div style="font-size:50px;margin-bottom:12px">🛒</div><h3 style="font-family:'Baloo 2';margin-bottom:8px">Abhi Koi Order Nahi</h3></div>`;return;}
+    container.innerHTML=data.map(o=>`<div class="order-row"><div class="order-icon">🛒</div><div style="flex:1"><div class="order-id">${o.order_id}</div><div class="order-prod">${o.items}</div><div class="order-date">${new Date(o.created_at).toLocaleDateString('hi-IN')} • ${o.customer_name}</div><div style="font-size:12px;color:#6B6259">📍 ${o.delivery_address||'—'}</div></div><div><div class="order-amount">₹${parseFloat(o.total).toLocaleString('en-IN')}</div></div><span class="status-pill ${o.status==='pending'?'pending':'delivered'}">${o.status==='pending'?'⏳ Processing':'✅ Done'}</span></div>`).join('');
   }
-
-  async function deleteProduct(id) {
-    if(!confirm('Kya aap sach mein ye product delete karna chahte hain?')) return;
-    const {error} = await sb.from('products').delete().eq('id',id);
+  async function loadEarnings(){
+    const{data}=await sb.from('orders').select('total').eq('status','delivered');
+    if(data&&data.length>0){const total=data.reduce((s,o)=>s+parseFloat(o.total||0),0);const comm=total*0.05;document.getElementById('earnTotal').textContent='₹'+total.toLocaleString('en-IN');document.getElementById('earnComm').textContent='₹'+Math.round(comm).toLocaleString('en-IN');document.getElementById('earnNet').textContent='₹'+Math.round(total-comm).toLocaleString('en-IN');document.getElementById('earnOrds').textContent=data.length;}
+  }
+  async function deleteProduct(id){
+    if(!confirm('Delete karna chahte hain?'))return;
+    const{error}=await sb.from('products').delete().eq('id',id);
     if(error){showToast('❌ Delete error!');return;}
-    showToast('🗑️ Product delete ho gaya!');
-    loadMyProducts();
-    loadStats();
+    showToast('🗑️ Product delete ho gaya!');loadMyProducts();loadStats();
   }
-
   loadStats();
 </script>
 </body>
