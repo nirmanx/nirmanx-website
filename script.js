@@ -1,197 +1,287 @@
-// ============================================
-//  NIRMANX — script.js — UPDATED
-// ============================================
+// ===== GROUTGROVE — MAIN SCRIPT =====
 
-// ===== GLOBAL QUANTITY POPUP =====
-let pendingItem = null;
-let popupQty = 1;
+// Supabase Config
+const SUPABASE_URL = 'https://ddgwdesqicrneikxrcnj.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZ3dkZXNxaWNybmVpa3hyY25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3Mzc1MTksImV4cCI6MjA4OTMxMzUxOX0.AFH7Sfat5XnYFYocdbjZlYhL5iLG1dO6wXm_FHycAqo';
 
-// Popup HTML inject karo agar nahi hai
-function injectQtyPopup(){
-  if(document.getElementById('globalQtyOverlay')) return;
-  const popup = document.createElement('div');
-  popup.id = 'globalQtyOverlay';
-  popup.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center;';
-  popup.innerHTML = `
-    <div style="background:white;border-radius:20px;padding:36px;text-align:center;max-width:340px;width:90%;animation:popIn .3s ease">
-      <h3 style="font-family:'Baloo 2';font-size:22px;font-weight:800;margin-bottom:6px">📦 Quantity Chuno</h3>
-      <div id="gPopupProdName" style="font-size:14px;color:#6B6259;margin-bottom:6px"></div>
-      <div id="gPopupProdPrice" style="font-family:'Baloo 2';font-size:20px;font-weight:800;color:#F46F1A;margin-bottom:20px"></div>
-      <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px">
-        <button onclick="changeGPopupQty(-1)" style="width:44px;height:44px;border-radius:10px;border:2px solid #EAD9C8;background:white;font-size:22px;cursor:pointer;font-weight:700">−</button>
-        <span id="gPopupQtyNum" style="font-family:'Baloo 2';font-size:32px;font-weight:800;min-width:50px;text-align:center">1</span>
-        <button onclick="changeGPopupQty(1)" style="width:44px;height:44px;border-radius:10px;border:2px solid #EAD9C8;background:white;font-size:22px;cursor:pointer;font-weight:700">+</button>
-      </div>
-      <div style="font-size:14px;color:#6B6259;margin-bottom:20px">Total: <span id="gPopupTotal" style="color:#F46F1A;font-weight:700;font-family:'Baloo 2';font-size:16px">₹0</span></div>
-      <button onclick="confirmGlobalCart()" style="width:100%;background:#F46F1A;color:white;border:none;border-radius:12px;padding:14px;font-family:'Baloo 2';font-size:17px;font-weight:700;cursor:pointer;margin-bottom:10px">✅ Cart Mein Daalo</button>
-      <button onclick="closeGQtyPopup()" style="width:100%;background:#FDF8F3;color:#6B6259;border:1.5px solid #EAD9C8;border-radius:12px;padding:12px;font-family:'Hind';font-size:14px;cursor:pointer">❌ Cancel</button>
-    </div>`;
-  popup.addEventListener('click', function(e){ if(e.target===this) closeGQtyPopup(); });
-  document.body.appendChild(popup);
+// ===== NAVBAR =====
+function toggleNav() {
+  const nav = document.getElementById('navLinks');
+  if (nav) nav.classList.toggle('open');
+}
 
-  // Add animation style
-  if(!document.getElementById('popInStyle')){
-    const style = document.createElement('style');
-    style.id = 'popInStyle';
-    style.textContent = '@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}';
-    document.head.appendChild(style);
+// Close nav on outside click
+document.addEventListener('click', function(e) {
+  const nav = document.getElementById('navLinks');
+  const hamburger = document.querySelector('.hamburger');
+  if (nav && nav.classList.contains('open')) {
+    if (!nav.contains(e.target) && e.target !== hamburger) {
+      nav.classList.remove('open');
+    }
+  }
+});
+
+// ===== TOAST NOTIFICATION =====
+function showToast(msg, duration = 3000) {
+  let toast = document.querySelector('.toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.className = 'toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), duration);
+}
+
+// ===== CART SYSTEM =====
+const CART_KEY = 'nirmanx_cart';
+
+function getCart() {
+  try {
+    return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+  } catch (e) {
+    return [];
   }
 }
 
-function addToCart(name, price){
-  injectQtyPopup();
-  pendingItem = {name, price};
-  popupQty = 1;
-  document.getElementById('gPopupProdName').textContent = name;
-  document.getElementById('gPopupProdPrice').textContent = '₹' + price.toLocaleString('en-IN') + ' per unit';
-  document.getElementById('gPopupQtyNum').textContent = 1;
-  document.getElementById('gPopupTotal').textContent = '₹' + price.toLocaleString('en-IN');
-  const overlay = document.getElementById('globalQtyOverlay');
-  overlay.style.display = 'flex';
+function saveCart(cart) {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  updateCartBadge();
 }
 
-function changeGPopupQty(d){
-  popupQty = Math.max(1, popupQty + d);
-  document.getElementById('gPopupQtyNum').textContent = popupQty;
-  document.getElementById('gPopupTotal').textContent = '₹' + (pendingItem.price * popupQty).toLocaleString('en-IN');
+function updateCartBadge() {
+  const cart = getCart();
+  const total = cart.reduce((s, i) => s + i.qty, 0);
+  const badge = document.querySelector('.cart-badge');
+  if (badge) {
+    badge.textContent = total;
+    badge.style.display = total > 0 ? 'inline' : 'none';
+  }
 }
 
-function closeGQtyPopup(){
-  const overlay = document.getElementById('globalQtyOverlay');
-  if(overlay) overlay.style.display = 'none';
-  pendingItem = null;
+// Global addToCart — works on all pages
+window.addToCart = function(name, price) {
+  // If on cart page, handle directly
+  if (window.location.pathname.includes('cart.html')) {
+    let cart = getCart();
+    const existing = cart.find(i => i.name === name);
+    if (existing) {
+      existing.qty++;
+      saveCart(cart);
+      showToast('✅ Quantity updated in cart!');
+    } else {
+      cart.push({ name, price, qty: 1 });
+      saveCart(cart);
+      showToast('✅ Added to cart!');
+    }
+    if (typeof renderCart === 'function') renderCart();
+    return;
+  }
+
+  // Show quantity popup
+  showQtyPopup(name, price);
+};
+
+function showQtyPopup(name, price) {
+  // Remove existing popup
+  const existing = document.querySelector('.qty-popup-overlay');
+  if (existing) existing.remove();
+
+  let qty = 1;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'qty-popup-overlay';
+  overlay.innerHTML = `
+    <div class="qty-popup">
+      <h3>${name}</h3>
+      <div class="qp-price">₹${parseFloat(price).toLocaleString('en-IN')}</div>
+      <div class="qty-controls">
+        <button id="qp-minus">−</button>
+        <span id="qp-num">1</span>
+        <button id="qp-plus">+</button>
+      </div>
+      <div class="qp-total" id="qp-total">Total: ₹${parseFloat(price).toLocaleString('en-IN')}</div>
+      <div class="qp-btns">
+        <button class="qp-cancel" id="qp-cancel">Cancel</button>
+        <button class="qp-add" id="qp-add">🛒 Add to Cart</button>
+      </div>
+    </div>`;
+
+  document.body.appendChild(overlay);
+
+  function updateTotal() {
+    document.getElementById('qp-num').textContent = qty;
+    document.getElementById('qp-total').textContent =
+      'Total: ₹' + (price * qty).toLocaleString('en-IN');
+  }
+
+  document.getElementById('qp-minus').addEventListener('click', () => {
+    if (qty > 1) { qty--; updateTotal(); }
+  });
+
+  document.getElementById('qp-plus').addEventListener('click', () => {
+    if (qty < 999) { qty++; updateTotal(); }
+  });
+
+  document.getElementById('qp-cancel').addEventListener('click', () => {
+    overlay.remove();
+  });
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.remove();
+  });
+
+  document.getElementById('qp-add').addEventListener('click', () => {
+    let cart = getCart();
+    const existing = cart.find(i => i.name === name);
+    if (existing) {
+      existing.qty += qty;
+    } else {
+      cart.push({ name, price: parseFloat(price), qty });
+    }
+    saveCart(cart);
+    overlay.remove();
+    showToast(`✅ ${name} added to cart (×${qty})!`);
+  });
 }
 
-function confirmGlobalCart(){
-  if(!pendingItem) return;
-  let cart = JSON.parse(localStorage.getItem('nirmanx_cart')) || [];
-  const ex = cart.find(i => i.name === pendingItem.name);
-  if(ex){ ex.qty += popupQty; }
-  else { cart.push({name: pendingItem.name, price: pendingItem.price, qty: popupQty}); }
-  localStorage.setItem('nirmanx_cart', JSON.stringify(cart));
-  closeGQtyPopup();
-  showToast('✅ ' + pendingItem.name + ' (×' + popupQty + ') cart mein add ho gaya!');
+// ===== CALCULATOR =====
+let currentCalcType = 'cement';
+
+function switchCalc(type, btn) {
+  currentCalcType = type;
+  document.querySelectorAll('.calc-tab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const result = document.getElementById('calcResult');
+  if (result) {
+    result.classList.remove('show');
+    result.style.display = 'none';
+  }
 }
 
-// ===== TOAST =====
-function showToast(msg){
-  const old = document.getElementById('nx-toast');
-  if(old) old.remove();
-  const toast = document.createElement('div');
-  toast.id = 'nx-toast';
-  toast.style.cssText = `
-    position:fixed;bottom:90px;left:50%;transform:translateX(-50%);
-    background:#1A1208;color:white;padding:13px 24px;border-radius:30px;
-    font-family:'Hind',sans-serif;font-size:15px;font-weight:600;
-    z-index:99999;box-shadow:0 6px 24px rgba(0,0,0,.25);
-    border-left:4px solid #F46F1A;white-space:nowrap;
-  `;
-  toast.textContent = msg;
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 3000);
-}
+function calculate() {
+  const length = parseFloat(document.getElementById('cLength')?.value);
+  const width = parseFloat(document.getElementById('cWidth')?.value);
+  const floors = parseFloat(document.getElementById('cFloors')?.value) || 1;
 
-// ===== NAVBAR MOBILE =====
-function toggleNav(){
-  const links = document.getElementById('navLinks');
-  if(links) links.classList.toggle('open');
+  if (!length || !width || length <= 0 || width <= 0) {
+    showToast('⚠️ Please enter valid length and width!');
+    return;
+  }
+
+  if (length > 500 || width > 500) {
+    showToast('⚠️ Please enter area in feet (max 500)!');
+    return;
+  }
+
+  const area = length * width * floors;
+  let results = [];
+
+  switch (currentCalcType) {
+    case 'cement':
+      const cementBags = Math.ceil(area * 0.4);
+      const sandCFT = Math.ceil(area * 0.6);
+      const gritCFT = Math.ceil(area * 1.2);
+      results = [
+        { val: cementBags + ' Bags', lbl: 'Cement (50kg)', icon: '🏗️' },
+        { val: sandCFT + ' CFT', lbl: 'Sand (Baalu)', icon: '🪣' },
+        { val: gritCFT + ' CFT', lbl: 'Grit/Stone', icon: '🪨' },
+        { val: '₹' + (cementBags * 380).toLocaleString('en-IN'), lbl: 'Est. Cost', icon: '💰' }
+      ];
+      break;
+
+    case 'bricks':
+      const bricks = Math.ceil(area * 55);
+      const mortar = Math.ceil(area * 0.3);
+      results = [
+        { val: bricks.toLocaleString('en-IN'), lbl: 'Bricks Needed', icon: '🧱' },
+        { val: mortar + ' Bags', lbl: 'Cement for Mortar', icon: '🏗️' },
+        { val: '₹' + (bricks * 8).toLocaleString('en-IN'), lbl: 'Est. Brick Cost', icon: '💰' },
+        { val: area + ' sqft', lbl: 'Total Area', icon: '📐' }
+      ];
+      break;
+
+    case 'tiles':
+      const tiles = Math.ceil(area * 1.1);
+      const adhesive = Math.ceil(area / 40);
+      const grout = Math.ceil(area / 50);
+      results = [
+        { val: tiles + ' sqft', lbl: 'Tiles Required (+10%)', icon: '🪟' },
+        { val: adhesive + ' Bags', lbl: 'Tile Adhesive', icon: '🧴' },
+        { val: grout + ' Bags', lbl: 'Grout/Filler', icon: '⬜' },
+        { val: '₹' + (tiles * 45).toLocaleString('en-IN'), lbl: 'Est. Cost', icon: '💰' }
+      ];
+      break;
+
+    case 'paint':
+      const wallArea = area * 3.5;
+      const paintLtr = Math.ceil(wallArea / 40);
+      const primer = Math.ceil(wallArea / 80);
+      results = [
+        { val: paintLtr + ' Litres', lbl: 'Paint Needed (2 coats)', icon: '🎨' },
+        { val: primer + ' Litres', lbl: 'Primer', icon: '🖌️' },
+        { val: wallArea + ' sqft', lbl: 'Wall Area', icon: '📐' },
+        { val: '₹' + (paintLtr * 280).toLocaleString('en-IN'), lbl: 'Est. Cost', icon: '💰' }
+      ];
+      break;
+  }
+
+  const grid = document.getElementById('resultGrid');
+  if (grid) {
+    grid.innerHTML = results.map(r => `
+      <div class="result-item">
+        <div style="font-size:24px;margin-bottom:6px">${r.icon}</div>
+        <div class="r-val">${r.val}</div>
+        <div class="r-lbl">${r.lbl}</div>
+      </div>`).join('');
+  }
+
+  const result = document.getElementById('calcResult');
+  if (result) {
+    result.style.display = 'block';
+    result.classList.add('show');
+    result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
 }
 
 // ===== SEARCH =====
-function searchProduct(){
-  const query = (document.getElementById('searchInput')?.value || '').trim().toLowerCase();
-  if(!query){ showToast('⚠️ Kuch toh search karo!'); return; }
-  const map = {
-    cement: 'pages/cement.html',
-    steel: 'pages/steel.html',
-    sariya: 'pages/steel.html',
-    bricks: 'pages/bricks.html',
-    eent: 'pages/bricks.html',
-    tiles: 'pages/tiles.html',
-    farshi: 'pages/tiles.html',
-  };
-  for(const key in map){
-    if(query.includes(key)){
-      window.location.href = map[key];
-      return;
-    }
+function searchProduct() {
+  const query = document.getElementById('searchInput')?.value?.trim();
+  if (!query) {
+    showToast('⚠️ Please enter a product name!');
+    return;
   }
-  window.location.href = 'pages/products.html';
+  // Redirect to products page with search query
+  const base = window.location.pathname.includes('/pages/') ? 'products.html' : 'pages/products.html';
+  window.location.href = `${base}?search=${encodeURIComponent(query)}`;
 }
 
-document.addEventListener('DOMContentLoaded', function(){
-  const s = document.getElementById('searchInput');
-  if(s) s.addEventListener('keypress', e => { if(e.key==='Enter') searchProduct(); });
+// Enter key on search
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && document.getElementById('searchInput') === document.activeElement) {
+    searchProduct();
+  }
 });
 
-// ===== CALCULATOR =====
-let activeCalc = 'cement';
-
-function switchCalc(type, btn){
-  activeCalc = type;
-  document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  const r = document.getElementById('calcResult');
-  if(r) r.classList.remove('show');
-}
-
-function calculate(){
-  const l = parseFloat(document.getElementById('cLength')?.value) || 0;
-  const w = parseFloat(document.getElementById('cWidth')?.value) || 0;
-  const f = parseFloat(document.getElementById('cFloors')?.value) || 1;
-  if(!l || !w){ showToast('⚠️ Length aur width daalein!'); return; }
-  const area = l * w * f;
-  const grid = document.getElementById('resultGrid');
-  let html = '';
-
-  if(activeCalc==='cement'){
-    const bags=Math.ceil(area*0.4), steel=Math.ceil(area*4), sand=Math.ceil(area*0.6), cost=bags*380;
-    html=`<div class="result-item"><div class="r-val">${bags}</div><div class="r-lbl">Cement Bags</div></div>
-          <div class="result-item"><div class="r-val">${steel} kg</div><div class="r-lbl">Steel/Sariya</div></div>
-          <div class="result-item"><div class="r-val">${sand} CFT</div><div class="r-lbl">Sand/Baalu</div></div>
-          <div class="result-item"><div class="r-val">₹${cost.toLocaleString('en-IN')}</div><div class="r-lbl">Approx Cost</div></div>`;
-  } else if(activeCalc==='bricks'){
-    const b=Math.ceil(area*55), m=Math.ceil(area*0.25), cost=b*8;
-    html=`<div class="result-item"><div class="r-val">${b.toLocaleString('en-IN')}</div><div class="r-lbl">Bricks/Eent</div></div>
-          <div class="result-item"><div class="r-val">${m} bags</div><div class="r-lbl">Mortar Cement</div></div>
-          <div class="result-item"><div class="r-val">₹${cost.toLocaleString('en-IN')}</div><div class="r-lbl">Approx Cost</div></div>`;
-  } else if(activeCalc==='tiles'){
-    const t=Math.ceil(area*1.1), a=Math.ceil(area/40), cost=t*45;
-    html=`<div class="result-item"><div class="r-val">${t} sqft</div><div class="r-lbl">Tiles (+10%)</div></div>
-          <div class="result-item"><div class="r-val">${a} bags</div><div class="r-lbl">Tile Adhesive</div></div>
-          <div class="result-item"><div class="r-val">₹${cost.toLocaleString('en-IN')}</div><div class="r-lbl">Approx Cost</div></div>`;
-  } else if(activeCalc==='paint'){
-    const lt=Math.ceil(area/80*2), pr=Math.ceil(lt/0.8), cost=lt*280;
-    html=`<div class="result-item"><div class="r-val">${lt} L</div><div class="r-lbl">Paint (2 coats)</div></div>
-          <div class="result-item"><div class="r-val">${pr} L</div><div class="r-lbl">Primer</div></div>
-          <div class="result-item"><div class="r-val">₹${cost.toLocaleString('en-IN')}</div><div class="r-lbl">Approx Cost</div></div>`;
-  }
-
-  if(grid) grid.innerHTML = html;
-  const res = document.getElementById('calcResult');
-  if(res) res.classList.add('show');
-}
-
-// ===== WHATSAPP BUBBLE =====
+// ===== WHATSAPP FLOAT =====
 setTimeout(() => {
-  const b = document.getElementById('waBubble');
-  if(b){ b.classList.add('show'); setTimeout(()=>b.classList.remove('show'), 5000); }
-}, 3500);
+  const bubble = document.getElementById('waBubble');
+  if (bubble) {
+    bubble.style.display = 'block';
+    setTimeout(() => { bubble.style.display = 'none'; }, 5000);
+  }
+}, 3000);
 
-// ===== USER BADGE — Har Page Par =====
-document.addEventListener('DOMContentLoaded', function(){
-  const nxUser = JSON.parse(localStorage.getItem('nx_user'));
-  if(nxUser){
-    const lb = document.getElementById('loginNavBtn');
-    const ub = document.getElementById('userBadge');
-    const un = document.getElementById('userName');
-    if(lb) lb.style.display = 'none';
-    if(ub) ub.style.display = 'inline-flex';
-    if(un) un.textContent = nxUser.name.split(' ')[0];
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', function () {
+  updateCartBadge();
+
+  // Handle search query from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchQuery = urlParams.get('search');
+  if (searchQuery && typeof loadProducts === 'function') {
+    const input = document.querySelector('.filter-search');
+    if (input) input.value = searchQuery;
   }
 });
-
-function logoutUser(){
-  localStorage.removeItem('nx_user');
-  window.location.reload();
-}

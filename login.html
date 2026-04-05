@@ -1,124 +1,266 @@
-<!DOCTYPE html>
-<html lang="hi">
+!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login – GroutGrove</title>
   <link rel="stylesheet" href="../style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    .auth-page{min-height:100vh;background:linear-gradient(135deg,#1A1208,#2D2010,#4A3018);display:flex;align-items:center;justify-content:center;padding:30px 20px}
-    .auth-box{background:white;border-radius:24px;padding:40px 36px;width:100%;max-width:440px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-    .auth-logo{font-family:'Baloo 2';font-size:34px;font-weight:800;color:var(--orange);text-align:center;margin-bottom:4px}
-    .auth-logo span{color:var(--black)}
-    .auth-sub{text-align:center;color:var(--gray);font-size:14px;margin-bottom:24px}
-    .auth-tabs{display:flex;background:var(--light);border-radius:12px;padding:4px;margin-bottom:22px}
-    .auth-tab{flex:1;padding:10px;border:none;background:transparent;font-family:'Hind';font-size:14px;font-weight:600;color:var(--gray);border-radius:10px;cursor:pointer;transition:all .2s}
-    .auth-tab.active{background:var(--orange);color:white}
-    .form-field{margin-bottom:14px}
-    .form-field label{display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px}
-    .form-field input,.form-field select{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'Hind';font-size:15px;outline:none;transition:border .2s;background:var(--light);color:var(--black)}
-    .form-field input:focus,.form-field select:focus{border-color:var(--orange);background:white}
-    .btn-auth{width:100%;background:var(--orange);color:white;border:none;border-radius:12px;padding:14px;font-family:'Baloo 2';font-size:17px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px}
-    .btn-auth:hover{background:var(--orange-dark)}
-    .btn-auth:disabled{background:var(--gray);cursor:not-allowed}
-    .error-msg{background:#FEE2E2;border:1.5px solid #E74C3C;border-radius:10px;padding:12px;font-size:13px;color:#C0392B;margin-bottom:14px;display:none}
-    .welcome-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:9999;align-items:center;justify-content:center}
+    body{background:linear-gradient(135deg,#0F172A 0%,#1E293B 60%,#0F172A 100%);min-height:100vh;display:flex;flex-direction:column}
+    .auth-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:30px 20px}
+    .auth-box{background:white;border-radius:24px;padding:40px 36px;width:100%;max-width:440px;box-shadow:0 24px 80px rgba(0,0,0,.4)}
+    .auth-logo{font-family:'Playfair Display',serif;font-size:32px;font-weight:800;color:#004225;text-align:center;margin-bottom:4px}
+    .auth-logo span{color:#EF4444}
+    .auth-sub{text-align:center;color:#64748B;font-size:14px;margin-bottom:24px}
+    .tabs{display:flex;background:#F1F5F9;border-radius:12px;padding:4px;margin-bottom:24px;gap:4px}
+    .tab-btn{flex:1;padding:10px;border:none;border-radius:9px;font-family:'DM Sans';font-size:14px;font-weight:600;cursor:pointer;background:transparent;color:#64748B;transition:all .2s}
+    .tab-btn.active{background:white;color:#1E293B;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+    .form-field{margin-bottom:16px}
+    .form-field label{display:block;font-size:12px;font-weight:700;color:#475569;margin-bottom:7px;text-transform:uppercase;letter-spacing:.5px}
+    .form-field input,.form-field select{width:100%;border:1.5px solid #E2E8F0;border-radius:12px;padding:13px 15px;font-family:'DM Sans';font-size:15px;outline:none;background:#FAFCFB;color:#1E293B;transition:border .2s}
+    .form-field input:focus,.form-field select:focus{border-color:#1E293B;background:white}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .err-box{background:#FEF2F2;border:1.5px solid #EF4444;border-radius:12px;padding:13px;font-size:13px;color:#DC2626;margin-bottom:16px;display:none}
+    .ok-box{background:#F0FDF4;border:1.5px solid #22C55E;border-radius:12px;padding:13px;font-size:13px;color:#166534;margin-bottom:16px;display:none}
+    .btn-main{width:100%;background:#1E293B;color:white;border:none;border-radius:50px;padding:15px;font-family:'DM Sans';font-size:17px;font-weight:700;cursor:pointer;transition:all .2s}
+    .btn-main:hover{background:#0F172A;transform:translateY(-1px)}
+    .btn-main:disabled{background:#94A3B8;cursor:not-allowed;transform:none}
+    .divider{display:flex;align-items:center;gap:12px;margin:18px 0}
+    .divider hr{flex:1;border:none;height:1px;background:#E2E8F0}
+    .divider span{font-size:13px;color:#94A3B8}
+    .link-text{text-align:center;font-size:13px;color:#64748B;margin-top:16px}
+    .link-text a{color:#1E293B;font-weight:700;text-decoration:none}
+    .back-link{display:block;text-align:center;margin-top:16px;color:#94A3B8;font-size:13px}
+    .back-link:hover{color:#1E293B}
+    .welcome-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
     .welcome-overlay.show{display:flex}
-    .welcome-card{background:white;border-radius:24px;padding:44px 36px;text-align:center;max-width:400px;width:90%;animation:popIn .4s ease}
-    @keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
-    .w-emoji{font-size:64px;margin-bottom:16px}
-    .w-title{font-family:'Baloo 2';font-size:28px;font-weight:800;color:var(--black);margin-bottom:8px}
-    .w-title span{color:var(--orange)}
-    .w-name{font-family:'Baloo 2';font-size:20px;font-weight:700;color:var(--orange);margin-bottom:10px}
-    .w-msg{color:var(--gray);font-size:14px;line-height:1.7;margin-bottom:22px}
-    .w-btn{background:var(--orange);color:white;border:none;border-radius:25px;padding:14px 36px;font-family:'Baloo 2';font-size:16px;font-weight:700;cursor:pointer}
+    .welcome-card{background:white;border-radius:24px;padding:44px 32px;text-align:center;max-width:380px;width:100%}
+    .w-ico{font-size:64px;margin-bottom:16px;display:block}
+    .w-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;color:#1E293B;margin-bottom:8px}
+    .w-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#F59E0B;margin-bottom:12px}
+    .w-msg{color:#64748B;font-size:14px;line-height:1.7;margin-bottom:24px}
+    .w-btn{background:#1E293B;color:white;border:none;border-radius:50px;padding:14px 36px;font-family:'DM Sans';font-size:16px;font-weight:700;cursor:pointer}
   </style>
 </head>
 <body>
-  <div class="welcome-overlay" id="welcomeOverlay">
-    <div class="welcome-card">
-      <div class="w-emoji">🏗️</div>
-      <div class="w-title">Welcome to <span>GroutGrove!</span></div>
-      <div class="w-name" id="wName"></div>
-      <div class="w-msg" id="wMsg">Aap successfully login ho gaye!<br>India ka trusted construction marketplace.</div>
-      <button class="w-btn" onclick="window.location.href='../index.html'">🛒 Shopping Shuru Karo!</button>
-    </div>
-  </div>
 
-  <div class="auth-page">
-    <div class="auth-box">
-      <div class="auth-logo">Grout<span>Grove</span></div>
-      <div class="auth-sub">India's Construction Marketplace</div>
-      <div class="auth-tabs">
-        <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">👤 Login</button>
-        <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')">✏️ Sign Up</button>
+<!-- Welcome Overlay -->
+<div class="welcome-overlay" id="welcomeOverlay">
+  <div class="welcome-card">
+    <span class="w-ico">🎉</span>
+    <div class="w-title">Welcome Back!</div>
+    <div class="w-name" id="wName"></div>
+    <div class="w-msg">You are logged in successfully.<br>Happy shopping on GroutGrove!</div>
+    <button class="w-btn" onclick="window.location.href='../index.html'">🛒 Go to Home</button>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="logo">Grout<span>Grove</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="../index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="contact.html">Contact</a>
+      <a href="cart.html" class="nav-cta">🛒 Cart</a>
+    </div>
+    <button class="hamburger" onclick="toggleNav()">☰</button>
+  </div>
+</nav>
+
+<div class="auth-wrap">
+  <div class="auth-box">
+    <div class="auth-logo">Grout<span>Grove</span></div>
+    <div class="auth-sub">India's Construction Marketplace</div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">👤 Login</button>
+      <button class="tab-btn" id="tabSignup" onclick="switchTab('signup')">✨ Sign Up</button>
+    </div>
+
+    <div class="err-box" id="errBox"></div>
+    <div class="ok-box" id="okBox"></div>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+      <div class="form-field">
+        <label>Phone Number *</label>
+        <input type="tel" id="loginPhone" placeholder="Enter your registered phone number"/>
       </div>
-      <div class="error-msg" id="errorMsg"></div>
-      <div id="loginForm">
-        <div class="form-field"><label>📱 Phone Number</label><input type="tel" id="loginPhone" placeholder="+91 XXXXX XXXXX" maxlength="13"/></div>
-        <div class="form-field"><label>🔒 Password</label><input type="password" id="loginPass" placeholder="Apna password daalein"/></div>
-        <button class="btn-auth" id="loginBtn" onclick="doLogin()">🔓 Login Karo</button>
-        <p style="text-align:center;margin-top:14px;font-size:13px;color:var(--gray)">Account nahi hai? <a href="#" onclick="switchTab('signup')" style="color:var(--orange);font-weight:600">Sign Up →</a></p>
+      <div class="form-field">
+        <label>Password *</label>
+        <input type="password" id="loginPass" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doLogin()"/>
       </div>
-      <div id="signupForm" style="display:none">
-        <div class="form-field"><label>👤 Poora Naam *</label><input type="text" id="signupName" placeholder="Aapka poora naam"/></div>
-        <div class="form-field"><label>📱 Phone Number *</label><input type="tel" id="signupPhone" placeholder="+91 XXXXX XXXXX" maxlength="13"/></div>
-        <div class="form-field"><label>📍 Shehar *</label>
-          <select id="signupCity"><option value="">Shehar chuno</option><option>Delhi</option><option>Noida</option><option>Greater Noida</option><option>Gurugram</option><option>Ghaziabad</option><option>Other</option></select>
+      <button class="btn-main" id="loginBtn" onclick="doLogin()">🔐 Login</button>
+      <div class="link-text">Don't have an account? <a onclick="switchTab('signup')" style="cursor:pointer">Sign Up Free →</a></div>
+    </div>
+
+    <!-- SIGNUP FORM -->
+    <div id="signupForm" style="display:none">
+      <div class="form-row">
+        <div class="form-field">
+          <label>First Name *</label>
+          <input type="text" id="sFirstName" placeholder="Rajesh"/>
         </div>
-        <div class="form-field"><label>🔒 Password * (min 6 char)</label><input type="password" id="signupPass" placeholder="Strong password banayein"/></div>
-        <div class="form-field"><label>🔒 Confirm Password *</label><input type="password" id="signupPass2" placeholder="Password dobara daalein"/></div>
-        <button class="btn-auth" id="signupBtn" onclick="doSignup()">✅ Account Banao — Free!</button>
-        <p style="text-align:center;margin-top:14px;font-size:13px;color:var(--gray)">Account hai? <a href="#" onclick="switchTab('login')" style="color:var(--orange);font-weight:600">Login Karo →</a></p>
+        <div class="form-field">
+          <label>Last Name *</label>
+          <input type="text" id="sLastName" placeholder="Kumar"/>
+        </div>
       </div>
-      <p style="text-align:center;margin-top:20px"><a href="../index.html" style="color:var(--orange);font-size:13px;font-weight:600;text-decoration:none">← Wapas Home</a></p>
+      <div class="form-field">
+        <label>Phone Number *</label>
+        <input type="tel" id="sPhone" placeholder="+91 XXXXX XXXXX" maxlength="13"/>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label>City *</label>
+          <select id="sCity">
+            <option value="">Select City</option>
+            <option>Delhi</option><option>Noida</option><option>Greater Noida</option>
+            <option>Gurugram</option><option>Ghaziabad</option><option>Faridabad</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>You Are *</label>
+          <select id="sType">
+            <option value="">Select</option>
+            <option>Home Owner</option><option>Contractor</option>
+            <option>Builder</option><option>Architect</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Password * (min 6 characters)</label>
+        <input type="password" id="sPass" placeholder="Create a strong password"/>
+      </div>
+      <div class="form-field">
+        <label>Confirm Password *</label>
+        <input type="password" id="sCPass" placeholder="Repeat your password" onkeydown="if(event.key==='Enter')doSignup()"/>
+      </div>
+      <button class="btn-main" id="signupBtn" onclick="doSignup()">✅ Create Free Account</button>
+      <div class="link-text">Already have an account? <a onclick="switchTab('login')" style="cursor:pointer">Login →</a></div>
     </div>
-  </div>
 
-  <script src="../script.js"></script>
-  <script>
-    const{createClient}=supabase;
-    const sb=createClient('https://ddgwdesqicrneikxrcnj.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZ3dkZXNxaWNybmVpa3hyY25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3Mzc1MTksImV4cCI6MjA4OTMxMzUxOX0.AFH7Sfat5XnYFYocdbjZlYhL5iLG1dO6wXm_FHycAqo');
-    function switchTab(t){document.getElementById('loginForm').style.display=t==='login'?'block':'none';document.getElementById('signupForm').style.display=t==='signup'?'block':'none';document.getElementById('tab-login').classList.toggle('active',t==='login');document.getElementById('tab-signup').classList.toggle('active',t==='signup');document.getElementById('errorMsg').style.display='none';}
-    function showError(m){const el=document.getElementById('errorMsg');el.textContent=m;el.style.display='block';}
-    async function doLogin(){
-      const p=document.getElementById('loginPhone').value.trim();
-      const pw=document.getElementById('loginPass').value;
-      if(!p){showError('⚠️ Phone daalein!');return;}
-      if(!pw){showError('⚠️ Password daalein!');return;}
-      const btn=document.getElementById('loginBtn');btn.textContent='⏳ Login ho raha hai...';btn.disabled=true;
-      document.getElementById('errorMsg').style.display='none';
-      const{data,error}=await sb.from('customers').select('*').eq('phone',p).eq('password',pw);
-      if(error||!data||data.length===0){showError('❌ Phone ya password galat hai!');btn.textContent='🔓 Login Karo';btn.disabled=false;return;}
-      const u=data[0];
-      localStorage.setItem('nx_user',JSON.stringify({name:u.full_name,phone:u.phone,city:u.city,id:u.id}));
-      document.getElementById('wName').textContent='Namaste, '+u.full_name.split(' ')[0]+'! 👋';
-      document.getElementById('welcomeOverlay').classList.add('show');
-    }
-    async function doSignup(){
-      const n=document.getElementById('signupName').value.trim();
-      const p=document.getElementById('signupPhone').value.trim();
-      const c=document.getElementById('signupCity').value;
-      const pw=document.getElementById('signupPass').value;
-      const pw2=document.getElementById('signupPass2').value;
-      if(!n){showError('⚠️ Naam daalein!');return;}
-      if(!p||p.replace(/\D/g,'').length<10){showError('⚠️ Valid phone daalein!');return;}
-      if(!c){showError('⚠️ Shehar chuno!');return;}
-      if(!pw||pw.length<6){showError('⚠️ Min 6 character password!');return;}
-      if(pw!==pw2){showError('❌ Passwords match nahi!');return;}
-      const btn=document.getElementById('signupBtn');btn.textContent='⏳ Ban raha hai...';btn.disabled=true;
-      document.getElementById('errorMsg').style.display='none';
-      const{data:ex}=await sb.from('customers').select('phone').eq('phone',p);
-      if(ex&&ex.length>0){showError('❌ Phone pehle se registered!');btn.textContent='✅ Account Banao';btn.disabled=false;return;}
-      const{data,error}=await sb.from('customers').insert([{full_name:n,phone:p,password:pw,city:c}]).select();
-      if(error){showError('❌ Error: '+error.message);btn.textContent='✅ Account Banao';btn.disabled=false;return;}
-      localStorage.setItem('nx_user',JSON.stringify({name:n,phone:p,city:c,id:data[0].id}));
-      document.getElementById('wName').textContent='Namaste, '+n.split(' ')[0]+'! 👋';
-      document.getElementById('wMsg').innerHTML='Aapka account ban gaya!<br>Ab construction material order karo.';
-      document.getElementById('welcomeOverlay').classList.add('show');
-    }
-  </script>
+    <a href="../index.html" class="back-link">← Back to GroutGrove</a>
+  </div>
+</div>
+
+<script src="../script.js"></script>
+<script>
+// Supabase setup
+const SURL='https://ddgwdesqicrneikxrcnj.supabase.co';
+const SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZ3dkZXNxaWNybmVpa3hyY25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3Mzc1MTksImV4cCI6MjA4OTMxMzUxOX0.AFH7Sfat5XnYFYocdbjZlYhL5iLG1dO6wXm_FHycAqo';
+
+// Universal Supabase fetch
+async function sbFetch(table, method, body, query=''){
+  const url=`${SURL}/rest/v1/${table}${query}`;
+  const headers={
+    'Content-Type':'application/json',
+    'apikey':SKEY,
+    'Authorization':'Bearer '+SKEY,
+    'Prefer': method==='POST'?'return=representation':''
+  };
+  const res=await fetch(url,{method,headers,body:body?JSON.stringify(body):undefined});
+  const data=await res.json();
+  if(!res.ok)throw new Error(data.message||data.error||'Database error');
+  return data;
+}
+
+function showErr(msg){
+  const e=document.getElementById('errBox');
+  const o=document.getElementById('okBox');
+  e.textContent='❌ '+msg;e.style.display='block';
+  o.style.display='none';
+  e.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function showOk(msg){
+  const e=document.getElementById('errBox');
+  const o=document.getElementById('okBox');
+  o.textContent='✅ '+msg;o.style.display='block';
+  e.style.display='none';
+}
+function clearMsgs(){
+  document.getElementById('errBox').style.display='none';
+  document.getElementById('okBox').style.display='none';
+}
+
+function switchTab(tab){
+  clearMsgs();
+  document.getElementById('loginForm').style.display=tab==='login'?'block':'none';
+  document.getElementById('signupForm').style.display=tab==='signup'?'block':'none';
+  document.getElementById('tabLogin').classList.toggle('active',tab==='login');
+  document.getElementById('tabSignup').classList.toggle('active',tab==='signup');
+}
+
+// Check URL for ?tab=signup
+const urlP=new URLSearchParams(window.location.search);
+if(urlP.get('tab')==='signup')switchTab('signup');
+
+// ===== LOGIN =====
+async function doLogin(){
+  const phone=document.getElementById('loginPhone').value.trim();
+  const pass=document.getElementById('loginPass').value;
+  if(!phone){showErr('Please enter your phone number!');return;}
+  if(!pass){showErr('Please enter your password!');return;}
+  const btn=document.getElementById('loginBtn');
+  btn.textContent='⏳ Logging in...';btn.disabled=true;
+  clearMsgs();
+  try{
+    const ph=phone.replace(/\D/g,'');
+    const data=await sbFetch('customers','GET',null,`?phone=eq.${ph}&select=*`);
+    if(!data||data.length===0){showErr('Phone number not registered! Please sign up first.');btn.textContent='🔐 Login';btn.disabled=false;return;}
+    const user=data[0];
+    if(user.password!==pass){showErr('Wrong password! Please try again.');btn.textContent='🔐 Login';btn.disabled=false;return;}
+    localStorage.setItem('nx_user',JSON.stringify({name:user.full_name,phone:user.phone,city:user.city,id:user.id}));
+    document.getElementById('wName').textContent='Hello, '+user.full_name.split(' ')[0]+'! 👋';
+    document.getElementById('welcomeOverlay').classList.add('show');
+  }catch(err){
+    showErr('Connection error. Please check your internet and try again.');
+    btn.textContent='🔐 Login';btn.disabled=false;
+  }
+}
+
+// ===== SIGNUP =====
+async function doSignup(){
+  const fn=document.getElementById('sFirstName').value.trim();
+  const ln=document.getElementById('sLastName').value.trim();
+  const ph=document.getElementById('sPhone').value.trim().replace(/\D/g,'');
+  const city=document.getElementById('sCity').value;
+  const utype=document.getElementById('sType').value;
+  const pw=document.getElementById('sPass').value;
+  const cp=document.getElementById('sCPass').value;
+  if(!fn){showErr('Please enter your first name!');return;}
+  if(!ln){showErr('Please enter your last name!');return;}
+  if(!ph||ph.length<10){showErr('Please enter a valid 10-digit phone number!');return;}
+  if(!city){showErr('Please select your city!');return;}
+  if(!utype){showErr('Please select what you are!');return;}
+  if(!pw||pw.length<6){showErr('Password must be at least 6 characters!');return;}
+  if(pw!==cp){showErr('Passwords do not match!');return;}
+  const btn=document.getElementById('signupBtn');
+  btn.textContent='⏳ Creating account...';btn.disabled=true;clearMsgs();
+  try{
+    // Check existing
+    const ex=await sbFetch('customers','GET',null,`?phone=eq.${ph}&select=id`);
+    if(ex&&ex.length>0){showErr('This phone number is already registered! Please login.');btn.textContent='✅ Create Free Account';btn.disabled=false;return;}
+    // Create account
+    const result=await sbFetch('customers','POST',{
+      full_name:fn+' '+ln,
+      phone:ph,
+      city:city,
+      password:pw
+    });
+    const user=result[0]||result;
+    localStorage.setItem('nx_user',JSON.stringify({name:fn+' '+ln,phone:ph,city:city,id:user.id||''}));
+    document.getElementById('wName').textContent='Welcome, '+fn+'! 🎉';
+    document.getElementById('welcomeOverlay').classList.add('show');
+  }catch(err){
+    showErr('Registration failed: '+err.message+'. Please try WhatsApp: +91 96541 71005');
+    btn.textContent='✅ Create Free Account';btn.disabled=false;
+  }
+}
+</script>
 </body>
 </html>
